@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/gfstatic/templateone/res/static/css/main.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/gfstatic/templateone/res/layui/css/layui.css}">
+    <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+</head>
+
+<body>
+
+    <div class="site-nav-bg">
+        <div class="site-nav w1200">
+            <p class="sn-back-home">
+                <i class="layui-icon layui-icon-home"></i>
+                <a href="#">首页</a>
+            </p>
+            <div class="sn-quick-menu">
+                <div class="login"><a href="#">顾客登录</a></div>
+                <div class="login"><a href="#">商家登录</a></div>
+                <!--<div class="sp-cart"><a href="#">购物车</a><span>2</span></div>-->
+            </div>
+        </div>
+    </div>
+
+    <div class="header">
+        <div class="headerLayout w1200">
+            <div class="headerCon">
+                <h1 class="mallLogo">
+                    <a href="#" title="母婴商城">
+                        <img th:src="@{/gfstatic/templateone/res/static/img/logo.png}"/>
+                    </a>
+                </h1>
+                <!--<div class="mallSearch">-->
+                    <!--<form action="" class="layui-form" novalidate>-->
+                        <!--<input type="text" name="title" required lay-verify="required" autocomplete="off" class="layui-input" placeholder="请输入需要的商品">-->
+                        <!--<button class="layui-btn" lay-submit lay-filter="formDemo">-->
+                            <!--<i class="layui-icon layui-icon-search"></i>-->
+                        <!--</button>-->
+                        <!--<input type="hidden" name="" value="">-->
+                    <!--</form>-->
+                <!--</div>-->
+            </div>
+        </div>
+    </div>
+
+    <div class="content content-nav-base  login-content">
+        <div class="main-nav">
+            <div class="inner-cont0">
+                <div class="inner-cont1 w1200">
+                    <div class="inner-cont2">
+                        <a href="#">所有商品</a>
+                        <a href="#">今日团购</a>
+                        <a href="#">母婴资讯</a>
+                        <a href="#">关于我们</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="login-bg">
+            <div class="login-cont w1200">
+                <div class="form-box">
+                    <form class="layui-form">
+                        <legend>账号密码登录</legend>
+                        <div class="layui-form-item">
+                            <!-- 账号 -->
+                            <div class="layui-inline iphone">
+                                <div class="layui-input-inline">
+                                    <i class="layui-icon layui-icon-user iphone-icon"></i>
+                                    <input type="text" id="gf_username" name="gf_username" class="layui-input" placeholder="会员号/手机号/邮箱" autocomplete="off" >
+                                </div>
+                            </div>
+                            <!-- 密码 -->
+                            <div class="layui-inline iphone">
+                                <div class="layui-input-inline">
+                                    <i class="layui-icon layui-icon-password iphone-icon"></i>
+                                    <input type="password" id="gf_password" name="gf_password" class="layui-input" placeholder="密码" autocomplete="off" >
+                                </div>
+                            </div>
+                            <!-- 验证码 -->
+                            <div class="layui-inline veri-code">
+                                <div class="layui-input-inline">
+                                    <input id="gf_vcode" type="text" name="gf_vcode" placeholder="验证码" autocomplete="off" class="layui-input">
+                                    <!-- TODO 图片验证码 -->
+                                    <img id="gf_vcode_img" class="layui-btn" th:src="@{/graph/vcode}" style="width: 130px;"/>
+                                </div>
+                            </div>
+                            <!-- 找回密码 -->
+                            <div class="layui-inline">
+                                <a href="#">忘记密码</a>
+                                <a href="#">免费注册</a>
+                            </div>
+                        </div>
+                        <!-- 登录 -->
+                        <div class="layui-form-item login-btn">
+                            <div class="layui-input-block">
+                                <button type="button" id="gf_login" class="layui-btn">登录</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="ng-promise-box">
+            <div class="ng-promise w1200">
+                <p class="text">
+                    <!--<a class="icon1" href="javascript:void(0);">7天无理由退换货</a>-->
+                    <!--<a class="icon2" href="javascript:void(0);">满99元全场免邮</a>-->
+                    <!--<a class="icon3" style="margin-right: 0" href="javascript:void(0);">100%品质保证</a>-->
+                </p>
+            </div>
+        </div>
+        <div class="mod_help w1200">
+            <p>
+                <a href="javascript:void(0);">关于我们</a>
+                <span>|</span>
+                <a href="javascript:void(0);">帮助中心</a>
+                <span>|</span>
+                <a href="javascript:void(0);">售后服务</a>
+                <span>|</span>
+                <a href="javascript:void(0);">母婴资讯</a>
+                <span>|</span>
+                <a href="javascript:void(0);">关于货源</a>
+            </p>
+            <p class="coty">xxx版权所有 &copy; 2012-2020</p>
+        </div>
+    </div>
+
+    <script>
+        $("#gf_vcode_img").on("click", function () {
+            var timestamp = (new Date()).valueOf();
+            $(this).attr("src","/vcode?timestamp=" + timestamp);
+        });
+    </script>
+
+</body>
+
+</html>
