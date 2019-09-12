@@ -1,0 +1,13 @@
+当前 Session 中使用过的变量名（其他地方最好不要重复使用）：
+
+1、user（用户登录的唯一标识）
+
+2、tempUser
+
+3、graphVcode
+
+4、messageVcode
+
+5、phone
+
+6、messageVpassword

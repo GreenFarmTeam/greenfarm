@@ -1,3 +1,4 @@
+<!-- TODO 临时主页 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -5,9 +6,11 @@
     <title>暂时性页面</title>
 </head>
 <body>
-    <a th:href="@{/user/password/login}">消费者登录</a>
+    <a th:if="${session.user}==null" th:href="@{/user/password/login}">登录</a>
+    <a th:if="${session.user}!=null" href="#">个人中心</a>
+    <a th:if="${session.user}!=null" href="#">注销</a>
     <br/>
     <br/>
-    <a>商家登录</a>
+    <a>商家中心</a>
 </body>
 </html>

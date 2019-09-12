@@ -1,0 +1,40 @@
+<!-- TODO Page：会员/消费者注册临时页面 -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>会员注册临时页面</title>
+    <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/regex.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
+</head>
+<body>
+    <form>
+        <input type="radio" name="gf_register_method" id="gf_register_by_mail" value="2"/>邮箱验证注册
+        <br/>
+        <input type="radio" name="gf_register_method" id="gf_register_by_mobile" checked="checked" value="1"/>手机号验证注册
+        <hr/>
+        <label for="gf_password_a">密码</label>
+        <input type="password" id="gf_password_a"/>
+        <br/>
+        <br/>
+        <label for="gf_password_b">确认密码</label>
+        <input type="password" id="gf_password_b"/>
+        <hr/>
+        <label for="gf_mail">邮箱</label>
+        <input type="text" id="gf_mail" autocomplete="off" disabled="disabled"/>
+        <hr/>
+        <label for="gf_phone">联系电话</label>
+        <input type="text" id="gf_phone"/>
+        <br/>
+        <br/>
+        <label for="gf_vcode">验证码</label>
+        <input type="text" id="gf_vcode"/>
+        <input type="button" id="gf_get_vcode" autocomplete="off" value="获取短信验证码"/>
+        <hr/>
+        <input type="button" id="gf_register" value="注册"/>
+    </form>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/user/register.js}"></script>
+</body>
+</html>

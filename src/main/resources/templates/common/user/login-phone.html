@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/gfstatic/templateone/res/layui/css/layui.css}">
     <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/regex.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
@@ -68,33 +69,25 @@
             <div class="login-cont w1200">
                 <div class="form-box">
                     <form class="layui-form">
-                        <legend>账号密码登录</legend>
+                        <legend>手机验证登录</legend>
                         <div class="layui-form-item">
                             <!-- 账号 -->
                             <div class="layui-inline iphone">
                                 <div class="layui-input-inline">
                                     <i class="layui-icon layui-icon-user iphone-icon"></i>
-                                    <input type="text" id="gf_username" name="gf_username" class="layui-input" placeholder="会员号/手机号/邮箱" autocomplete="off">
-                                </div>
-                            </div>
-                            <!-- 密码 -->
-                            <div class="layui-inline iphone">
-                                <div class="layui-input-inline">
-                                    <i class="layui-icon layui-icon-password iphone-icon"></i>
-                                    <input type="password" id="gf_password" name="gf_password" class="layui-input" placeholder="密码" autocomplete="off">
+                                    <input type="text" id="gf_phone" name="gf_phone" class="layui-input" placeholder="手机号" autocomplete="off" >
                                 </div>
                             </div>
                             <!-- 验证码 -->
                             <div class="layui-inline veri-code">
                                 <div class="layui-input-inline">
-                                    <input id="gf_vcode" type="text" name="gf_vcode" placeholder="验证码" autocomplete="off" class="layui-input">
-                                    <img id="gf_vcode_img" class="layui-btn" th:src="@{/graph/vcode}" style="width: 130px;"/>
+                                    <input id="gf_vcode" type="text" name="gf_vcode" placeholder="动态密码" autocomplete="off" class="layui-input">
+                                    <input type="button" class="layui-btn" id="gf_get_vcode" value="获取动态密码"/>
                                 </div>
                             </div>
                             <!-- TODO 链接位置需要调整 -->
                             <div class="layui-inline">
-                                <a th:href="@{/user/mobile/login}">手机验证登录</a>
-                                <a href="#">忘记密码</a>
+                                <a th:href="@{/user/password/login}">密码登录</a>
                                 <a th:href="@{/user/register}">免费注册</a>
                                 <a href="#">商家入驻</a>
                             </div>
@@ -137,7 +130,7 @@
         </div>
     </div>
 
-    <script type="text/javascript" th:src="@{/gfstatic/js/common/user/login.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/user/login-phone.js}"></script>
 
 </body>
 
