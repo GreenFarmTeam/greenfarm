@@ -120,7 +120,8 @@ public class LoginController {
                     json.put("phone", StringUtils.desensitizePhoneNumber(phone));
                     session.setAttribute("phone", phone);
                     session.setAttribute("messageVpassword", vcode);
-                    HttpUtils.sessionAttributeInvalid(session, "messageVpassword", 1);
+                    HttpUtils.sessionAttributeInvalid(session, "phone", 3);
+                    HttpUtils.sessionAttributeInvalid(session, "messageVpassword", 3);
                 } else {
                     json.put("flag", false);
                     json.put("reason", ShortMessageUtils.getErrorDescription(responseData));
@@ -136,28 +137,61 @@ public class LoginController {
         return json.toString();
     }
 
-
-
     /**
-     * 跳转至“商家使用密码登录”界面
+     * 消费者“使用手机号登录”操作
      *
-     * @return ModelAndView 视图
+     * @param phone 手机号
+     * @param vcode 动态密码
+     * @param request HTTP 请求
+     * @return JSON
      */
+    @ApiOperation(value = "userLoginWithMobilePhoneOperation", notes = "消费者“使用手机号登录”操作")
+    @PostMapping(value = "/user/mobile/login/operation")
+    @ResponseBody
+    public String userLoginWithMobilePhoneOperation(@RequestParam(value = "phone") String phone, @RequestParam(value = "vcode") String vcode, HttpServletRequest request) {
+        JSONObject json = new JSONObject();
+        HttpSession session = request.getSession();
+        String code = (String) session.getAttribute("messageVpassword");
+        String phoneNum = (String) session.getAttribute("phone");
+        if (code == null || phoneNum == null) {
+            json.put("flag", false);
+            json.put("reason", "动态密码已失效，请重新获取！");
+        } else {
+            if (!code.equals(vcode) || !phoneNum.equals(phone)) {
+                json.put("flag", false);
+                json.put("reason", "动态密码错误！");
+            } else {
+                json.put("flag", true);
+                session.setAttribute("user", userService.getUserByPhone(phone));
+                session.removeAttribute("messageVpassword");
+                session.removeAttribute("phone");
+            }
+        }
+        return json.toString();
+    }
+
+
+
+//    /**
+//     * 跳转至“商家使用密码登录”界面
+//     *
+//     * @return ModelAndView 视图
+//     */
 //    @ApiOperation(value = "businessLoginWithPasswordPage", notes = "跳转至“商家使用密码登录”界面")
-//    @GetMapping(value = "/business/password/login")
+//    @GetMapping(value = "/admin/password/login")
 //    public ModelAndView businessLoginWithPasswordPage() {
 //        ModelAndView modelAndView = new ModelAndView();
 //        modelAndView.setViewName("");
 //        return modelAndView;
 //    }
 
-    /**
-     * 跳转至“商家使用手机验证码登录”界面
-     *
-     * @return ModelAndView 视图
-     */
+//    /**
+//     * 跳转至“商家使用手机验证码登录”界面
+//     *
+//     * @return ModelAndView 视图
+//     */
 //    @ApiOperation(value = "businessLoginWithMobilePhonePage", notes = "跳转至“商家使用手机短信验证码登录”界面")
-//    @GetMapping(value = "/business/mobile/login")
+//    @GetMapping(value = "/admin/mobile/login")
 //    public ModelAndView businessLoginWithMobilePhonePage() {
 //        ModelAndView modelAndView = new ModelAndView();
 //        modelAndView.setViewName("");

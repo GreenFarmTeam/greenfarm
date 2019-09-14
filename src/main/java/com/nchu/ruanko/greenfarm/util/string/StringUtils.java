@@ -89,4 +89,45 @@ public final class StringUtils {
         return String.copyValueOf(seq);
     }
 
+    /**
+     * 对“身份证号”进行脱敏处理
+     *
+     * 33062219******001*
+     *
+     * @param idCard 身份证号
+     * @return 脱敏处理后的“身份证号”
+     */
+    public static String desensitizeIdCard(String idCard) {
+        char[] seq = idCard.toCharArray();
+        seq[seq.length - 1] = '*';
+        for (int i = 8; i <= 13; i++) {
+            seq[i] = '*';
+        }
+        return String.copyValueOf(seq);
+    }
+
+    /**
+     * 对“姓名”进行脱敏处理
+     *
+     *
+     * @param name 姓名
+     * @return 脱敏处理后的“姓名”
+     */
+    public static String desensitizeName(String name) {
+        char[] seq = new char[2];
+        seq[0] = name.charAt(0);
+        seq[1] = '*';
+        return String.copyValueOf(seq);
+    }
+
+    /**
+     * 对“邮箱”进行脱敏处理
+     *
+     * @param mail 邮箱
+     * @return 脱敏处理后的“邮箱”
+     */
+    public static String desensitizeMail(String mail) {
+        return mail.charAt(0) + "*" + mail.substring(mail.lastIndexOf("@"));
+    }
+
 }

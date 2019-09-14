@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
         if (user.getUserMail() != null) {
             String username = generateDefaultUsername(user.getUserMail());
             user.setUserUsername(username);
-            user.setUserNickName(username);
+            user.setUserNickname(username);
             user.setUserMail(StringUtils.encodeBase64(user.getUserMail()));
             user.setUserPhone(null);
         }
@@ -45,11 +45,62 @@ public class UserServiceImpl implements UserService {
         if (user.getUserPhone() != null) {
             String username = generateDefaultUsername(user.getUserPhone());
             user.setUserUsername(username);
-            user.setUserNickName(username);
+            user.setUserNickname(username);
             user.setUserPhone(StringUtils.encodeBase64(user.getUserPhone()));
             user.setUserMail(null);
         }
         userDAO.insertUser(user);
+    }
+
+    /**
+     *
+     * @param nickname
+     * @param uid
+     */
+    @Override
+    public void modifyUserNicknameByUID(String nickname, String uid) {
+        userDAO.updateUserNicknameByUID(nickname, uid);
+    }
+
+    /**
+     *
+     * @param realname
+     * @param idcard
+     * @param uid
+     */
+    @Override
+    public void modifyUserRealnameAndIdcardByUID(String realname, String idcard, String uid) {
+        userDAO.updateUserRealnameAndIdcardByUID(StringUtils.encodeBase64(realname), StringUtils.encodeBase64(idcard), uid);
+    }
+
+    /**
+     *
+     * @param mail
+     * @param uid
+     */
+    @Override
+    public void modifyUserMailByUID(String mail, String uid) {
+        userDAO.updateUserMailByUID(StringUtils.encodeBase64(mail), uid);
+    }
+
+    /**
+     *
+     * @param phone
+     * @param uid
+     */
+    @Override
+    public void modifyUserPhoneByUID(String phone, String uid) {
+        userDAO.updateUserPhoneByUID(StringUtils.encodeBase64(phone), uid);
+    }
+
+    /**
+     *
+     * @param password
+     * @param uid
+     */
+    @Override
+    public void modifyUserPasswordByUID(String password, String uid) {
+        userDAO.updateUserPasswordByUID(StringUtils.encodeMd5(password), uid);
     }
 
     /**
@@ -61,7 +112,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     public User getUserByKeyAndPassword(String key, String password) {
-        User user = null;
+        User user;
         if (key.contains(MAIL_CHAR)) {
             user = userDAO.getUserByMailAndPassword(StringUtils.encodeBase64(key), StringUtils.encodeMd5(password));
         } else {
@@ -72,6 +123,16 @@ public class UserServiceImpl implements UserService {
             }
         }
         return user;
+    }
+
+    @Override
+    public User getUserByUID(String uid) {
+        return userDAO.getUserByUID(uid);
+    }
+
+    @Override
+    public User getUserByPhone(String phone) {
+        return userDAO.getUserByPhone(StringUtils.encodeBase64(phone));
     }
 
     /**
@@ -97,6 +158,16 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     *
+     * @param idcard
+     * @return
+     */
+    @Override
+    public boolean checkUniqueUserWithIdcard(String idcard) {
+        return userDAO.countUserByIdcard(StringUtils.encodeBase64(idcard)) == 0;
+    }
+
+    /**
      * 基于注册时所用的“邮箱”或“手机”生成“会员号”
      *
      * @param str 邮箱或手机号
@@ -113,7 +184,5 @@ public class UserServiceImpl implements UserService {
         }
         return result;
     }
-
-
 
 }

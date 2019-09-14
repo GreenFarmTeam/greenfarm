@@ -1,0 +1,37 @@
+<!-- TODO 实名认证临时界面 -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>实名认证临时界面</title>
+    <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/regex.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
+</head>
+<body>
+    <span th:if="${session.user.userIdcard}==null" style="color: #FF0000; font-weight: bold;">未进行实名认证</span>
+    <table th:if="${session.user.userIdcard}!=null" border="1">
+        <tr>
+            <td>真实姓名</td>
+            <td style="color: #FF0000; font-weight: bold;" th:text="${name}"></td>
+        </tr>
+        <tr>
+            <td>身份证号</td>
+            <td style="color: #FF0000; font-weight: bold;" th:text="${idcard}"></td>
+        </tr>
+    </table>
+    <hr/>
+    <form>
+        <label for="gf_realname">真实姓名：</label>
+        <input type="text" id="gf_realname"/>
+        <br/>
+        <label for="gf_idcard">身份证号：</label>
+        <input type="text" id="gf_idcard"/>
+        <br/>
+        <input type="button" id="gf_sure" value="确定"/>
+    </form>
+    <input type="hidden" id="gf_uid" th:value="${session.user.userUid}"/>
+    <script type="text/javascript" th:src="@{/gfstatic/js/management/user/certification.js}"></script>
+</body>
+</html>

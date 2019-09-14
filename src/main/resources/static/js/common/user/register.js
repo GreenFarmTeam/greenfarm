@@ -58,7 +58,7 @@ function countDown() {
         setTimeout(countDown, 1000);
     } else {
         timer = 70;
-        $("#gf_get_vcode").text("获取短信验证码").removeAttr("disabled");
+        $("#gf_get_vcode").val("获取短信验证码").removeAttr("disabled");
     }
 }
 

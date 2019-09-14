@@ -11,3 +11,5 @@
 5、phone
 
 6、messageVpassword
+
+7、mail

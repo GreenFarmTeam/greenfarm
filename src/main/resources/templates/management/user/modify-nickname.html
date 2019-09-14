@@ -1,0 +1,23 @@
+<!-- TODO 修改昵称临时界面 -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>修改昵称临时界面</title>
+    <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/regex.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
+</head>
+<body>
+    <form>
+        <label for="gf_nickname">昵称：</label>
+        <input type="text" id="gf_nickname" th:value="${session.user.userNickname}"/>
+        <input type="hidden" id="gf_old_nickname" th:value="${session.user.userNickname}"/>
+        <hr/>
+        <input type="button" id="gf_modify" value="修改"/>
+    </form>
+    <input type="hidden" id="gf_uid" th:value="${session.user.userUid}"/>
+    <script type="text/javascript" th:src="@{/gfstatic/js/management/user/modify-nickname.js}"></script>
+</body>
+</html>

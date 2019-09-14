@@ -21,7 +21,7 @@ public interface UserDAO {
             @Result(property = "userUid", column = "user_uid"),
             @Result(property = "userUsername", column = "user_username"),
             @Result(property = "userPassword", column = "user_password"),
-            @Result(property = "userNickName", column = "user_nickname"),
+            @Result(property = "userNickname", column = "user_nickname"),
             @Result(property = "userPhone", column = "user_phone"),
             @Result(property = "userMail", column = "user_mail"),
             @Result(property = "userIdcard", column = "user_idcard"),
@@ -73,6 +73,17 @@ public interface UserDAO {
 
     /**
      *
+     * @param phone
+     * @return
+     */
+    @ResultMap(value = "userMapper1")
+    @Select("SELECT *" +
+            " FROM gf_tb_user" +
+            " WHERE user_phone=#{phone}")
+    User getUserByPhone(@Param(value = "phone") String phone);
+
+    /**
+     *
      * @param mail
      * @return
      */
@@ -93,10 +104,71 @@ public interface UserDAO {
 
     /**
      *
+     * @param idcard
+     * @return
+     */
+    @Select("SELECT COUNT(*)" +
+            " FROM gf_tb_user" +
+            " WHERE user_idcard=#{idcard}")
+    int countUserByIdcard(@Param(value = "idcard") String idcard);
+
+    /**
+     *
      * @param user
      */
     @Insert("INSERT INTO gf_tb_user" +
             " VALUES(#{userUid},#{userUsername},#{userPassword},#{userNickName},#{userPhone},#{userMail},#{userIdcard},#{userRealname},#{userPhoto},#{userTime},#{userIsBusiness})")
     void insertUser(User user);
+
+    /**
+     *
+     * @param nickname
+     * @param uid
+     */
+    @Update("UPDATE gf_tb_user" +
+            " SET user_nickname=#{nickname}" +
+            " WHERE user_uid=#{uid}")
+    void updateUserNicknameByUID(@Param(value = "nickname") String nickname, @Param(value = "uid") String uid);
+
+    /**
+     *
+     * @param realname
+     * @param idcard
+     * @param uid
+     */
+    @Update("UPDATE gf_tb_user" +
+            " SET user_realname=#{realname},user_idcard=#{idcard}" +
+            " WHERE user_uid=#{uid}")
+    void updateUserRealnameAndIdcardByUID(@Param(value = "realname") String realname, @Param(value = "idcard") String idcard, @Param(value = "uid") String uid);
+
+    /**
+     *
+     * @param mail
+     * @param uid
+     */
+    @Update("UPDATE gf_tb_user" +
+            " SET user_mail=#{mail}" +
+            " WHERE user_uid=#{uid}")
+    void updateUserMailByUID(@Param(value = "mail") String mail, @Param(value = "uid") String uid);
+
+    /**
+     *
+     * @param phone
+     * @param uid
+     */
+    @Update("UPDATE gf_tb_user" +
+            " SET user_phone=#{phone}" +
+            " WHERE user_uid=#{uid}")
+    void updateUserPhoneByUID(@Param(value = "phone") String phone, @Param(value = "uid") String uid);
+
+    /**
+     *
+     * @param password
+     * @param uid
+     */
+    @Update("UPDATE gf_tb_user" +
+            " SET user_password=#{password}" +
+            " WHERE user_uid=#{uid}")
+    void updateUserPasswordByUID(@Param(value = "password") String password, @Param(value = "uid") String uid);
 
 }

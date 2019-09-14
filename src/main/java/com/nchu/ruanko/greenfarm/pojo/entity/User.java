@@ -12,7 +12,7 @@ public class User {
     private String userUid;
     private String userUsername;
     private String userPassword;
-    private String userNickName;
+    private String userNickname;
     private String userPhone;
     private String userMail;
     private String userIdcard;
@@ -45,12 +45,12 @@ public class User {
         this.userPassword = userPassword;
     }
 
-    public String getUserNickName() {
-        return userNickName;
+    public String getUserNickname() {
+        return userNickname;
     }
 
-    public void setUserNickName(String userNickName) {
-        this.userNickName = userNickName;
+    public void setUserNickname(String userNickname) {
+        this.userNickname = userNickname;
     }
 
     public String getUserPhone() {
@@ -115,7 +115,7 @@ public class User {
                 "userUid='" + userUid + '\'' +
                 ", userUsername='" + userUsername + '\'' +
                 ", userPassword='" + userPassword + '\'' +
-                ", userNickName='" + userNickName + '\'' +
+                ", userNickname='" + userNickname + '\'' +
                 ", userPhone='" + userPhone + '\'' +
                 ", userMail='" + userMail + '\'' +
                 ", userIdcard='" + userIdcard + '\'' +

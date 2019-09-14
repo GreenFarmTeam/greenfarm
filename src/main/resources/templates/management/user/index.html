@@ -1,0 +1,58 @@
+<!-- TODO 会员/消费者个人中心临时主页 -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>个人中心临时</title>
+</head>
+<body>
+    <a th:href="@{/index}">回到主页</a>
+    <hr/>
+    <table th:if="${session.user}!=null" border="1">
+        <tr>
+            <td>昵称</td>
+            <td th:text="${session.user.userNickname}"></td>
+        </tr>
+        <tr>
+            <td>会员号</td>
+            <td th:text="${session.user.userUsername}"></td>
+        </tr>
+    </table>
+    <hr/>
+    <h2>个人信息管理</h2>
+    <h4>修改昵称</h4>
+    <a th:href="@{/user/management/nickname}">修改昵称</a>
+    <span th:text="${session.user.userNickname}" style="color: #FF0000; font-weight: bold"></span>
+    <hr/>
+    <h4>修改头像</h4>
+    <a href="#">修改头像</a>
+    <span th:if="${session.user.userPhoto}==null" style="color: #FF0000; font-weight: bold">默认头像</span>
+    <span th:if="${session.user.userPhoto}!=null" style="color: #FF0000; font-weight: bold">自定义头像</span>
+    <hr/>
+    <h4>实名认证</h4>
+    <a th:href="@{/user/management/certification}">实名认证</a>
+    <span th:if="${session.user.userIdcard}==null" style="color: #FF0000; font-weight: bold">未完成</span>
+    <span th:if="${session.user.userIdcard}!=null" style="color: #FF0000; font-weight: bold">已完成</span>
+    <hr/>
+    <h4>安全管理</h4>
+    <table border="1">
+        <tr>
+            <td>修改密码</td>
+            <td colspan="2"><a th:href="@{/user/management/password}">修改密码</a></td>
+        </tr>
+        <tr>
+            <td>绑定手机号</td>
+            <td th:if="${session.user.userPhone}==null" style="color: #FF0000; font-weight: bold">未绑定</td>
+            <td th:if="${session.user.userPhone}!=null" style="color: #FF0000; font-weight: bold">已绑定</td>
+            <td><a th:href="@{/user/management/phone}">绑定手机号</a></td>
+        </tr>
+        <tr>
+            <td>绑定邮箱</td>
+            <td th:if="${session.user.userMail}==null" style="color: #FF0000; font-weight: bold">未绑定</td>
+            <td th:if="${session.user.userMail}!=null" style="color: #FF0000; font-weight: bold">已绑定</td>
+            <td><a th:href="@{/user/management/mail}">绑定邮箱</a></td>
+        </tr>
+    </table>
+    <hr/>
+</body>
+</html>

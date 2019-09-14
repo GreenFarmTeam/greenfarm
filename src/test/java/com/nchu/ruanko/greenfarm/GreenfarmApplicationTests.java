@@ -36,8 +36,8 @@ public class GreenfarmApplicationTests {
 //        user3.setUserIsBusiness(1);
 //        userDAO.insertUser(user3);
 
-//        Business business = businessDAO.getBusinessByUsernameAndPassword("2", "33");
-//        System.out.println(business);
+//        Business admin = businessDAO.getBusinessByUsernameAndPassword("2", "33");
+//        System.out.println(admin);
 
     }
 

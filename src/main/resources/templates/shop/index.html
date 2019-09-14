@@ -4,13 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <title>暂时性页面</title>
+    <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
 </head>
 <body>
     <a th:if="${session.user}==null" th:href="@{/user/password/login}">登录</a>
-    <a th:if="${session.user}!=null" href="#">个人中心</a>
-    <a th:if="${session.user}!=null" href="#">注销</a>
+    <table th:if="${session.user}!=null" border="1">
+        <tr>
+            <td>昵称</td>
+            <td th:text="${session.user.userNickname}"></td>
+        </tr>
+        <tr>
+            <td>会员号</td>
+            <td th:text="${session.user.userUsername}"></td>
+        </tr>
+    </table>
+    <a th:if="${session.user}!=null" th:href="@{/user/management/index}">个人中心</a>
+    <a th:if="${session.user}!=null" href="javascript:void(0)" id="gf_logout">注销</a>
     <br/>
     <br/>
-    <a>商家中心</a>
+    <a th:if="${session.user}==null" th:href="@{/user/password/login}">商家中心</a>
+    <a th:if="${session.user}!=null" href="#">商家中心</a>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/user/logout.js}"></script>
 </body>
 </html>

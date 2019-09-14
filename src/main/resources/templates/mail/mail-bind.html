@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>邮箱绑定确认</title>
+</head>
+<body>
+    <h3>请确认进行绑定邮箱操作！</h3>
+    <p>尊敬的&nbsp;<span style="color: #FF0000; font-weight: bolder;" th:text="${username}"></span>&nbsp;用户：</p>
+    <p>&nbsp;&nbsp;感谢您对“绿色农场”的支持，请您点击下面的链接确认您的账号所要绑定该邮箱：</p>
+    <p>&nbsp;&nbsp;&nbsp;&nbsp;<a th:href="${href}">确认绑定</a></p>
+    <p style="color: #FF0000; font-weight: bold">请在同一浏览器下进入链接，否则无法完成绑定！</p>
+</body>
+</html>
