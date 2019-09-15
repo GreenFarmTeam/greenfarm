@@ -154,7 +154,7 @@ public interface UserDAO {
      * @param user
      */
     @Insert("INSERT INTO gf_tb_user" +
-            " VALUES(#{userUid},#{userUsername},#{userPassword},#{userNickName},#{userPhone},#{userMail},#{userIdcard},#{userRealname},#{userPhoto},#{userTime},#{userIsBusiness})")
+            " VALUES(#{userUid},#{userUsername},#{userPassword},#{userNickname},#{userPhone},#{userMail},#{userIdcard},#{userRealname},#{userPhoto},#{userTime},#{userIsBusiness})")
     void insertUser(User user);
 
     /**
