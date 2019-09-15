@@ -7,7 +7,7 @@ $("#gf_sure").on('click', function () {
         if (mailRegex.test(mail) === false) {
             layer.alert('邮箱格式错误！', {skin:'layui-layer-lan', closeBtn: 0});
         } else {
-            layer.confirm('确定要更新绑定邮箱？', {btn:['是','否'], skin:'layui-layer-lan'}, function() {
+            layer.confirm('确定要更新绑定邮箱？', {btn:['是','否'], skin:'layui-layer-lan', closeBtn:0}, function() {
                 layer.closeAll();
                 layer.load(0, {shade : 0.5});
                 $.ajax({

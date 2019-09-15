@@ -53,7 +53,7 @@ $("#gf_sure").on('click', function () {
         if (phoneRegex.test(phone) === false) {
             layer.alert('手机号格式错误！', {skin:'layui-layer-lan', closeBtn: 0});
         } else {
-            layer.confirm('确定要更新绑定手机？', {btn:['是','否'], skin:'layui-layer-lan'}, function() {
+            layer.confirm('确定要更新绑定手机？', {btn:['是','否'], skin:'layui-layer-lan', closeBtn:0}, function() {
                 $.ajax({
                     type : "POST",
                     url : "/user/management/phone/operation/" + uid,

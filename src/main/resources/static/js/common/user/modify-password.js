@@ -1,8 +1,6 @@
-// 确认修改密码
 $("#gf_sure").on('click', function () {
     var passwordA = $("#gf_password_a").val();
     var passwordB = $("#gf_password_b").val();
-    var uid = $("#gf_uid").val();
     if ($.trim(passwordA) === "" || $.trim(passwordB) === "") {
         layer.alert('请填写完整信息！', {skin:'layui-layer-lan', closeBtn: 0});
     } else {
@@ -12,24 +10,23 @@ $("#gf_sure").on('click', function () {
             if (passwordA !== passwordB) {
                 layer.alert('两次密码不一致！', {skin:'layui-layer-lan', closeBtn: 0});
             } else {
-                layer.confirm('确定要修改密码？', {btn:['是','否'], skin:'layui-layer-lan', closeBtn:0}, function() {
+                layer.confirm('确定要修改密码？', {btn:['是','否'], skin:'layui-layer-lan', closeBtn:0}, function () {
                     $.ajax({
                         type : "POST",
-                        url : "/user/management/password/operation/" + uid,
+                        url : "/user/forget/password/modify/password/operation",
                         dataType : "json",
                         data : {
                             "password" : passwordA
                         },
                         success : function (jsonData) {
                             if (jsonData.flag === true) {
-                                $(location).attr("href", getPathPrefix() + "user/management/index");
+                                $(location).attr("href", getPathPrefix() + "user/password/login");
                             }
                         }
                     });
                 }, function () {
                     // null operation
                 });
-
             }
         }
     }

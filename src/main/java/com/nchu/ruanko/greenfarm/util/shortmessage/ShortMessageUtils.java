@@ -57,6 +57,28 @@ public final class ShortMessageUtils {
     }
 
     /**
+     *
+     * @param template 短信模板编号
+     * @param phone 手机号
+     * @param json 封装成 JSON 的替换文本
+     * @return JSON 格式的响应结果
+     * @throws ClientException 异常
+     */
+    public static String sendMessage(String template, String phone, JSONObject json) throws ClientException {
+        CommonRequest request = new CommonRequest();
+        request.setMethod(MethodType.POST);
+        request.setDomain(DOMAIN);
+        request.setVersion(VERSION);
+        request.setAction(ACTION);
+        request.putQueryParameter("TemplateCode", template);
+        request.putQueryParameter("SignName", SIGN_NAME);
+        request.putQueryParameter("PhoneNumbers", phone);
+        request.putQueryParameter("TemplateParam", json.toString());
+        CommonResponse response = client.getCommonResponse(request);
+        return response.getData();
+    }
+
+    /**
      * 获取 API 错误码
      *
      * @param responseData 短息 API 调用后返回的 JSON

@@ -13,3 +13,7 @@
 6、messageVpassword
 
 7、mail
+
+8、username
+
+9、userUid

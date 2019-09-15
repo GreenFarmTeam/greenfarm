@@ -38,7 +38,7 @@ $("#gf_get_vcode").on('click', function () {
                 success : function (jsonData) {
                     layer.closeAll('loading');
                     if (jsonData.flag === true) {
-                        layer.alert('已向' + jsonData.phone + '成功发送验证码，请及时接收！', {skin:'layui-layer-lan', closeBtn: 0});
+                        layer.alert('已向' + jsonData.phone + '成功发送验证码，5分钟有效，请及时接收！', {skin:'layui-layer-lan', closeBtn: 0});
                         $("#gf_get_vcode").attr("disabled", "disabled");
                         countDown();
                     } else {

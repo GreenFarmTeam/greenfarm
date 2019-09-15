@@ -22,8 +22,8 @@
                 <a href="#">首页</a>
             </p>
             <div class="sn-quick-menu">
-                <div class="login"><a th:href="@{/user/password/login}">顾客登录</a></div>
-                <div class="login"><a href="#">商家登录</a></div>
+                <!--<div class="login"><a th:href="@{/user/password/login}">顾客登录</a></div>-->
+                <!--<div class="login"><a href="#">商家登录</a></div>-->
                 <!--<div class="sp-cart"><a href="#">购物车</a><span>2</span></div>-->
             </div>
         </div>
@@ -94,9 +94,10 @@
                             <!-- TODO 链接位置需要调整 -->
                             <div class="layui-inline">
                                 <a th:href="@{/user/mobile/login}">手机验证登录</a>
-                                <a href="#">忘记密码</a>
+                                <a th:href="@{/user/forget/password}">忘记密码</a>
+                                <a th:href="@{/user/forget/username}">忘记会员号</a>
                                 <a th:href="@{/user/register}">免费注册</a>
-                                <a href="#">商家入驻</a>
+                                <!--<a href="#">商家入驻</a>-->
                             </div>
                         </div>
                         <!-- 登录 -->

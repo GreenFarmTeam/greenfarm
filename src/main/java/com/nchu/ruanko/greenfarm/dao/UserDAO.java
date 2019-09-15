@@ -82,6 +82,43 @@ public interface UserDAO {
             " WHERE user_phone=#{phone}")
     User getUserByPhone(@Param(value = "phone") String phone);
 
+
+    /**
+     *
+     * @param idcard
+     * @param realname
+     * @return
+     */
+    @ResultMap(value = "userMapper1")
+    @Select("SELECT *" +
+            " FROM gf_tb_user" +
+            " WHERE user_idcard=#{idcard}" +
+            " AND user_realname=#{realname}")
+    User getUserByIdcardAndRealname(@Param(value = "idcard") String idcard, @Param(value = "realname") String realname);
+
+
+    /**
+     *
+     * @param mail
+     * @return
+     */
+    @ResultMap(value = "userMapper1")
+    @Select("SELECT *" +
+            " FROM gf_tb_user" +
+            " WHERE user_mail=#{mail}")
+    User getUserByMail(@Param(value = "mail") String mail);
+
+    /**
+     *
+     * @param username
+     * @return
+     */
+    @ResultMap(value = "userMapper1")
+    @Select("SELECT *" +
+            " FROM gf_tb_user" +
+            " WHERE user_username=#{username}")
+    User getUserByUsername(@Param(value = "username") String username);
+
     /**
      *
      * @param mail

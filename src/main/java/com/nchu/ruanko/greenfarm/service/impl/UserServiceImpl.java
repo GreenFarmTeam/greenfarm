@@ -6,7 +6,7 @@ import com.nchu.ruanko.greenfarm.service.UserService;
 import com.nchu.ruanko.greenfarm.util.string.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.sql.Date;
+import java.util.Date;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -135,6 +135,26 @@ public class UserServiceImpl implements UserService {
         return userDAO.getUserByPhone(StringUtils.encodeBase64(phone));
     }
 
+    @Override
+    public User getUserByIdcardAndRealname(String idcard, String realname) {
+        return userDAO.getUserByIdcardAndRealname(StringUtils.encodeBase64(idcard), StringUtils.encodeBase64(realname));
+    }
+
+    @Override
+    public User getUserByKey(String key) {
+        User user;
+        if (key.contains(MAIL_CHAR)) {
+            user = userDAO.getUserByMail(StringUtils.encodeBase64(key));
+        } else {
+            if (key.contains(USERNAME_CHAR1) || key.contains(USERNAME_CHAR2)) {
+                user = userDAO.getUserByUsername(key);
+            } else {
+                user = userDAO.getUserByPhone(StringUtils.encodeBase64(key));
+            }
+        }
+        return user;
+    }
+
     /**
      * 判断该邮箱是否已被注册
      *
@@ -170,17 +190,25 @@ public class UserServiceImpl implements UserService {
     /**
      * 基于注册时所用的“邮箱”或“手机”生成“会员号”
      *
+     * 一定要考虑如何避免重复
+     *
      * @param str 邮箱或手机号
      * @return 会员号
      */
     private String generateDefaultUsername(String str) {
+        String uid = StringUtils.createUUID();
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 1; i <= 5; i++) {
+            int result = (int)((31 + 1) * Math.random() + 0);
+            stringBuilder.append(uid.charAt(result));
+        }
         String result;
         if (str.contains(MAIL_CHAR)) {
             result = str.substring(str.lastIndexOf("@") + 1, str.lastIndexOf(".")).replace(".", "");
             result = result + str.substring(0, str.lastIndexOf("@"));
-            result = "m" + result;
+            result = "m" + result + stringBuilder.toString();
         } else {
-            result = "p" + str;
+            result = "p" + str + stringBuilder.toString();
         }
         return result;
     }

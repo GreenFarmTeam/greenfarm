@@ -22,6 +22,10 @@ public interface UserService {
 
     User getUserByPhone(String phone);
 
+    User getUserByIdcardAndRealname(String idcard, String realname);
+
+    User getUserByKey(String key);
+
     boolean checkUniqueUserWithMail(String mail);
 
     boolean checkUniqueUserWithPhone(String phone);

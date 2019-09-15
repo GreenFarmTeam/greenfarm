@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>找回会员号临时界面</title>
+    <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/regex.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
+</head>
+<body>
+    <span style="color: #FF0000; font-weight: bolder">仅限进行实名认证的用户使用</span>
+    <hr/>
+    <form>
+        <label for="gf_idcard">身份证号</label>
+        <input type="text" id="gf_idcard"/>
+        <br/>
+        <label>真实姓名</label>
+        <input type="text" id="gf_realname"/>
+        <br/>
+        <label>验证码</label>
+        <input type="text" id="gf_vcode"/>
+        <img id="gf_vcode_img" class="layui-btn" th:src="@{/graph/vcode}" style="width: 130px;"/>
+        <br/>
+        <input type="button" id="gf_sure" value="确定"/>
+    </form>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/user/forget-username.js}"></script>
+</body>
+</html>

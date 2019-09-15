@@ -8,7 +8,7 @@ $("#gf_modify").on('click', function () {
         if (nicknameRegex.test(newNickname) === false) {
             layer.alert('昵称格式不符合要求！', {skin:'layui-layer-lan', closeBtn: 0});
         } else {
-            layer.confirm('确定要修改？', {btn:['是','否'], skin:'layui-layer-lan'}, function() {
+            layer.confirm('确定要修改？', {btn:['是','否'], skin:'layui-layer-lan', closeBtn:0}, function() {
                 $.ajax({
                     type : "POST",
                     url : "/user/management/nickname/operation/" + uid,

@@ -19,8 +19,14 @@ public class OtherTest {
 //        System.out.println(StringUtils.desensitizeIdCard("371322199802030210"));
 //        boolean flag = CertificationUtils.certification("袁悦", "371322199802030210");
 //        System.out.println(flag);
-        String str = "2161624113@qq.com";
-        System.out.println(str.substring(str.lastIndexOf("@")));
+//        String str = "2161624113@qq.com";
+//        System.out.println(str.substring(str.lastIndexOf("@")));
+        for (int i = 0; i <= 100; i++) {
+            int result = (int)((31 + 1) * Math.random() + 0);
+            System.out.println(result);
+        }
+
     }
+
 
 }
