@@ -21,10 +21,14 @@ public class OtherTest {
 //        System.out.println(flag);
 //        String str = "2161624113@qq.com";
 //        System.out.println(str.substring(str.lastIndexOf("@")));
-        for (int i = 0; i <= 100; i++) {
-            int result = (int)((31 + 1) * Math.random() + 0);
-            System.out.println(result);
-        }
+//        for (int i = 0; i <= 100; i++) {
+//            int result = (int)((31 + 1) * Math.random() + 0);
+//            System.out.println(result);
+//        }
+//        System.out.println(StringUtils.encodeMd5("16205134"));
+//        System.out.println(StringUtils.encodeBase64("110@qq.com"));
+        System.out.println(StringUtils.createUUID());
+
 
     }
 

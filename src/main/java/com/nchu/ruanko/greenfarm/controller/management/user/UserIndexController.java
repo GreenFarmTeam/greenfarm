@@ -7,13 +7,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * “会员/消费者个人中心”的主控制器
+ * “会员/消费者个人中心”的控制器
  *
  * @author Yuan Yueshun
  */
-@Api(tags = "management.user.IndexController", description = "“会员/消费者个人中心”的主控制器")
+@Api(tags = "management.user.UserIndexController", description = "“会员/消费者个人中心”的控制器")
 @Controller
-public class IndexController {
+public class UserIndexController {
 
     /**
      * 跳转至会员/消费者“个人中心”主页

@@ -54,5 +54,9 @@
         </tr>
     </table>
     <hr/>
+    <h4>商家管理</h4>
+    <a th:if="${session.user.userIsBusiness}==0 and ${session.user.userIdcard}!=null" th:href="@{/user/management/business/apply}">申请成为商家</a>
+    <a th:if="${session.user.userIdcard}!=null" th:href="@{/user/management/business/apply/history}">我的申请</a>
+    <a th:if="${session.user.userIsBusiness}==1" href="#">商家中心</a>
 </body>
 </html>

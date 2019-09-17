@@ -1,0 +1,30 @@
+<!-- TODO 用户申请成为商家临时界面 -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户申请成为商家临时界面</title>
+    <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/regex.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
+</head>
+<body>
+    <form>
+        <label for="gf_shop_name">店铺名称</label>
+        <input type="text" id="gf_shop_name"/>
+        <br/>
+        <label for="gf_shop_desc">店铺描述</label>
+        <textarea id="gf_shop_desc"></textarea>
+        <br/>
+        <label>经营范围</label>
+        <label th:each="pt:${productTypeList}">
+            <input type="checkbox" name="gf_type" th:value="${pt.typeUid}"/>
+            <span th:text="${pt.typeName}"></span>
+        </label>
+        <br/>
+        <input type="button" id="gf_sure" value="提交申请"/>
+    </form>
+    <script type="text/javascript" th:src="@{/gfstatic/js/management/user/become-business.js}"></script>
+</body>
+</html>

@@ -1,16 +1,17 @@
 当前 Session 中使用过的变量名（其他地方最好不要重复使用）：
 
 1、user（用户登录的唯一标识）
+   admin（管理员登录的唯一标识）
 
-2、tempUser
+2、tempUser（用户注册时所用）
 
-3、graphVcode
+3、graphVcode（图形验证码）
 
-4、messageVcode
+4、messageVcode（短信验证码）
 
 5、phone
 
-6、messageVpassword
+6、messageVpassword（用户手机登录时所用短信验证码）
 
 7、mail
 

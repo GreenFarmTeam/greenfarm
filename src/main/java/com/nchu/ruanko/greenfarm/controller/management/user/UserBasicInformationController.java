@@ -27,9 +27,9 @@ import java.util.Map;
  *
  * @author Yuan Yueshun
  */
-@Api(tags = "management.user.BasicInformationController", description = "“会员/消费者个人中心”的“基本信息管理”功能控制器")
+@Api(tags = "management.user.UserBasicInformationController", description = "“会员/消费者个人中心”的“基本信息管理”功能控制器")
 @Controller
-public class BasicInformationController {
+public class UserBasicInformationController {
 
     @Autowired
     private UserService userService;

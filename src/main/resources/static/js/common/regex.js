@@ -12,3 +12,6 @@ var nicknameRegex = /^[0-9a-zA-Z\u4E00-\u9FA5]{1,25}$/;
 
 // 身份证号正则
 var idcardRegex = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+
+// 商店名称正则
+var shopNameRegex = /^[0-9a-zA-Z\u4E00-\u9FA5]{6,15}$/;

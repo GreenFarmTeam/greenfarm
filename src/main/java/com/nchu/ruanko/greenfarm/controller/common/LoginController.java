@@ -2,7 +2,9 @@ package com.nchu.ruanko.greenfarm.controller.common;
 
 import com.alibaba.fastjson.JSONObject;
 import com.aliyuncs.exceptions.ClientException;
+import com.nchu.ruanko.greenfarm.pojo.entity.Administrator;
 import com.nchu.ruanko.greenfarm.pojo.entity.User;
+import com.nchu.ruanko.greenfarm.service.AdministratorService;
 import com.nchu.ruanko.greenfarm.service.UserService;
 import com.nchu.ruanko.greenfarm.util.http.HttpUtils;
 import com.nchu.ruanko.greenfarm.util.shortmessage.ShortMessageErrorsEnum;
@@ -31,6 +33,9 @@ public class LoginController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AdministratorService administratorService;
 
     private static final String MESSAGE_TEMPLATE = "SMS_174020810";
 
@@ -207,24 +212,46 @@ public class LoginController {
     @GetMapping(value = "/greenfarm/admin/password/login")
     public ModelAndView administratorLoginWithPasswordPage() {
         ModelAndView modelAndView = new ModelAndView();
-        // TODO
-        modelAndView.setViewName("");
+        modelAndView.setViewName("common/admin/login");
         return modelAndView;
     }
 
     /**
-     * 跳转至“管理员使用手机验证码登录”界面
+     * “管理员使用密码登录”操作
      *
-     * @return ModelAndView 视图
+     * @param username 用户名
+     * @param password 密码
+     * @return JSON
      */
-    @ApiOperation(value = "administratorLoginWithMobilePhonePage", notes = "跳转至“管理员使用手机短信验证码登录”界面")
-    @GetMapping(value = "/greenfarm/admin/mobile/login")
-    public ModelAndView administratorLoginWithMobilePhonePage() {
-        ModelAndView modelAndView = new ModelAndView();
-        // TODO
-        modelAndView.setViewName("");
-        return modelAndView;
+    @ApiOperation(value = "administratorLoginWithPasswordOperation", notes = "“管理员使用密码登录”操作")
+    @PostMapping(value = "/greenfarm/admin/password/login/operation")
+    @ResponseBody
+    public String administratorLoginWithPasswordOperation(@RequestParam(name = "username") String username, @RequestParam(name = "password") String password, HttpServletRequest request) {
+        JSONObject json = new JSONObject();
+        Administrator administrator = administratorService.getAdministratorByUsernameAndPassword(username, password);
+        if (administrator == null) {
+            json.put("flag", false);
+            json.put("reason", "账号或密码错误！");
+        } else {
+            json.put("flag", true);
+            HttpSession session = request.getSession();
+            session.setAttribute("admin", administrator);
+        }
+        return json.toString();
     }
+
+//    /**
+//     * 跳转至“管理员使用手机验证码登录”界面
+//     *
+//     * @return ModelAndView 视图
+//     */
+//    @ApiOperation(value = "administratorLoginWithMobilePhonePage", notes = "跳转至“管理员使用手机短信验证码登录”界面")
+//    @GetMapping(value = "/greenfarm/admin/mobile/login")
+//    public ModelAndView administratorLoginWithMobilePhonePage() {
+//        ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName("");
+//        return modelAndView;
+//    }
 
 
 

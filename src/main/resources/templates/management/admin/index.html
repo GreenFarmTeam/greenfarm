@@ -1,0 +1,28 @@
+<!-- TODO 管理员主页临时界面 -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>管理员主页临时界面</title>
+</head>
+<body>
+    <table th:if="${session.admin}!=null" border="1">
+        <tr>
+            <td>工号</td>
+            <td th:text="${session.admin.adminUsername}"></td>
+        </tr>
+    </table>
+    <hr/>
+    <a href="javaScript:void(0)" id="gf_logout">注销登录</a>
+    <hr/>
+    <h4>商家管理</h4>
+    <ul>
+        <li>
+            <a href="#">已有商家</a>
+        </li>
+        <li>
+            <a href="#">待审核商家</a>
+        </li>
+    </ul>
+</body>
+</html>

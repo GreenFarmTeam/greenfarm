@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户申请记录临时页面</title>
+</head>
+<body>
+    <table th:if="${businessReviewList}!=null" border="1">
+        <tr>
+            <td>提交日期</td>
+            <td>审核结果</td>
+            <td>未审核通过原因</td>
+        </tr>
+        <tr th:each="br:${businessReviewList}" >
+            <td th:text="${#dates.format(br.reviewSubmitTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:if="${br.reviewResult}==null" colspan="2">审核中</td>
+            <td th:if="${br.reviewResult}!=null and ${br.reviewResult}==0">未通过</td>
+            <td th:if="${br.reviewResult}!=null and ${br.reviewResult}==0" th:text="${br.reviewReason}"></td>
+            <td th:if="${br.reviewResult}!=null and ${br.reviewResult}==1" colspan="2">通过</td>
+        </tr>
+    </table>
+</body>
+</html>

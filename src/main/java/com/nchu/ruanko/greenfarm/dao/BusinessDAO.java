@@ -3,40 +3,39 @@ package com.nchu.ruanko.greenfarm.dao;
 import com.nchu.ruanko.greenfarm.pojo.entity.Business;
 import org.apache.ibatis.annotations.*;
 
-/**
- * 对应数据库的表 gf_tb_business
- *
- * @author Yuan Yueshun
- */
 @Mapper
 public interface BusinessDAO {
 
-    /**
-     *
-     * @param username
-     * @param password
-     * @return
-     */
+    @Insert("INSERT INTO gf_tb_business(bus_uid,bus_user_uid,bus_idcard_front,bus_idcard_behind,bus_shop_name,bus_shop_desc,bus_shop_state)" +
+            " VALUES(#{business.businessUid},#{uid},#{business.businessIdcardFront},#{business.businessIdcardBehind},#{business.businessShopName},#{business.businessShopDescription},#{business.businessShopState})")
+    void insertBusiness(@Param(value = "business") Business business, @Param(value = "uid") String userUid);
+
+    @Update("UPDATE gf_tb_business" +
+            " SET bus_idcard_front=#{business.businessIdcardFront},bus_idcard_behind=#{business.businessIdcardBehind},bus_shop_name=#{business.businessShopName},bus_shop_desc=#{business.businessShopDescription},bus_shop_state=#{business.businessShopState}" +
+            " WHERE bus_uid=#{uid}")
+    void updateBusinessByBusinessUid(@Param(value = "business") Business business, @Param(value = "uid") String businessUid);
+
     @Results(id = "businessMapper1", value = {
-            @Result(property = "businessUid", column = "business_uid"),
-            @Result(property = "user", column = "business_user", one = @One(select = "com.nchu.ruanko.greenfarm.dao.UserDAO.getUserByUID")),
-            @Result(property = "businessIdcardFront", column = "business_idcard_front"),
-            @Result(property = "businessIdcardBehind", column = "business_idcard_behind"),
-            @Result(property = "businessShopName", column = "business_shop_name"),
-            @Result(property = "businessShopDescription", column = "business_shop_description"),
-            @Result(property = "businessShopState", column = "business_shop_state")
+            @Result(property = "businessUid", column = "bus_uid"),
+            @Result(property = "user", column = "bus_user_uid", one = @One(select = "com.nchu.ruanko.greenfarm.dao.UserDAO.getUserByUID")),
+            @Result(property = "businessIdcardFront", column = "bus_idcard_front"),
+            @Result(property = "businessIdcardBehind", column = "bus_idcard_behind"),
+            @Result(property = "businessShopName", column = "bus_shop_name"),
+            @Result(property = "businessShopDescription", column = "bus_shop_desc"),
+            @Result(property = "businessShopState", column = "bus_shop_state")
     })
     @Select("SELECT *" +
-            " FROM gf_tb_business,gf_tb_user" +
-            " WHERE gf_tb_business.business_user=gf_tb_user.user_uid" +
-            " AND gf_tb_user.user_username=#{username}" +
-            " AND gf_tb_user.user_password=#{password}")
-    Business getBusinessByUsernameAndPassword(@Param(value = "username") String username, @Param(value = "password") String password);
+            " FROM gf_tb_business" +
+            " WHERE bus_user_uid=#{uid}")
+    Business getBusinessByUID(@Param(value = "uid") String uid);
 
-    /**
-     *
-     * @param business
-     */
-    @Insert("")
-    void insertBusiness(Business business);
+    @Select("SELECT bus_uid" +
+            " FROM gf_tb_business" +
+            " WHERE bus_user_uid=#{uid}")
+    String getBusinessUidByUserUID(@Param(value = "uid") String userUid);
+
+    @Select("SELECT COUNT(*)" +
+            " FROM gf_tb_business" +
+            " WHERE bus_user_uid=#{uid}")
+    int countBusinessByUserUID(@Param(value = "uid") String userUid);
 }
