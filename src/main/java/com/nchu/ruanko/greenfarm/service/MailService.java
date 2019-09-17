@@ -60,6 +60,4 @@ public class MailService {
         sender.send(message);
     }
 
-
-
 }

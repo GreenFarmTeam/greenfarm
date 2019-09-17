@@ -36,6 +36,4 @@ public interface ProductTypeDAO {
             " WHERE type_uid=#{uid}")
     ProductType getProductTypeByUID(@Param(value = "uid") String uid);
 
-
-
 }

@@ -36,11 +36,11 @@ public class ForgetUsernameController {
     private static final String TEMPLATE = "SMS_174022882";
 
     /**
-     * 跳转至“忘记会员号/用户名”界面
+     * 跳转至“忘记会员号/用户名”页面
      *
      * @return ModelAndView
      */
-    @ApiOperation(value = "userForgetUsernamePage", notes = "跳转至“忘记会员号/用户名”界面")
+    @ApiOperation(value = "userForgetUsernamePage", notes = "跳转至“忘记会员号/用户名”页面")
     @GetMapping("/user/forget/username")
     public ModelAndView userForgetUsernamePage() {
         ModelAndView modelAndView = new ModelAndView();
@@ -49,6 +49,9 @@ public class ForgetUsernameController {
     }
 
     /**
+     * 进行“实名验证”
+     *
+     * 通过“实名认证”才有权知道会员名
      *
      * @param idcard 身份证号
      * @param realname 真实姓名
@@ -56,7 +59,7 @@ public class ForgetUsernameController {
      * @param request HTTP 请求
      * @return JSON
      */
-    @ApiOperation(value = "userForgetUsernameOperation", notes = "“实名验证”操作（通过才有权知道会员名）")
+    @ApiOperation(value = "userForgetUsernameOperation", notes = "进行“实名验证”")
     @PostMapping(value = "/user/forget/username/operation")
     @ResponseBody
     public String userForgetUsernameOperation(@RequestParam(name = "idcard") String idcard, @RequestParam(name = "realname") String realname, @RequestParam(name = "vcode") String vcode, HttpServletRequest request) {
@@ -85,12 +88,12 @@ public class ForgetUsernameController {
 
 
     /**
-     * 跳转至“选择找回用户名的方法”的界面
+     * 跳转至“选择找回会员名的方法”的页面
      *
      * @param request HTTP 请求
      * @return ModelAndView
      */
-    @ApiOperation(value = "userForgetUsernameChooseMethodPage", notes = "跳转至“选择找回用户名的方法”界面")
+    @ApiOperation(value = "userForgetUsernameChooseMethodPage", notes = "跳转至“选择找回用户名的方法”页面")
     @GetMapping("/user/forget/username/method")
     public ModelAndView userForgetUsernameChooseMethodPage(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();

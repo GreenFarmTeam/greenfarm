@@ -40,11 +40,11 @@ public class LoginController {
     private static final String MESSAGE_TEMPLATE = "SMS_174020810";
 
     /**
-     * 跳转至“消费者使用密码登录”界面
+     * 跳转至“会员/用户使用密码登录”页面
      *
-     * @return ModelAndView 视图
+     * @return ModelAndView
      */
-    @ApiOperation(value = "userLoginWithPasswordPage", notes = "跳转至“消费者使用密码登录”界面")
+    @ApiOperation(value = "userLoginWithPasswordPage", notes = "跳转至“消费者使用密码登录”页面")
     @GetMapping(value = "/user/password/login")
     public ModelAndView userLoginWithPasswordPage() {
         ModelAndView modelAndView = new ModelAndView();
@@ -66,7 +66,7 @@ public class LoginController {
     public String userLoginWithPasswordOperation(@RequestParam(name = "key") String key, @RequestParam(name = "password") String password, @RequestParam(name = "vcode") String vcode, HttpServletRequest request) {
         JSONObject json = new JSONObject();
         HttpSession session = request.getSession();
-        User user = null;
+        User user;
         String code = (String) session.getAttribute("graphVcode");
         if (!code.equals(vcode)) {
             json.put("flag", false);
@@ -88,11 +88,11 @@ public class LoginController {
     }
 
     /**
-     * 跳转至“消费者使用手机验证码登录”界面
+     * 跳转至“会员/用户使用手机验证码登录”页面
      *
-     * @return ModelAndView 视图
+     * @return ModelAndView
      */
-    @ApiOperation(value = "userLoginWithMobilePhonePage", notes = "跳转至“消费者使用手机短信验证码登录”界面")
+    @ApiOperation(value = "userLoginWithMobilePhonePage", notes = "跳转至“消费者使用手机短信验证码登录”页面")
     @GetMapping(value = "/user/mobile/login")
     public ModelAndView userLoginWithMobilePhonePage() {
         ModelAndView modelAndView = new ModelAndView();
@@ -101,7 +101,7 @@ public class LoginController {
     }
 
     /**
-     * 发送登录时所用的手机验证码短信
+     * 发送登录时所用的手机短信验证码
      *
      * @param phone 手机号
      * @param request HTTP 请求
@@ -143,7 +143,7 @@ public class LoginController {
     }
 
     /**
-     * 消费者“使用手机号登录”操作
+     * 会员/用户“使用短信验证码登录”操作
      *
      * @param phone 手机号
      * @param vcode 动态密码
@@ -175,40 +175,12 @@ public class LoginController {
         return json.toString();
     }
 
-
-
-//    /**
-//     * 跳转至“商家使用密码登录”界面
-//     *
-//     * @return ModelAndView 视图
-//     */
-//    @ApiOperation(value = "businessLoginWithPasswordPage", notes = "跳转至“商家使用密码登录”界面")
-//    @GetMapping(value = "/admin/password/login")
-//    public ModelAndView businessLoginWithPasswordPage() {
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.setViewName("");
-//        return modelAndView;
-//    }
-
-//    /**
-//     * 跳转至“商家使用手机验证码登录”界面
-//     *
-//     * @return ModelAndView 视图
-//     */
-//    @ApiOperation(value = "businessLoginWithMobilePhonePage", notes = "跳转至“商家使用手机短信验证码登录”界面")
-//    @GetMapping(value = "/admin/mobile/login")
-//    public ModelAndView businessLoginWithMobilePhonePage() {
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.setViewName("");
-//        return modelAndView;
-//    }
-
     /**
-     * 跳转至“管理员使用密码登录”界面
+     * 跳转至“管理员使用密码登录”页面
      *
-     * @return ModelAndView 视图
+     * @return ModelAndView
      */
-    @ApiOperation(value = "administratorLoginWithPasswordPage", notes = "跳转至“管理员使用密码登录”界面")
+    @ApiOperation(value = "administratorLoginWithPasswordPage", notes = "跳转至“管理员使用密码登录”页面")
     @GetMapping(value = "/greenfarm/admin/password/login")
     public ModelAndView administratorLoginWithPasswordPage() {
         ModelAndView modelAndView = new ModelAndView();
@@ -217,7 +189,7 @@ public class LoginController {
     }
 
     /**
-     * “管理员使用密码登录”操作
+     * 管理员“使用密码登录”操作
      *
      * @param username 用户名
      * @param password 密码
@@ -239,25 +211,5 @@ public class LoginController {
         }
         return json.toString();
     }
-
-//    /**
-//     * 跳转至“管理员使用手机验证码登录”界面
-//     *
-//     * @return ModelAndView 视图
-//     */
-//    @ApiOperation(value = "administratorLoginWithMobilePhonePage", notes = "跳转至“管理员使用手机短信验证码登录”界面")
-//    @GetMapping(value = "/greenfarm/admin/mobile/login")
-//    public ModelAndView administratorLoginWithMobilePhonePage() {
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.setViewName("");
-//        return modelAndView;
-//    }
-
-
-
-
-
-
-
 
 }

@@ -11,6 +11,12 @@ import org.apache.ibatis.annotations.*;
 @Mapper
 public interface AdministratorDAO {
 
+    /**
+     *
+     * @param username
+     * @param password
+     * @return
+     */
     @Results(id = "administratorMapper1", value = {
             @Result(property = "adminUsername", column = "admin_username"),
             @Result(property = "adminPassword", column = "admin_password"),

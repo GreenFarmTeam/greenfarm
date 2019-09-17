@@ -23,7 +23,7 @@ public interface BusinessDAO {
     @Update("UPDATE gf_tb_business" +
             " SET bus_idcard_front=#{business.businessIdcardFront},bus_idcard_behind=#{business.businessIdcardBehind},bus_shop_name=#{business.businessShopName},bus_shop_desc=#{business.businessShopDescription},bus_shop_state=#{business.businessShopState}" +
             " WHERE bus_uid=#{uid}")
-    void updateBusinessByBusinessUid(@Param(value = "business") Business business, @Param(value = "uid") String businessUid);
+    void updateBusinessByBusinessUID(@Param(value = "business") Business business, @Param(value = "uid") String businessUid);
 
     /**
      *

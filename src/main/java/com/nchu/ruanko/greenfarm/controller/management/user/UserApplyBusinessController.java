@@ -22,7 +22,12 @@ import javax.servlet.http.HttpSession;
 import java.util.Date;
 import java.util.List;
 
-@Api(tags = "management.user.UserApplyBusinessController", description = "“会员申请成为商家”功能控制器")
+/**
+ * “用户/会员申请成为商家”功能控制器
+ *
+ * @author Yuan Yueshun
+ */
+@Api(tags = "management.user.UserApplyBusinessController", description = "“用户/会员申请成为商家”功能控制器")
 @Controller
 public class UserApplyBusinessController {
 
@@ -32,7 +37,12 @@ public class UserApplyBusinessController {
     @Autowired
     private BusinessService businessService;
 
-    @ApiOperation(value = "userApplyBusinessPage", notes = "跳转至“会员申请成为商家”的页面")
+    /**
+     * 跳转至“会员/用户申请成为商家”的页面
+     *
+     * @return ModelAndView
+     */
+    @ApiOperation(value = "userApplyBusinessPage", notes = "跳转至“会员/用户申请成为商家”的页面")
     @GetMapping(value = "/user/management/business/apply")
     public ModelAndView userApplyBusinessPage() {
         ModelAndView modelAndView = new ModelAndView();
@@ -42,7 +52,16 @@ public class UserApplyBusinessController {
         return modelAndView;
     }
 
-    @ApiOperation(value = "userApplyBusinessOperation", notes = "")
+    /**
+     * 会员/用户申请成为商家
+     *
+     * @param shopName 店铺名称
+     * @param shopDescription 店铺描述
+     * @param shopScopes 店铺经营范围
+     * @param request HTTP 请求
+     * @return JSON
+     */
+    @ApiOperation(value = "userApplyBusinessOperation", notes = "会员/用户申请成为商家")
     @PostMapping(value = "/user/management/business/apply/operation")
     @ResponseBody
     public String userApplyBusinessOperation(@RequestParam(name = "shopName") String shopName, @RequestParam(name = "shopDescription") String shopDescription, @RequestParam(name = "shopScopes") String[] shopScopes, HttpServletRequest request) {
@@ -96,6 +115,13 @@ public class UserApplyBusinessController {
         return json.toString();
     }
 
+    /**
+     * 跳转至“会员/用户申请成为商家的申请记录”的页面
+     *
+     * @param request HTTP 请求
+     * @return ModelAndView
+     */
+    @ApiOperation(value = "userApplyBusinessHistoryPage", notes = "跳转至“会员/用户申请成为商家的申请记录”的页面")
     @GetMapping(value = "/user/management/business/apply/history")
     public ModelAndView userApplyBusinessHistoryPage(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
@@ -106,6 +132,5 @@ public class UserApplyBusinessController {
         modelAndView.setViewName("management/user/business-apply-record");
         return modelAndView;
     }
-
 
 }

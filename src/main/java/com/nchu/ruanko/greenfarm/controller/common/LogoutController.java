@@ -13,12 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 public class LogoutController {
 
     /**
-     * 消费者“退出”操作
+     * 会员/用户“退出”操作
      *
      * @param request HTTP 请求
      * @return JSON
      */
-    @ApiOperation(value = "userLogoutOperation", notes = "消费者“退出”操作")
+    @ApiOperation(value = "userLogoutOperation", notes = "会员/用户“退出”操作")
     @GetMapping(value = "/user/logout/operation")
     @ResponseBody
     public String userLogoutOperation(HttpServletRequest request) {

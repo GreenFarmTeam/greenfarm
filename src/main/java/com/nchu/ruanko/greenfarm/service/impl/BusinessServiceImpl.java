@@ -57,7 +57,7 @@ public class BusinessServiceImpl implements BusinessService {
         business.setBusinessIdcardFront(null);
         business.setBusinessIdcardBehind(null);
         business.setBusinessShopState(null);
-        businessDAO.updateBusinessByBusinessUid(business, businessUid);
+        businessDAO.updateBusinessByBusinessUID(business, businessUid);
     }
 
     @Override

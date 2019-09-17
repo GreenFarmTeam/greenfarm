@@ -23,11 +23,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * “会员/消费者个人中心”的“基本信息管理”功能控制器
+ * “会员/用户个人基本信息管理”功能控制器
  *
  * @author Yuan Yueshun
  */
-@Api(tags = "management.user.UserBasicInformationController", description = "“会员/消费者个人中心”的“基本信息管理”功能控制器")
+@Api(tags = "management.user.UserBasicInformationController", description = "“会员/用户个人基本信息管理”功能控制器")
 @Controller
 public class UserBasicInformationController {
 
@@ -40,11 +40,11 @@ public class UserBasicInformationController {
     private static final String MESSAGE_TEMPLATE = "SMS_174020806";
 
     /**
-     * 跳转至会员/消费者“修改昵称和头像”界面
+     * 跳转至会员/用户“修改昵称”页面
      *
      * @return ModelAndView
      */
-    @ApiOperation(value = "userModifyNicknamePage", notes = "跳转至会员/消费者“修改昵称”界面")
+    @ApiOperation(value = "userModifyNicknamePage", notes = "跳转至会员/消费者“修改昵称”页面")
     @GetMapping(value = "/user/management/nickname")
     public ModelAndView userModifyNicknamePage() {
         ModelAndView modelAndView = new ModelAndView();
@@ -54,16 +54,14 @@ public class UserBasicInformationController {
 
 
     /**
-     * 会员/消费者“修改昵称和头像”操作
-     *
-     * RESTful 风格
+     * 会员/用户“修改昵称”操作
      *
      * @param nickname 昵称
-     * @param uid 会员/消费者 uid
+     * @param uid 会员/用户 UID
      * @param request HTTP 请求
      * @return JSON
      */
-    @ApiOperation(value = "userModifyNicknameOperation", notes = "会员/消费者“修改昵称”操作")
+    @ApiOperation(value = "userModifyNicknameOperation", notes = "会员/用户“修改昵称”操作")
     @PostMapping(value = "/user/management/nickname/operation/{uid}")
     @ResponseBody
     public String userModifyNicknameOperation(@RequestParam(name = "nickname") String nickname, @PathVariable(name = "uid") String uid, HttpServletRequest request) {
@@ -78,11 +76,11 @@ public class UserBasicInformationController {
     }
 
     /**
-     * 跳转至会员/消费者“实名认证”界面
+     * 跳转至“会员/用户实名认证”页面
      *
      * @return ModelAndView
      */
-    @ApiOperation(value = "userCertificationPage", notes = "跳转至会员/消费者“实名认证”界面")
+    @ApiOperation(value = "userCertificationPage", notes = "跳转至“会员/用户实名认证”页面")
     @GetMapping(value = "/user/management/certification")
     public ModelAndView userCertificationPage(HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -97,7 +95,7 @@ public class UserBasicInformationController {
     }
 
     /**
-     * 会员/消费者“实名认证”操作
+     * 会员/用户“实名认证”操作
      *
      * @param realname 真实姓名
      * @param idcard 身份证号
@@ -105,7 +103,7 @@ public class UserBasicInformationController {
      * @param request HTTP 请求
      * @return JSON
      */
-    @ApiOperation(value = "userCertificationOperation", notes = "会员/消费者“实名认证”操作")
+    @ApiOperation(value = "userCertificationOperation", notes = "会员/用户“实名认证”操作")
     @PostMapping(value = "/user/management/certification/operation/{uid}")
     @ResponseBody
     public String userCertificationOperation(@RequestParam(name = "realname") String realname, @RequestParam(name = "idcard") String idcard, @PathVariable(name = "uid") String uid, HttpServletRequest request) {
@@ -138,12 +136,12 @@ public class UserBasicInformationController {
     }
 
     /**
-     * 跳转至会员/消费者“绑定邮箱”界面
+     * 跳转至“会员/用户绑定邮箱”界面
      *
      * @param request HTTP 请求
      * @return ModelAndView
      */
-    @ApiOperation(value = "userModifyMailPage", notes = "跳转至会员/消费者“绑定邮箱”界面")
+    @ApiOperation(value = "userModifyMailPage", notes = "跳转至“会员/用户绑定邮箱”界面")
     @GetMapping(value = "/user/management/mail")
     public ModelAndView userModifyMailPage(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
@@ -193,11 +191,11 @@ public class UserBasicInformationController {
     }
 
     /**
-     * 前往邮箱确认绑定提示页面
+     * 跳转至“前往邮箱确认绑定提示”的页面
      *
      * @return ModelAndView
      */
-    @ApiOperation(value = "userModifyMailBindTipPage", notes = "前往邮箱确认绑定提示页面")
+    @ApiOperation(value = "userModifyMailBindTipPage", notes = "跳转至“前往邮箱确认绑定提示”的页面")
     @GetMapping("/user/management/mail/bind/tip")
     public ModelAndView userModifyMailBindTipPage() {
         ModelAndView modelAndView = new ModelAndView();
@@ -233,12 +231,12 @@ public class UserBasicInformationController {
     }
 
     /**
-     * 跳转至“绑定手机”界面
+     * 跳转至“绑定手机”的页面
      *
      * @param request HTTP 请求
      * @return ModelAndView
      */
-    @ApiOperation(value = "userModifyPhonePage", notes = "跳转至“绑定手机”界面")
+    @ApiOperation(value = "userModifyPhonePage", notes = "跳转至“绑定手机”的页面")
     @GetMapping(value = "/user/management/phone")
     public ModelAndView userModifyPhonePage(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
@@ -329,11 +327,11 @@ public class UserBasicInformationController {
     }
 
     /**
-     * 跳转至“修改密码”界面
+     * 跳转至“修改密码”的页面
      *
      * @return ModelAndView
      */
-    @ApiOperation(value = "userModifyPasswordPage", notes = "跳转至“修改密码”界面")
+    @ApiOperation(value = "userModifyPasswordPage", notes = "跳转至“修改密码”的页面")
     @GetMapping(value = "/user/management/password")
     public ModelAndView userModifyPasswordPage() {
         ModelAndView modelAndView = new ModelAndView();

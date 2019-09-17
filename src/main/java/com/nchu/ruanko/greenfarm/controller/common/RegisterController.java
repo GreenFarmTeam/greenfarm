@@ -42,11 +42,11 @@ public class RegisterController {
     private static final String MESSAGE_TEMPLATE = "SMS_174020806";
 
     /**
-     * 跳转至“注册成为消费者”界面
+     * 跳转至“注册成为会员/用户”页面
      *
-     * @return ModelAndView 视图
+     * @return ModelAndView
      */
-    @ApiOperation(value = "userRegisterPage", notes = "跳转至“注册成为消费者”界面")
+    @ApiOperation(value = "userRegisterPage", notes = "跳转至“注册成为消费者”页面")
     @GetMapping(value = "/user/register")
     public ModelAndView userRegisterPage() {
         ModelAndView modelAndView = new ModelAndView();
@@ -55,11 +55,11 @@ public class RegisterController {
     }
 
     /**
-     * 跳转至“到邮箱中激活的提示”界面
+     * 跳转至“到邮箱中激活的提示”页面
      *
-     * @return ModelAndView 视图
+     * @return ModelAndView
      */
-    @ApiOperation(value = "userRegisterWithMailActivateTipPage", notes = "跳转至“到邮箱中激活的提示”界面")
+    @ApiOperation(value = "userRegisterWithMailActivateTipPage", notes = "跳转至“到邮箱中激活的提示”页面")
     @GetMapping("/user/register/mail/activate/tip")
     public ModelAndView userRegisterWithMailActivateTipPage() {
         ModelAndView modelAndView = new ModelAndView();
@@ -69,9 +69,7 @@ public class RegisterController {
 
 
     /**
-     * 收集前端传来的会员/消费者“注册”数据，完成校验，数据暂存在 Session 中的 tempUser，然后发送“激活账号”邮件
-     *
-     * 有时间的话增加激活时间限制
+     * 收集前端传来的会员/用户“注册”数据，完成校验，数据暂存在 Session 中的 tempUser，然后发送“激活账号”邮件
      *
      * @return JSON
      */
@@ -109,7 +107,9 @@ public class RegisterController {
     }
 
     /**
-     * 到邮箱中进行“激活”操作，点击链接
+     * 邮件注册操作
+     *
+     * 到邮箱中进行“激活”操作，点击链接后的响应
      *
      * @return 页面
      */
@@ -132,7 +132,7 @@ public class RegisterController {
     }
 
     /**
-     * 发送注册时所用的手机验证码短信
+     * 发送注册时所用的手机短信验证码
      *
      * @param phone 手机号
      * @param request HTTP 请求
@@ -172,7 +172,7 @@ public class RegisterController {
 
 
     /**
-     * 手机验证注册
+     * 手机短信验证码注册操作
      *
      * @param password 密码
      * @param phone 手机号
@@ -209,8 +209,5 @@ public class RegisterController {
         }
         return json.toString();
     }
-
-
-
 
 }

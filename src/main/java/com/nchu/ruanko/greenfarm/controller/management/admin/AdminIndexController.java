@@ -10,7 +10,12 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class AdminIndexController {
 
-    @ApiOperation(value = "adminManagementIndexPage", notes = "")
+    /**
+     * 跳转至“管理员主页”
+     *
+     * @return ModelAndView
+     */
+    @ApiOperation(value = "adminManagementIndexPage", notes = "跳转至“管理员主页”")
     @GetMapping(value = "/greenfarm/admin/management/index")
     public ModelAndView adminManagementIndexPage() {
         ModelAndView modelAndView = new ModelAndView();

@@ -38,11 +38,11 @@ public class ForgetPasswordController {
     private static final String TEMPLATE = "SMS_174020810";
 
     /**
-     * 跳转至会员“忘记密码”界面
+     * 跳转至“会员/用户忘记密码”页面
      *
      * @return ModelAndView
      */
-    @ApiOperation(value = "userForgetPasswordPage", notes = "跳转至会员“忘记密码”界面")
+    @ApiOperation(value = "userForgetPasswordPage", notes = "跳转至会员“忘记密码”页面")
     @GetMapping("/user/forget/password")
     public ModelAndView userForgetPasswordPage() {
         ModelAndView modelAndView = new ModelAndView();
@@ -51,14 +51,14 @@ public class ForgetPasswordController {
     }
 
     /**
+     * 验证“会员号”，验证成功后进行才能进行下一步
      *
-     *
-     * @param key 登录名/登录依据
+     * @param key 会员号
      * @param vcode 验证码
      * @param request HTTP 请求
      * @return JSON
      */
-    @ApiOperation(value = "userForgetPasswordOperation", notes = "")
+    @ApiOperation(value = "userForgetPasswordOperation", notes = "验证“会员号”，验证成功后进行才能进行下一步")
     @PostMapping(value = "/user/forget/password/operation")
     @ResponseBody
     public String userForgetPasswordOperation(@RequestParam(name = "key") String key, @RequestParam(name = "vcode") String vcode, HttpServletRequest request) {
@@ -86,7 +86,13 @@ public class ForgetPasswordController {
     }
 
 
-    @ApiOperation(value = "userForgetPasswordMethodPage", notes = "")
+    /**
+     * 跳转至“选择找回密码方法”的页面
+     *
+     * @param request HTTP 请求
+     * @return ModelAndView
+     */
+    @ApiOperation(value = "userForgetPasswordMethodPage", notes = "跳转至“选择找回密码方法”的页面")
     @GetMapping(value = "/user/forget/password/method")
     public ModelAndView userForgetPasswordMethodPage(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
@@ -103,7 +109,13 @@ public class ForgetPasswordController {
         return modelAndView;
     }
 
-    @ApiOperation(value = "userForgetPasswordSendMail", notes = "")
+    /**
+     * 发送含验证信息的邮件
+     *
+     * @param request HTTP 请求
+     * @return JSON
+     */
+    @ApiOperation(value = "userForgetPasswordSendMail", notes = "发送含验证信息的邮件")
     @GetMapping("/user/forget/password/method/mail")
     @ResponseBody
     public String userForgetPasswordSendMail(HttpServletRequest request) {
@@ -130,15 +142,31 @@ public class ForgetPasswordController {
         return json.toString();
     }
 
-    @ApiOperation(value = "userForgetPasswordCheckMailPage", notes = "")
+    /**
+     * 跳转至“输入验证信息”的页面
+     *
+     * 通过邮件或手机短信验证信息都在这个页面上填写
+     *
+     * @return ModelAndView
+     */
+    @ApiOperation(value = "userForgetPasswordCheckMailPage", notes = "跳转至“输入验证信息”的页面，通过邮件或手机短信验证信息都在这个页面上填写")
     @GetMapping("/user/forget/password/method/check")
-    public ModelAndView userForgetPasswordCheckMailPage() {
+    public ModelAndView userForgetPasswordCheckPage() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("common/user/forget-password-vcode");
         return modelAndView;
     }
 
-    @ApiOperation(value = "userForgetPasswordCheckOperation", notes = "")
+    /**
+     * 验证信息校验
+     *
+     * 验证成功后才能进行重置密码的操作
+     *
+     * @param vcode 验证码
+     * @param request HTTP 请求
+     * @return JSON
+     */
+    @ApiOperation(value = "userForgetPasswordCheckOperation", notes = "验证信息校验，验证成功后才能进行重置密码的操作")
     @PostMapping(value = "/user/forget/password/method/check/operation")
     @ResponseBody
     public String userForgetPasswordCheckOperation(@RequestParam(name = "vcode") String vcode, HttpServletRequest request) {
@@ -160,6 +188,12 @@ public class ForgetPasswordController {
         return json.toString();
     }
 
+    /**
+     * 发送含验证信息的手机短信
+     *
+     * @param request HTTP 请求
+     * @return JSON
+     */
     @ApiOperation(value = "userForgetPasswordSendShortMessage", notes = "")
     @GetMapping(value = "/user/forget/password/method/message")
     @ResponseBody
@@ -190,7 +224,12 @@ public class ForgetPasswordController {
         return json.toString();
     }
 
-    @ApiOperation(value = "userForgetPasswordModifyPasswordPage", notes = "")
+    /**
+     * 跳转至“设置新密码”的页面
+     *
+     * @return ModelAndView
+     */
+    @ApiOperation(value = "userForgetPasswordModifyPasswordPage", notes = "跳转至“设置新密码”的页面")
     @GetMapping(value = "/user/forget/password/modify/password")
     public ModelAndView userForgetPasswordModifyPasswordPage() {
         ModelAndView modelAndView = new ModelAndView();
@@ -198,7 +237,14 @@ public class ForgetPasswordController {
         return modelAndView;
     }
 
-    @ApiOperation(value = "userForgetPasswordModifyPasswordOperation", notes = "")
+    /**
+     * 设置新密码
+     *
+     * @param password 密码
+     * @param request HTTP 请求
+     * @return JSON
+     */
+    @ApiOperation(value = "userForgetPasswordModifyPasswordOperation", notes = "设置新密码")
     @PostMapping(value = "/user/forget/password/modify/password/operation")
     @ResponseBody
     public String userForgetPasswordModifyPasswordOperation(@RequestParam(name = "password") String password, HttpServletRequest request) {

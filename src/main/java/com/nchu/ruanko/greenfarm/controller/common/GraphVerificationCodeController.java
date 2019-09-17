@@ -15,12 +15,12 @@ import java.io.IOException;
  *
  * @author woshiwo13021 CSDN
  */
-@Api(tags = "common.GraphVerificationCodeController", description = "“获取图片验证码”功能控制器")
+@Api(tags = "common.GraphVerificationCodeController", description = "“图片验证码生成”功能控制器")
 @Controller
 public class GraphVerificationCodeController {
 
     /**
-     * 获取图片验证码，并将得到的验证码以 graphVcode 存入 Session 中
+     * 生成图片验证码，并将得到的验证码以 graphVcode 存入 Session 中
      *
      * @param request HTTP 请求
      * @param response HTTP 响应
