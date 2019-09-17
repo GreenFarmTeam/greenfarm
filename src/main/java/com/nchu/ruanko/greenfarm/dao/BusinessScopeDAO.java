@@ -8,6 +8,11 @@ import java.util.List;
 public interface BusinessScopeDAO {
 
 
+    /**
+     *
+     * @param businessUid
+     * @return
+     */
     @Results(id = "businessScopeMapper1", value = {
             @Result(property = "businessScopeUid", column = "scope_uid"),
             @Result(property = "business", column = "scope_business_uid", one = @One(select = "com.nchu.ruanko.greenfarm.dao.BusinessDAO.getBusinessByUID")),
@@ -18,8 +23,22 @@ public interface BusinessScopeDAO {
             " WHERE scope_business_uid=#{uid}")
     List<BusinessScope> listBusinessScopesByBusinessUID(@Param(value = "uid") String businessUid);
 
+    /**
+     *
+     * @param uid
+     * @param businessUid
+     * @param typeUid
+     */
     @Insert("INSERT INTO gf_tb_business_scope(scope_uid,scope_business_uid,scope_type_uid)" +
             " VALUES(#{uid},#{businessUid},#{typeUid})")
     void insertBusinessScope(@Param(value = "uid") String uid, @Param(value = "businessUid") String businessUid, @Param("typeUid") String typeUid);
+
+    /**
+     *
+     * @param businessUid
+     */
+    @Delete("DELETE FROM gf_tb_business_scope" +
+            " WHERE scope_business_uid=#{uid}")
+    void deleteBusinessScopeByBusinessUID(@Param(value = "uid") String businessUid);
 
 }

@@ -208,4 +208,14 @@ public interface UserDAO {
             " WHERE user_uid=#{uid}")
     void updateUserPasswordByUID(@Param(value = "password") String password, @Param(value = "uid") String uid);
 
+    /**
+     *
+     * @param isBusiness
+     * @param uid
+     */
+    @Update("UPDATE gf_tb_user" +
+            " SET user_is_business=#{isBusiness}" +
+            " WHERE user_uid=#{uid}")
+    void updateUserIsBusinessByUID(@Param(value = "isBusiness") Integer isBusiness, @Param(value = "uid") String uid);
+
 }

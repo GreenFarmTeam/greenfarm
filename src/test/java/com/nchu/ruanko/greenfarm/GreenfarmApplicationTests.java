@@ -7,6 +7,8 @@ import com.nchu.ruanko.greenfarm.dao.ProductTypeDAO;
 import com.nchu.ruanko.greenfarm.pojo.entity.BusinessReview;
 import com.nchu.ruanko.greenfarm.pojo.entity.BusinessScope;
 import com.nchu.ruanko.greenfarm.pojo.entity.ProductType;
+import com.nchu.ruanko.greenfarm.pojo.vo.AdminBusinessReviewPageVO;
+import com.nchu.ruanko.greenfarm.service.BusinessService;
 import com.nchu.ruanko.greenfarm.service.MailService;
 import com.nchu.ruanko.greenfarm.util.string.StringUtils;
 import org.junit.Test;
@@ -42,6 +44,9 @@ public class GreenfarmApplicationTests {
     @Autowired
     private BusinessReviewDAO businessReviewDAO;
 
+    @Autowired
+    private BusinessService businessService;
+
     @Test
     public void contextLoads() {
 //        User user1 = userDAO.getUserByUsernameAndPassword("2", "3");
@@ -66,9 +71,12 @@ public class GreenfarmApplicationTests {
 //        review.setReviewUid(StringUtils.createUUID());
 //        review.setReviewSubmitTime(new Date());
 //        businessReviewDAO.insertBusinessReview(review, "ff238f7eae8b4953b9ad923191e989f7");
-        List<BusinessReview> businessReviewList = businessReviewDAO.listBusinessReviewsByBusinessUID("aac58037374a4ba4afa8274c8256dff4");
-        System.out.println(businessReviewList);
-
+//        List<BusinessReview> businessReviewList = businessReviewDAO.listBusinessReviewsByBusinessUID("aac58037374a4ba4afa8274c8256dff4");
+//        System.out.println(businessReviewList);
+//        System.out.println(businessReviewDAO.listUnfinishedBusinessReviews());
+//        AdminBusinessReviewPageVO vo = businessService.listBusinessReviewsWithPage(1, 10, 10);
+//        System.out.println(vo.getPageInfo());
+//        System.out.println(businessReviewDAO.getBusinessReviewByReviewUID("36e76e4c1c6545b4b09873a9201f23a3"));
     }
 
 }

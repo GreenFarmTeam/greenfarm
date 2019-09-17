@@ -1,14 +1,21 @@
 package com.nchu.ruanko.greenfarm.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.nchu.ruanko.greenfarm.dao.BusinessDAO;
 import com.nchu.ruanko.greenfarm.dao.BusinessReviewDAO;
 import com.nchu.ruanko.greenfarm.dao.BusinessScopeDAO;
+import com.nchu.ruanko.greenfarm.dao.UserDAO;
 import com.nchu.ruanko.greenfarm.pojo.entity.Business;
 import com.nchu.ruanko.greenfarm.pojo.entity.BusinessReview;
+import com.nchu.ruanko.greenfarm.pojo.entity.User;
+import com.nchu.ruanko.greenfarm.pojo.vo.AdminBusinessReviewDetailVO;
+import com.nchu.ruanko.greenfarm.pojo.vo.AdminBusinessReviewPageVO;
 import com.nchu.ruanko.greenfarm.service.BusinessService;
 import com.nchu.ruanko.greenfarm.util.string.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -22,6 +29,9 @@ public class BusinessServiceImpl implements BusinessService {
 
     @Autowired
     private BusinessReviewDAO businessReviewDAO;
+
+    @Autowired
+    private UserDAO userDAO;
 
     @Override
     public void addBusiness(Business business, String userUid) {
@@ -51,6 +61,30 @@ public class BusinessServiceImpl implements BusinessService {
     }
 
     @Override
+    public String agreeApply(String reviewUid) {
+        businessReviewDAO.updateReviewTimeByReviewUID(new Date(System.currentTimeMillis()), reviewUid);
+        businessReviewDAO.updateReviewResultByReviewUID(1, reviewUid);
+        businessReviewDAO.updateReviewReasonByReviewUID(null, reviewUid);
+        String businessUid = businessReviewDAO.getBusinessReviewByReviewUID(reviewUid).getBusiness().getBusinessUid();
+        businessDAO.updateBusinessShopStateByBusinessUID(0, businessUid);
+        String userUid = businessDAO.getBusinessByUID(businessUid).getUser().getUserUid();
+        userDAO.updateUserIsBusinessByUID(1, userUid);
+        return userUid;
+    }
+
+    @Override
+    public void disagree(String reviewUid, String reason) {
+        businessReviewDAO.updateReviewTimeByReviewUID(new Date(System.currentTimeMillis()), reviewUid);
+        businessReviewDAO.updateReviewResultByReviewUID(0, reviewUid);
+        businessReviewDAO.updateReviewReasonByReviewUID(reason, reviewUid);
+        String businessUid = businessReviewDAO.getBusinessReviewByReviewUID(reviewUid).getBusiness().getBusinessUid();
+        businessDAO.updateBusinessShopStateByBusinessUID(null, businessUid);
+        businessScopeDAO.deleteBusinessScopeByBusinessUID(businessUid);
+        String userUid = businessDAO.getBusinessByUID(businessUid).getUser().getUserUid();
+        userDAO.updateUserIsBusinessByUID(0, userUid);
+    }
+
+    @Override
     public String getBusinessUidByUserUID(String userId) {
         return businessDAO.getBusinessUidByUserUID(userId);
     }
@@ -58,6 +92,36 @@ public class BusinessServiceImpl implements BusinessService {
     @Override
     public List<BusinessReview> listBusinessReviewsByBusinessUID(String businessUid) {
         return businessReviewDAO.listBusinessReviewsByBusinessUID(businessUid);
+    }
+
+    @Override
+    public AdminBusinessReviewPageVO listBusinessReviewsWithPage(int pageNum, int pageSize, int navigationSize) {
+        AdminBusinessReviewPageVO vo = new AdminBusinessReviewPageVO();
+        PageHelper.startPage(pageNum, pageSize);
+        List<BusinessReview> businessReviewList = businessReviewDAO.listUnfinishedBusinessReviews();
+        PageInfo<BusinessReview> pageInfo = new PageInfo<>(businessReviewList, navigationSize);
+        vo.setBusinessReviewList(businessReviewList);
+        vo.setPageInfo(pageInfo);
+        return vo;
+    }
+
+    @Override
+    public AdminBusinessReviewDetailVO getBusinessReviewDetailByReviewUID(String reviewUid) {
+        AdminBusinessReviewDetailVO vo = new AdminBusinessReviewDetailVO();
+        BusinessReview businessReview = businessReviewDAO.getBusinessReviewByReviewUID(reviewUid);
+        User user = businessReview.getBusiness().getUser();
+        vo.setBusinessReview(businessReview);
+        vo.setBusinessScopeList(businessScopeDAO.listBusinessScopesByBusinessUID(businessReview.getBusiness().getBusinessUid()));
+        vo.setUserUsername(user.getUserUsername());
+        vo.setUserRealName(StringUtils.decodeBase64(user.getUserRealname()));
+        vo.setUserIdcard(StringUtils.decodeBase64(user.getUserIdcard()));
+        if (user.getUserMail() != null) {
+            vo.setUserMail(StringUtils.decodeBase64(user.getUserMail()));
+        }
+        if (user.getUserPhone() != null) {
+            vo.setUserPhone(StringUtils.decodeBase64(user.getUserPhone()));
+        }
+        return vo;
     }
 
     @Override

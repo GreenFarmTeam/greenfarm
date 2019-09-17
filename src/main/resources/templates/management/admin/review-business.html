@@ -1,11 +1,64 @@
 <!-- TODO 管理员审核商家主页临时页面 -->
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>管理员审核商家主页临时页面</title>
+    <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
 </head>
 <body>
+    <table th:if="${vo.businessReviewList.size()}!=0" border="1">
+        <tr>
+            <td>申请流水号</td>
+            <td>申请会员号</td>
+            <td>提交时间</td>
+            <td>操作</td>
+        </tr>
+        <tr th:each="br:${vo.businessReviewList}">
+            <td th:text="${br.reviewUid}"></td>
+            <td th:text="${br.business.user.userUsername}"></td>
+            <td th:text="${#dates.format(br.reviewSubmitTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td>
+                <a th:href="@{/greenfarm/admin/management/business/review/detail/{reviewId}(reviewId=${br.reviewUid})}">详细信息</a>
+                <a href="javaScript:void(0)" id="gf_disagree">驳回申请</a>
+                <a href="javaScript:void(0)" id="gf_agree">同意申请</a>
+                <input type="hidden" id="gf_review_uid" th:value="${br.reviewUid}"/>
+            </td>
+        </tr>
+    </table>
+    <hr/>
+    <div th:if="${vo.businessReviewList.size()}!=0">
+        <a th:if="${vo.pageInfo.isFirstPage}==true" disabled="disabled">首页</a>
+        <a th:if="${vo.pageInfo.isFirstPage}==false" th:href="@{/greenfarm/admin/management/business/review(page=1)}">首页</a>
 
+        <a th:if="${vo.pageInfo.hasPreviousPage}==false" disabled="disabled">上一页</a>
+        <a th:if="${vo.pageInfo.hasPreviousPage}==true" th:href="@{/greenfarm/admin/management/business/review(page=${vo.pageInfo.pageNum}-1)}">上一页</a>
+
+        <!--<a th:if="${pg}!=${vo.pageInfo.pageNum}" th:each="pg:${vo.pageInfo.navigatepageNums}" th:href="@{/greenfarm/admin/management/business/review(page=${pg})}" th:text="${pg}"></a>-->
+        <!--<a th:if="${pg}==${vo.pageInfo.pageNum}" th:each="pg:${vo.pageInfo.navigatepageNums}" th:text="${pg}" disabled="disabled"></a>-->
+
+        <a th:each="pg:${vo.pageInfo.navigatepageNums}" th:href="@{/greenfarm/admin/management/business/review(page=${pg})}" th:text="${pg}"></a>
+
+
+        <a th:if="${vo.pageInfo.hasNextPage}==false" disabled="disabled">下一页</a>
+        <a th:if="${vo.pageInfo.hasNextPage}==true" th:href="@{/greenfarm/admin/management/business/review(page=${vo.pageInfo.pageNum}+1)}">下一页</a>
+
+        <a th:if="${vo.pageInfo.isLastPage}==true" disabled="disabled">末页</a>
+        <a th:if="${vo.pageInfo.isLastPage}==false" th:href="@{/greenfarm/admin/management/business/review(page=${vo.pageInfo.pages})}">末页</a>
+    </div>
+    <table th:if="${vo.businessReviewList.size()}==0" border="1">
+        <tr>
+            <td>申请流水号</td>
+            <td>申请会员号</td>
+            <td>提交时间</td>
+            <td>操作</td>
+        </tr>
+        <tr>
+            <td colspan="4">当前暂无待审核数据</td>
+        </tr>
+    </table>
+    <script type="text/javascript" th:src="@{/gfstatic/js/management/admin/review-business.js}"></script>
 </body>
 </html>

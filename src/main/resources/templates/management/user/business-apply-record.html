@@ -5,7 +5,7 @@
     <title>用户申请记录临时页面</title>
 </head>
 <body>
-    <table th:if="${businessReviewList}!=null" border="1">
+    <table th:if="${businessReviewList.size()}!=0" border="1">
         <tr>
             <td>提交日期</td>
             <td>审核结果</td>
@@ -17,6 +17,16 @@
             <td th:if="${br.reviewResult}!=null and ${br.reviewResult}==0">未通过</td>
             <td th:if="${br.reviewResult}!=null and ${br.reviewResult}==0" th:text="${br.reviewReason}"></td>
             <td th:if="${br.reviewResult}!=null and ${br.reviewResult}==1" colspan="2">通过</td>
+        </tr>
+    </table>
+    <table th:if="${businessReviewList.size()}==0" border="1">
+        <tr>
+            <td>提交日期</td>
+            <td>审核结果</td>
+            <td>未审核通过原因</td>
+        </tr>
+        <tr>
+            <td colspan="3">当前暂无审核记录</td>
         </tr>
     </table>
 </body>
