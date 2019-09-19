@@ -4,6 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <title>管理员主页临时界面</title>
+    <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
 </head>
 <body>
     <table th:if="${session.admin}!=null" border="1">
@@ -24,5 +27,6 @@
             <a th:href="@{/greenfarm/admin/management/business/review}">待审核商家</a>
         </li>
     </ul>
+<script type="text/javascript" th:src="@{/gfstatic/js/common/admin/logout.js}"></script>
 </body>
 </html>

@@ -30,4 +30,22 @@ public class LogoutController {
         return json.toString();
     }
 
+    /**
+     * 管理员“退出”操作
+     *
+     * @param request HTTP 请求
+     * @return JSON
+     */
+    @ApiOperation(value = "adminLogoutOperation", notes = "管理员“退出”操作")
+    @GetMapping(value = "/greenfarm/admin/logout/operation")
+    @ResponseBody
+    public String adminLogoutOperation(HttpServletRequest request) {
+        JSONObject json = new JSONObject();
+        if (request.getSession().getAttribute("admin") != null) {
+            json.put("flag", true);
+            request.getSession().removeAttribute("admin");
+        }
+        return json.toString();
+    }
+
 }

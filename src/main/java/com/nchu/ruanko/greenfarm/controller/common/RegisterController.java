@@ -95,7 +95,8 @@ public class RegisterController {
             val.put("href", HttpUtils.getUrlPrefix(request) + "/user/register/mail/activate?uid=" + uid);
             try {
                 mailService.sendThymeleafTemplateMail(mail, "【绿色农场】账户激活", "/mail/register-activate", val);
-            } catch (MessagingException e) {
+            } catch (Exception e) {
+                e.printStackTrace();
                 json.put("flag", false);
                 json.put("reason", "邮件发送失败！system");
                 return json.toString();
