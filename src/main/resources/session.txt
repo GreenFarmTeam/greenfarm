@@ -2,6 +2,7 @@
 
 1、user（用户登录的唯一标识）
    admin（管理员登录的唯一标识）
+   business（商家的标志，如果user是商家会和user并存）
 
 2、tempUser（用户注册时所用）
 

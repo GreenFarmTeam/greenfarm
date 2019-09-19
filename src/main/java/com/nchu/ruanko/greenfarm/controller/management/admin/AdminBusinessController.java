@@ -27,7 +27,7 @@ public class AdminBusinessController {
 
     @ApiOperation(value = "adminReviewBusinessPage", notes = "")
     @GetMapping(value = "/greenfarm/admin/management/business/review")
-    public ModelAndView adminReviewBusinessPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "1") int pageSize) {
+    public ModelAndView adminReviewBusinessPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "10") int pageSize) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("management/admin/review-business");
         modelAndView.addObject("vo", businessService.listBusinessReviewsWithPage(pageNum, pageSize, PAGE_NAVIGATION_SIZE));
