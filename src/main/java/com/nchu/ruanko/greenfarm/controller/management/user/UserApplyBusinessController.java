@@ -89,7 +89,7 @@ public class UserApplyBusinessController {
             json.put("flag", true);
         } else {
             // 两种情况：1、用户当前的申请正在审核中；2、用户前面申请没通过，再次申请
-            String businessUid = businessService.getBusinessUidByUserUID(userUid);
+            String businessUid = businessService.getBusinessUIDByUserUID(userUid);
              if (businessService.checkExistUnfinishedBusinessReviewByBusinessUID(businessUid)) {
                  // 用户当前的申请正在审核中
                  json.put("flag", false);
@@ -127,7 +127,7 @@ public class UserApplyBusinessController {
         ModelAndView modelAndView = new ModelAndView();
         HttpSession session = request.getSession();
         String userUid = ((User) session.getAttribute("user")).getUserUid();
-        String businessUid = businessService.getBusinessUidByUserUID(userUid);
+        String businessUid = businessService.getBusinessUIDByUserUID(userUid);
         modelAndView.addObject("businessReviewList", businessService.listBusinessReviewsByBusinessUID(businessUid));
         modelAndView.setViewName("management/user/business-apply-record");
         return modelAndView;

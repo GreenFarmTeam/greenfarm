@@ -20,7 +20,9 @@ public interface BusinessService {
 
     void disagree(String reviewUid, String reason);
 
-    String getBusinessUidByUserUID(String userId);
+    String getBusinessUIDByUserUID(String userId);
+
+    Business getBusinessByUserUID(String userId);
 
     List<BusinessReview> listBusinessReviewsByBusinessUID(String businessUid);
 

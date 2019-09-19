@@ -24,9 +24,12 @@ public class LogoutController {
     public String userLogoutOperation(HttpServletRequest request) {
         JSONObject json = new JSONObject();
         if (request.getSession().getAttribute("user") != null) {
-            json.put("flag", true);
             request.getSession().removeAttribute("user");
         }
+        if (request.getSession().getAttribute("business") != null) {
+            request.getSession().removeAttribute("business");
+        }
+        json.put("flag", true);
         return json.toString();
     }
 

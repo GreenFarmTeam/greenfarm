@@ -59,10 +59,21 @@ public interface BusinessDAO {
      * @param userUid
      * @return
      */
+    @ResultMap(value = "businessMapper1")
+    @Select("SELECT *" +
+            " FROM gf_tb_business" +
+            " WHERE bus_user_uid=#{uid}")
+    Business getBusinessByUserUID(@Param(value = "uid") String userUid);
+
+    /**
+     *
+     * @param userUid
+     * @return
+     */
     @Select("SELECT bus_uid" +
             " FROM gf_tb_business" +
             " WHERE bus_user_uid=#{uid}")
-    String getBusinessUidByUserUID(@Param(value = "uid") String userUid);
+    String getBusinessUIDByUserUID(@Param(value = "uid") String userUid);
 
     /**
      *
@@ -73,4 +84,5 @@ public interface BusinessDAO {
             " FROM gf_tb_business" +
             " WHERE bus_user_uid=#{uid}")
     int countBusinessByUserUID(@Param(value = "uid") String userUid);
+
 }

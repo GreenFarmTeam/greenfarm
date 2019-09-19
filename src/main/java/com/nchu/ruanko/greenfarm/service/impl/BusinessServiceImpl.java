@@ -85,8 +85,13 @@ public class BusinessServiceImpl implements BusinessService {
     }
 
     @Override
-    public String getBusinessUidByUserUID(String userId) {
-        return businessDAO.getBusinessUidByUserUID(userId);
+    public String getBusinessUIDByUserUID(String userId) {
+        return businessDAO.getBusinessUIDByUserUID(userId);
+    }
+
+    @Override
+    public Business getBusinessByUserUID(String userUid) {
+        return businessDAO.getBusinessByUserUID(userUid);
     }
 
     @Override

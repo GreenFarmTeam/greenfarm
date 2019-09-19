@@ -24,8 +24,6 @@
     <a th:if="${session.user}!=null" href="javascript:void(0)" id="gf_logout">注销</a>
     <br/>
     <br/>
-    <a th:if="${session.user}==null" th:href="@{/user/password/login}">商家中心</a>
-    <a th:if="${session.user}!=null" href="#">商家中心</a>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/user/logout.js}"></script>
 </body>
 </html>
