@@ -9,6 +9,7 @@ import com.nchu.ruanko.greenfarm.dao.UserDAO;
 import com.nchu.ruanko.greenfarm.pojo.entity.Business;
 import com.nchu.ruanko.greenfarm.pojo.entity.BusinessReview;
 import com.nchu.ruanko.greenfarm.pojo.entity.User;
+import com.nchu.ruanko.greenfarm.pojo.vo.AdminBusinessLegalPageVO;
 import com.nchu.ruanko.greenfarm.pojo.vo.AdminBusinessReviewDetailVO;
 import com.nchu.ruanko.greenfarm.pojo.vo.AdminBusinessReviewPageVO;
 import com.nchu.ruanko.greenfarm.service.BusinessService;
@@ -99,6 +100,14 @@ public class BusinessServiceImpl implements BusinessService {
         return businessReviewDAO.listBusinessReviewsByBusinessUID(businessUid);
     }
 
+    /**
+     * 加载待审核商家列表
+     * @param pageNum
+     * @param pageSize
+     * @param navigationSize
+     * @return
+     */
+
     @Override
     public AdminBusinessReviewPageVO listBusinessReviewsWithPage(int pageNum, int pageSize, int navigationSize) {
         AdminBusinessReviewPageVO vo = new AdminBusinessReviewPageVO();
@@ -138,5 +147,34 @@ public class BusinessServiceImpl implements BusinessService {
     public boolean checkExistUnfinishedBusinessReviewByBusinessUID(String businessUid) {
         return businessReviewDAO.countBusinessReviewUnfinishedByBusinessUID(businessUid) != 0;
     }
+
+    @Override
+    public AdminBusinessLegalPageVO listAllLegalBusinessWithPage(int pageNum, int pageSize, int pageNavigationSize) {
+        AdminBusinessLegalPageVO vo = new AdminBusinessLegalPageVO();
+        PageHelper.startPage(pageNum, pageSize);
+        List<Business> businessList = businessDAO.listAllLegalBusiness();
+        PageInfo<Business> pageInfo = new PageInfo<>(businessList, pageNavigationSize);
+        vo.setBusinessList(businessList);
+        vo.setPageInfo(pageInfo);
+        return vo;
+
+    }
+
+    /**
+     * 加载商家详情信息根据商家ID
+     * @param businessUid
+     * @return
+     */
+    @Override
+    public Business getBusinessDetailByBusinessUID(String businessUid) {
+        Business business = businessDAO.getBusinessByUID(businessUid);
+        business.getUser().setUserMail(StringUtils.decodeBase64(business.getUser().getUserMail()));
+        business.getUser().setUserPhone(StringUtils.decodeBase64(business.getUser().getUserPhone()));
+        business.getUser().setUserIdcard(StringUtils.decodeBase64(business.getUser().getUserIdcard()));
+        business.getUser().setUserRealname(StringUtils.decodeBase64(business.getUser().getUserRealname()));
+        business.setUser(business.getUser());
+        return business;
+    }
+
 
 }

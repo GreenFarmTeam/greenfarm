@@ -1,5 +1,6 @@
 package com.nchu.ruanko.greenfarm.dao;
 
+import com.nchu.ruanko.greenfarm.pojo.entity.Business;
 import com.nchu.ruanko.greenfarm.pojo.entity.BusinessReview;
 import org.apache.ibatis.annotations.*;
 import java.util.Date;
@@ -98,5 +99,7 @@ public interface BusinessReviewDAO {
             " SET rev_reason=#{reason}" +
             " WHERE rev_uid=#{uid}")
     void updateReviewReasonByReviewUID(@Param(value = "reason") String reason, @Param(value = "uid") String reviewUid);
+
+
 
 }

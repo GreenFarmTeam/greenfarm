@@ -2,6 +2,7 @@ package com.nchu.ruanko.greenfarm.service;
 
 import com.nchu.ruanko.greenfarm.pojo.entity.Business;
 import com.nchu.ruanko.greenfarm.pojo.entity.BusinessReview;
+import com.nchu.ruanko.greenfarm.pojo.vo.AdminBusinessLegalPageVO;
 import com.nchu.ruanko.greenfarm.pojo.vo.AdminBusinessReviewDetailVO;
 import com.nchu.ruanko.greenfarm.pojo.vo.AdminBusinessReviewPageVO;
 import java.util.List;
@@ -34,4 +35,8 @@ public interface BusinessService {
 
     boolean checkExistUnfinishedBusinessReviewByBusinessUID(String businessUid);
 
+    AdminBusinessLegalPageVO listAllLegalBusinessWithPage(int pageNum, int pageSize, int pageNavigationSize);
+
+
+    Business getBusinessDetailByBusinessUID(String businessUid);
 }

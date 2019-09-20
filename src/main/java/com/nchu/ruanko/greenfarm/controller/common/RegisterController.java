@@ -39,6 +39,9 @@ public class RegisterController {
     @Autowired
     private MailService mailService;
 
+    /**
+     * 手机短信模板
+     */
     private static final String MESSAGE_TEMPLATE = "SMS_174020806";
 
     /**
@@ -150,12 +153,14 @@ public class RegisterController {
             String responseData = ShortMessageUtils.sendVerificationCodeMessage(MESSAGE_TEMPLATE, phone, vcode);
             if (ShortMessageErrorsEnum.OK.getCode().equals(ShortMessageUtils.getErrorCode(responseData))) {
                 json.put("flag", true);
+                /**手机号隐藏中间四位**/
                 json.put("phone", StringUtils.desensitizePhoneNumber(phone));
                 User user = new User();
                 user.setUserUid(StringUtils.createUUID());
                 user.setUserPhone(phone);
                 session.setAttribute("tempUser", user);
                 session.setAttribute("messageVcode", vcode);
+
                 HttpUtils.sessionAttributeInvalid(session, "tempUser", 5);
                 HttpUtils.sessionAttributeInvalid(session, "messageVcode", 5);
             } else {

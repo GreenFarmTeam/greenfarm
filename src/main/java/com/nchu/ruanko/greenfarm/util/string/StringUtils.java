@@ -45,6 +45,9 @@ public final class StringUtils {
      * @return 解码后的字符串
      */
     public static String decodeBase64(String string) {
+        if (string == null || "".equals(string)) {
+            return null;
+        }
         return new String(Base64.decodeBase64(string));
     }
 

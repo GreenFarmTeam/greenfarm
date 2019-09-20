@@ -3,11 +3,23 @@ package com.nchu.ruanko.greenfarm.dao;
 import com.nchu.ruanko.greenfarm.pojo.entity.Business;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+
+/**
+ *
+ FieldTypeComment
+ rev_uidchar(32) NOT NULLUUID
+ rev_bus_uidchar(32) NOT NULL审核商家UUID
+ rev_stimedatetime NOT NULL提交时间
+ rev_rtimedatetime NULL审核时间
+ rev_resulttinyint(3) unsigned NULL审核结果
+ rev_reasontinytext NULL未审核通过原因
+ */
 @Mapper
 public interface BusinessDAO {
 
     /**
-     *
+     *插入商家记录
      * @param business
      * @param userUid
      */
@@ -16,7 +28,7 @@ public interface BusinessDAO {
     void insertBusiness(@Param(value = "business") Business business, @Param(value = "uid") String userUid);
 
     /**
-     *
+     *更新商家信息
      * @param business
      * @param businessUid
      */
@@ -49,10 +61,24 @@ public interface BusinessDAO {
             @Result(property = "businessShopDescription", column = "bus_shop_desc"),
             @Result(property = "businessShopState", column = "bus_shop_state")
     })
+    /**
+     * 查询某个商家根据商家ID
+     */
     @Select("SELECT *" +
             " FROM gf_tb_business" +
             " WHERE bus_uid=#{uid}")
     Business getBusinessByUID(@Param(value = "uid") String uid);
+
+    /**
+     * 查询所有合法的商家
+     * @return
+     */
+    @ResultMap(value = "businessMapper1")
+    @Select("select * from gf_tb_business,gf_tb_business_review " +
+            "where rev_result=1 and gf_tb_business.bus_uid=rev_bus_uid")
+    List<Business>  listAllLegalBusiness();
+
+
 
     /**
      *
