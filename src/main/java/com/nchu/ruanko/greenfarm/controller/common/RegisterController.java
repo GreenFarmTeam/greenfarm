@@ -153,7 +153,7 @@ public class RegisterController {
             String responseData = ShortMessageUtils.sendVerificationCodeMessage(MESSAGE_TEMPLATE, phone, vcode);
             if (ShortMessageErrorsEnum.OK.getCode().equals(ShortMessageUtils.getErrorCode(responseData))) {
                 json.put("flag", true);
-                /**手机号隐藏中间四位**/
+                // 手机号隐藏中间四位
                 json.put("phone", StringUtils.desensitizePhoneNumber(phone));
                 User user = new User();
                 user.setUserUid(StringUtils.createUUID());

@@ -2,6 +2,7 @@ package com.nchu.ruanko.greenfarm.controller.management.admin;
 
 import com.alibaba.fastjson.JSONObject;
 import com.nchu.ruanko.greenfarm.pojo.entity.Business;
+import com.nchu.ruanko.greenfarm.pojo.vo.AdminBusinessDetailVO;
 import com.nchu.ruanko.greenfarm.service.BusinessService;
 import com.nchu.ruanko.greenfarm.service.UserService;
 import com.nchu.ruanko.greenfarm.util.string.StringUtils;
@@ -128,16 +129,13 @@ public class AdminBusinessController {
     @ApiOperation(value = "adminBusinessDetailPage", notes = "查看商家的详情")
     @GetMapping(value = "/greenfarm/admin/management/business/detail/{businessUid}")
     public ModelAndView adminBusinessDetailPage(@PathVariable(name = "businessUid") String businessUid) {
-        System.out.println("我进来了");
         ModelAndView modelAndView = new ModelAndView();
+        AdminBusinessDetailVO vo = new AdminBusinessDetailVO();
         modelAndView.setViewName("management/admin/business-detail");
-        Business business = businessService.getBusinessDetailByBusinessUID(businessUid);
-        modelAndView.addObject("business",business);
+        vo.setBusiness(businessService.getBusinessDetailByBusinessUID(businessUid));
+        vo.setBusinessScopeList(businessService.listBusinessScopesByBusinessUID(businessUid));
+        modelAndView.addObject("vo",vo);
         return modelAndView;
     }
-
-
-
-
 
 }

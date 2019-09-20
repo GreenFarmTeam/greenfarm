@@ -54,6 +54,18 @@
         </tr>
     </table>
     <hr/>
+    <h4>收货地址管理</h4>
+    <table border="1">
+        <tr>
+            <td>已有收货地址</td>
+            <td><a href="#">已有收地址</a></td>
+        </tr>
+        <tr>
+            <td>新增收货地址</td>
+            <td><a th:href="@{/user/management/address/add}">新增收货地址</a></td>
+        </tr>
+    </table>
+    <hr/>
     <h4>商家管理</h4>
     <a th:if="${session.user.userIsBusiness}==0 and ${session.user.userIdcard}!=null" th:href="@{/user/management/business/apply}">申请成为商家</a>
     <a th:if="${session.user.userIsBusiness}==1" th:href="@{/business/management/index}">商家中心</a>

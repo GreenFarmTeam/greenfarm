@@ -8,6 +8,7 @@ import com.nchu.ruanko.greenfarm.dao.BusinessScopeDAO;
 import com.nchu.ruanko.greenfarm.dao.UserDAO;
 import com.nchu.ruanko.greenfarm.pojo.entity.Business;
 import com.nchu.ruanko.greenfarm.pojo.entity.BusinessReview;
+import com.nchu.ruanko.greenfarm.pojo.entity.BusinessScope;
 import com.nchu.ruanko.greenfarm.pojo.entity.User;
 import com.nchu.ruanko.greenfarm.pojo.vo.AdminBusinessLegalPageVO;
 import com.nchu.ruanko.greenfarm.pojo.vo.AdminBusinessReviewDetailVO;
@@ -98,6 +99,11 @@ public class BusinessServiceImpl implements BusinessService {
     @Override
     public List<BusinessReview> listBusinessReviewsByBusinessUID(String businessUid) {
         return businessReviewDAO.listBusinessReviewsByBusinessUID(businessUid);
+    }
+
+    @Override
+    public List<BusinessScope> listBusinessScopesByBusinessUID(String businessUid) {
+        return businessScopeDAO.listBusinessScopesByBusinessUID(businessUid);
     }
 
     /**

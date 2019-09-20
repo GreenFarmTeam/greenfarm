@@ -1,0 +1,44 @@
+<!-- TODO 用户/会员添加后货地址临时页面 -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户/会员添加后货地址临时页面</title>
+    <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/regex.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
+</head>
+<body>
+    <form>
+        <label for="gf_name">收货人姓名</label>
+        <input type="text" id="gf_name"/>
+        <hr/>
+        <label for="gf_province">省</label>
+        <select id="gf_province">
+            <option value="default" selected="selected">请选择</option>
+            <option th:if="${provinceList.size()}!=0" th:each="pv:${provinceList}" th:value="${pv.provinceId}" th:text="${pv.provinceName}"></option>
+        </select>
+        <br/>
+        <br/>
+        <label for="gf_city">市</label>
+        <select id="gf_city" disabled="disabled">
+            <option value="default">请选择</option>
+            <option value="other">其他</option>
+        </select>
+        <br/>
+        <br/>
+        <label for="gf_district">区/县</label>
+        <select id="gf_district" disabled="disabled">
+            <option value="default">请选择</option>
+            <option value="other">其他</option>
+        </select>
+        <hr/>
+        <label for="gf_desc">详细地址</label>
+        <input type="text" id="gf_desc"/>
+        <hr/>
+        <input type="button" id="gf_sure" value="确定"/>
+    </form>
+    <script type="text/javascript" th:src="@{/gfstatic/js/management/user/add-address.js}"></script>
+</body>
+</html>

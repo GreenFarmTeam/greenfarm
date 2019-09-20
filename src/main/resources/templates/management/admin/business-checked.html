@@ -16,7 +16,6 @@
             <td>操作</td>
         </tr>
         <tr th:each="br:${vo.businessList}">
-            <!--<td th:text="${serviceStat.index+1}"></td>-->
             <td th:text="${br.getUser().getUserUsername()}"></td>
             <td th:text="${br.getBusinessShopName()}"></td>
             <td>
@@ -38,8 +37,8 @@
         <!--<a th:if="${pg}==${vo.pageInfo.pageNum}" th:each="pg:${vo.pageInfo.navigatepageNums}" th:text="${pg}" disabled="disabled"></a>-->
 
         <a th:each="pg:${vo.pageInfo.navigatepageNums}" th:href="@{/greenfarm/admin/management/business/loadAll(page=${pg})}" th:text="${pg}"></a>
-        <a th:if="${vo.pageInfo.hasNextPage}==false"    disabled="disabled">下一页</a>
-        <a th:if="${vo.pageInfo.hasNextPage}==true"     th:href="@{/greenfarm/admin/management/business/loadAll(page=${vo.pageInfo.pageNum}+1)}">下一页</a>
+        <a th:if="${vo.pageInfo.hasNextPage}==false" disabled="disabled">下一页</a>
+        <a th:if="${vo.pageInfo.hasNextPage}==true" th:href="@{/greenfarm/admin/management/business/loadAll(page=${vo.pageInfo.pageNum}+1)}">下一页</a>
 
         <a th:if="${vo.pageInfo.isLastPage}==true" disabled="disabled">末页</a>
         <a th:if="${vo.pageInfo.isLastPage}==false" th:href="@{/greenfarm/admin/management/business/loadAll(page=${vo.pageInfo.pages})}">末页</a>
@@ -54,7 +53,7 @@
             <td>操作</td>
         </tr>
         <tr>
-            <td colspan="4">当前暂无审核通过的商家</td>
+            <td colspan="4">当前暂无商家</td>
         </tr>
     </table>
 
