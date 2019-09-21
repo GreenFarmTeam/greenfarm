@@ -1,20 +1,58 @@
 package com.nchu.ruanko.greenfarm.controller.common;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.nchu.ruanko.greenfarm.util.http.AliyunHttpUtils;
 import io.swagger.annotations.Api;
+import org.apache.http.HttpResponse;
+import org.apache.http.util.EntityUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import java.util.HashMap;
+import java.util.Map;
 
 @Api(tags = "common.AddressController", description = "“省市县地址联动”功能控制器")
 @Controller
 public class AddressController {
 
+    private static final String HOST = "https://jisuxzqhf.market.alicloudapi.com";
+    private static final String PATH = "/area/city";
+    private static final String METHOD = "GET";
+    private static final String APP_CODE = "b8334e2c6bfe4673afdfba5a9308b909";
+
+    private static final String NONE_SUB_STATUS = "203";
+    private static final String OK_STATUS = "0";
+
     @GetMapping(value = "/address/level")
     @ResponseBody
-    public String getNextLevelAddress(@RequestParam(name = "pid") String parentLevelId) {
-
-        return "";
+    public String getSubLevelAddress(@RequestParam(name = "pid") String parentLevelId) {
+        JSONObject json = new JSONObject();
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authorization", "APPCODE " + APP_CODE);
+        Map<String, String> querys = new HashMap<>();
+        querys.put("parentid", parentLevelId);
+        try {
+            HttpResponse response = AliyunHttpUtils.doGet(HOST, PATH, METHOD, headers, querys);
+            String tmp = EntityUtils.toString(response.getEntity());
+            JSONObject apiReturnJson = JSON.parseObject(tmp);
+            String status = apiReturnJson.getString("status");
+            if (OK_STATUS.equals(status)) {
+                json.put("status", 0);
+                json.put("sub", apiReturnJson.get("result"));
+            } else {
+                if (NONE_SUB_STATUS.equals(status)) {
+                    json.put("status", 1);
+                } else {
+                    json.put("status", 2);
+                }
+            }
+        } catch (Exception e) {
+            json.put("status", 2);
+            e.printStackTrace();
+        }
+        return json.toString();
     }
 
 }

@@ -3,6 +3,8 @@ package com.nchu.ruanko.greenfarm.pojo.entity;
 /**
  * 省份
  *
+ * 该实体也可以作为封装 市、县 来使用
+ *
  * 对应数据库的表 gf_tb_province
  */
 public class Province {

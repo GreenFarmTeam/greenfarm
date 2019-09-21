@@ -15,3 +15,10 @@ var idcardRegex = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
 
 // 商店名称正则  数字、字母 汉字6-15位
 var shopNameRegex = /^[0-9a-zA-Z\u4E00-\u9FA5]{6,15}$/;
+
+// 收货地址姓名正则
+var addressNameRegex = /^[0-9a-zA-Z\u4E00-\u9FA5]{2,10}$/;
+
+// 收货详细地址正则
+var addressRegex = /^[0-9a-zA-Z\u4E00-\u9FA5]{5,25}$/;
+
