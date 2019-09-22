@@ -97,13 +97,15 @@ gfCity.on('change', function () {
     }
 });
 
-// 新增收货地址
+// 修改收货地址
 $("#gf_sure").on('click', function () {
     var name = $("#gf_name").val();
     var provinceVal = $("#gf_province").val();
     var cityVal = $("#gf_city").val();
     var districtVal = $("#gf_district").val();
     var address = $("#gf_desc").val();
+    var addressUid = $("#gf_address_uid").val();
+
     if ($.trim(name) === "" || $.trim(address) === "" || provinceVal === "default") {
         layer.alert('请填写完整信息！', {skin:'layui-layer-lan', closeBtn: 0});
     } else {
@@ -121,14 +123,14 @@ $("#gf_sure").on('click', function () {
                     if (cityVal !== "other") {
                         if (districtVal === "default") {
                             if (cityHasSubLevel === 0) {
-                                layer.confirm('确定要添加收货地址？', {btn:['是','否'], skin:'layui-layer-lan', closeBtn:0}, function() {
+                                layer.confirm('确定要修改收货地址？', {btn:['是','否'], skin:'layui-layer-lan', closeBtn:0}, function() {
                                     $.ajax({
                                         type : "POST",
-                                        url : "/user/management/address/add/operation",
+                                        url : "/user/management/address/modify/" + addressUid + "/operation",
                                         dataType : "json",
                                         data : {
                                             "name" : name,
-                                            "address" : address,
+                                            "detail" : address,
                                             "province" : gfProvince.find("option:selected").text(),
                                             "city" : gfCity.find("option:selected").text()
                                         },
@@ -148,14 +150,14 @@ $("#gf_sure").on('click', function () {
                             }
                         } else {
                             console.log("OK2");
-                            layer.confirm('确定要添加收货地址？', {btn:['是','否'], skin:'layui-layer-lan', closeBtn:0}, function () {
+                            layer.confirm('确定要修改收货地址？', {btn:['是','否'], skin:'layui-layer-lan', closeBtn:0}, function () {
                                 $.ajax({
                                     type : "POST",
-                                    url : "/user/management/address/add/operation",
+                                    url : "/user/management/address/modify/" + addressUid + "/operation",
                                     dataType : "json",
                                     data : {
                                         "name" : name,
-                                        "address" : address,
+                                        "detail" : address,
                                         "province" : gfProvince.find("option:selected").text(),
                                         "city" : gfCity.find("option:selected").text(),
                                         "district" : gfDistrict.find("option:selected").text()
@@ -174,14 +176,14 @@ $("#gf_sure").on('click', function () {
                         }
                     } else {
                         console.log("OK3");
-                        layer.confirm('确定要添加收货地址？', {btn:['是','否'], skin:'layui-layer-lan', closeBtn:0}, function () {
+                        layer.confirm('确定要修改收货地址？', {btn:['是','否'], skin:'layui-layer-lan', closeBtn:0}, function () {
                             $.ajax({
                                 type : "POST",
-                                url : "/user/management/address/add/operation",
+                                url : "/user/management/address/modify/" + addressUid + "/operation",
                                 dataType : "json",
                                 data : {
                                     "name" : name,
-                                    "address" : address,
+                                    "detail" : address,
                                     "province" : gfProvince.find("option:selected").text(),
                                     "city" : gfCity.find("option:selected").text()
                                 },

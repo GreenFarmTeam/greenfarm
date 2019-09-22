@@ -1,0 +1,43 @@
+<!-- TODO 用户/会员全部收货地址临时页面 -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>用户/会员全部收货地址临时页面</title>
+    <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/regex.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
+</head>
+<body>
+    <table th:if="${addressList.size()}==0">
+        <tr>
+            <td>暂无收货地址</td>
+        </tr>
+    </table>
+
+    <table th:if="${addressList.size()}!=0" th:each="addr:${addressList}" border="1">
+        <tr>
+            <td>收货人姓名</td>
+            <td th:text="${addr.addressName}"></td>
+        </tr>
+        <tr>
+            <td>行政区</td>
+            <td th:if="${addr.addressDistrict}!=null" th:text="${addr.addressProvince}+' '+${addr.addressCity}+' '+${addr.addressDistrict}"></td>
+            <td th:if="${addr.addressDistrict}==null" th:text="${addr.addressProvince}+' '+${addr.addressCity}"></td>
+        </tr>
+        <tr>
+            <td>详细地址</td>
+            <td th:text="${addr.addressDetail}"></td>
+        </tr>
+        <tr>
+            <td>操作</td>
+            <td>
+                <a th:href="@{/user/management/address/modify/{uid}(uid=${addr.addressUid})}">修改</a>
+                <a href="javaScript:void(0)" name="gf_delete" th:value="${addr.addressUid}">删除</a>
+            </td>
+        </tr>
+    </table>
+    <script type="text/javascript" th:src="@{/gfstatic/js/management/user/address-list.js}"></script>
+</body>
+</html>

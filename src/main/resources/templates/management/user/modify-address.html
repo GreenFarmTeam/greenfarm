@@ -1,9 +1,9 @@
-<!-- TODO 用户/会员添加收货地址临时页面 -->
+<!-- TODO 用户/会员修改收货地址临时页面 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>用户/会员添加收货地址临时页面</title>
+    <title>用户/会员修改收货地址临时页面</title>
     <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/regex.js}"></script>
@@ -12,7 +12,7 @@
 <body>
     <form>
         <label for="gf_name">收货人姓名</label>
-        <input type="text" id="gf_name"/>
+        <input type="text" id="gf_name" th:value="${address.addressName}"/>
         <hr/>
         <label for="gf_province">省</label>
         <select id="gf_province">
@@ -33,10 +33,11 @@
         </select>
         <hr/>
         <label for="gf_desc">详细地址</label>
-        <input type="text" id="gf_desc"/>
+        <input type="text" id="gf_desc" th:value="${address.addressDetail}"/>
         <hr/>
         <input type="button" id="gf_sure" value="确定"/>
     </form>
-    <script type="text/javascript" th:src="@{/gfstatic/js/management/user/add-address.js}"></script>
+    <input type="hidden" id="gf_address_uid" th:value="${address.addressUid}"/>
+    <script type="text/javascript" th:src="@{/gfstatic/js/management/user/modify-address.js}"></script>
 </body>
 </html>

@@ -13,9 +13,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.HashMap;
 import java.util.Map;
 
-@Api(tags = "common.AddressController", description = "“省市县地址联动”功能控制器")
+/**
+ * “省市县地址联动”功能控制器
+ */
+@Api(tags = "common.AddressCascadeController", description = "“省市县地址联动”功能控制器")
 @Controller
-public class AddressController {
+public class AddressCascadeController {
 
     private static final String HOST = "https://jisuxzqhf.market.alicloudapi.com";
     private static final String PATH = "/area/city";
