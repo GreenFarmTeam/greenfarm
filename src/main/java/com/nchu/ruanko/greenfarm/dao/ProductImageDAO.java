@@ -16,6 +16,14 @@ public interface ProductImageDAO {
             " VALUES(#{img.productImageUid},#{img.productImagePath},#{img.productImageIsMainImage},#{uid})")
     void insertProductImageWithProductUID(@Param(value = "img") ProductImage productImage, @Param(value = "uid") String productUid);
 
+    /**
+     *
+     * @param productUid
+     */
+    @Delete("DELETE FROM gf_tb_product_image" +
+            " WHERE img_product_uid=#{uid}")
+    void deleteProductImageByProductUID(@Param(value = "uid") String productUid);
+
 
     /**
      *

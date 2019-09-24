@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * VO
  */
-public class BusinessProductReviewVO {
+public class AdminProductReviewVO {
 
     private Product product;
     private ProductImage productMainImage;

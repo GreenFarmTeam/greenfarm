@@ -8,12 +8,18 @@ import com.nchu.ruanko.greenfarm.dao.ProductReviewDAO;
 import com.nchu.ruanko.greenfarm.pojo.entity.Product;
 import com.nchu.ruanko.greenfarm.pojo.entity.ProductImage;
 import com.nchu.ruanko.greenfarm.pojo.entity.ProductReview;
+import com.nchu.ruanko.greenfarm.pojo.vo.AdminProductReviewPageVO;
+import com.nchu.ruanko.greenfarm.pojo.vo.AdminProductReviewVO;
 import com.nchu.ruanko.greenfarm.pojo.vo.BusinessProductReviewPageVO;
 import com.nchu.ruanko.greenfarm.pojo.vo.BusinessProductReviewVO;
 import com.nchu.ruanko.greenfarm.service.ProductService;
 import com.nchu.ruanko.greenfarm.util.string.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -30,8 +36,10 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductReviewDAO productReviewDAO;
 
+    private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
     /**
-     * 上架商品
+     * 商家上架商品
      *
      * @param product
      * @param productMainImage
@@ -76,10 +84,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     /**
-     * 获取当前商家所有的商品审核记录
+     * 商家获取当前商家所有的商品审核记录
      *
      * @param businessUid uid
-     * @return List<BusinessProductReviewVO>
+     * @param pageNum 页码
+     * @param pageSize 每页显示数
+     * @param navigationSize 导航页书
+     * @return BusinessProductReviewPageVO
      */
     @Override
     public BusinessProductReviewPageVO listBusinessProductReviewRecords(String businessUid, int pageNum, int pageSize, int navigationSize) {
@@ -102,6 +113,84 @@ public class ProductServiceImpl implements ProductService {
         vo.setPageInfo(pageInfo);
         vo.setBusinessProductReviewVOList(businessProductReviewVOList);
         return vo;
+    }
+
+    /**
+     * 管理员获取所有未审核的商品
+     *
+     * @param pageNum 页码
+     * @param pageSize 每页显示数
+     * @param navigationSize 导航页书
+     * @return AdminProductReviewPageVO
+     */
+    @Override
+    public AdminProductReviewPageVO listAdminProductReview(int pageNum, int pageSize, int navigationSize) {
+        AdminProductReviewPageVO vo = new AdminProductReviewPageVO();
+
+        PageHelper.startPage(pageNum, pageSize);
+        List<ProductReview> productReviewList = productReviewDAO.listUnreviewedProductReviewsOrderBySubmitTimeDesc();
+        PageInfo<ProductReview> pageInfo = new PageInfo<>(productReviewList, navigationSize);
+
+        List<AdminProductReviewVO> adminProductReviewVOList = new ArrayList<>();
+        for (ProductReview productReview : productReviewList) {
+            AdminProductReviewVO reviewVO = new AdminProductReviewVO();
+            String productUid = productReview.getProduct().getProductUid();
+            reviewVO.setProductReview(productReview);
+            reviewVO.setProduct(productReview.getProduct());
+            reviewVO.setProductMainImage(productImageDAO.getProductMainImageByProductUID(productUid));
+            reviewVO.setProductOtherImageList(productImageDAO.listProductOtherImagesByProductUID(productUid));
+            adminProductReviewVOList.add(reviewVO);
+        }
+
+        vo.setPageInfo(pageInfo);
+        vo.setAdminProductReviewVOList(adminProductReviewVOList);
+
+        return vo;
+    }
+
+    /**
+     * 管理员同意上架商品
+     *
+     * @param productReviewUid uid
+     */
+    @Override
+    public void adminAgreeProductReview(String productReviewUid) {
+        String productUid = productReviewDAO.getProductUIDByProductReviewUID(productReviewUid);
+        Date date = new Date(System.currentTimeMillis());
+        productReviewDAO.updateProductReviewReviewTimeByProductReviewUID(date, productReviewUid);
+        productDAO.updateProductUpDateByProductUID(date, productUid);
+        productReviewDAO.updateProductReviewResultAndProductReviewReasonByProductReviewUID(1, null, productReviewUid);
+        productDAO.updateProductIsRecommendByProductUID(0, productUid);
+    }
+
+    /**
+     * 管理员驳回上架商品申请
+     *
+     * @param reason
+     * @param productReviewUid
+     */
+    @Override
+    public void adminDisagreeProductReview(String reason, String productReviewUid) {
+        String productUid = productReviewDAO.getProductUIDByProductReviewUID(productReviewUid);
+
+        productReviewDAO.updateProductReviewReviewTimeByProductReviewUID(new Date(System.currentTimeMillis()), productReviewUid);
+        productReviewDAO.updateProductReviewResultAndProductReviewReasonByProductReviewUID(0, reason, productReviewUid);
+        productDAO.updateProductIsRecommendByProductUID(null, productUid);
+        try {
+            productDAO.updateProductUpDateByProductUID(dateFormat.parse("1000-01-01 00:00:00"), productUid);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void businessClearNoPassProductReview(String businessUid) {
+        List<String> productUidList = productDAO.listNoPassReviewProductUIDs();
+        if (productUidList.size() != 0) {
+            for (String productUid : productUidList) {
+                
+            }
+        }
     }
 
 }

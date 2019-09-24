@@ -58,11 +58,6 @@
                 <span th:if="${vo.businessScopeList.size()}!=0" th:each="sp:${vo.businessScopeList}" th:text="${sp.productType.typeName}"></span>
             </td>
         </tr>
-        <tr>
-            <td>店铺状态</td>
-            <td th:if="${vo.business.businessShopState}==0">店铺关门</td>
-            <td th:if="${vo.business.businessShopState}==1">店铺营业</td>
-        </tr>
     </table>
 
 

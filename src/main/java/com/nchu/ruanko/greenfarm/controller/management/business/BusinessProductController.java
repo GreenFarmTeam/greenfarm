@@ -139,7 +139,7 @@ public class BusinessProductController {
      */
     @ApiOperation(value = "businessManagementProductReviewPage", notes = "跳转至“商家的商品审核记录”的页面")
     @GetMapping(value = "/business/management/product/review")
-    public ModelAndView businessManagementProductReviewPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "1") int pageSize, HttpServletRequest request) {
+    public ModelAndView businessManagementProductReviewPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "10") int pageSize, HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
         HttpSession session = request.getSession();
         Business business = (Business) session.getAttribute("business");

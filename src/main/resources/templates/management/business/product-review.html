@@ -6,6 +6,9 @@
     <title>商家的商品审核记录的临时页面</title>
 </head>
 <body>
+    <!-- TODO 清空未审核审核记录 -->
+    <a href="javaScript:void(0)" id="gf_clear_no_pass">清空审核不通过的记录</a>
+    <hr/>
     <table border="1">
         <tr>
             <td>名称</td>
@@ -30,11 +33,15 @@
             <td th:if="${rv.product.productDescription}==null">无描述</td>
             <td th:text="${rv.product.productType.typeName}"></td>
             <td th:if="${rv.productMainImage}!=null">
-                <img th:src="${rv.productMainImage.productImagePath}" width="300px" height="300px"/>
+                <a th:href="@{${rv.productMainImage.productImagePath}}" target="_blank">
+                    <img th:src="${rv.productMainImage.productImagePath}" width="100px" height="100px"/>
+                </a>
             </td>
             <td th:if="${rv.productMainImage}==null">无主图片</td>
             <td th:if="${rv.productOtherImageList.size()}!=0">
-                <img th:each="img:${rv.productOtherImageList}" th:src="${img.productImagePath}" width="300px" height="300px"/>
+                <a th:each="img:${rv.productOtherImageList}" th:href="@{${img.productImagePath}}" target="_blank">
+                    <img th:src="${img.productImagePath}" width="100px" height="100px"/>
+                </a>
             </td>
             <td th:if="${rv.productOtherImageList.size()}==0">无其他图片</td>
             <td th:text="${#dates.format(rv.productReview.productReviewSubmitTime,'yyyy-MM-dd HH:mm:ss')}"></td>
@@ -46,7 +53,7 @@
         </tr>
     </table>
     <hr/>
-    <div th:if="${vo.businessProductReviewVOList}!=0">
+    <div th:if="${vo.businessProductReviewVOList.size()}!=0">
         <a th:if="${vo.pageInfo.isFirstPage}==true" disabled="disabled">首页</a>
         <a th:if="${vo.pageInfo.isFirstPage}==false" th:href="@{/business/management/product/review(page=1)}">首页</a>
 
@@ -65,5 +72,6 @@
         <a th:if="${vo.pageInfo.isLastPage}==true" disabled="disabled">末页</a>
         <a th:if="${vo.pageInfo.isLastPage}==false" th:href="@{/business/management/product/review(page=${vo.pageInfo.pages})}">末页</a>
     </div>
+    <script type="text/javascript" th:src="@{/gfstatic/js/management/business/product-review.js}"></script>
 </body>
 </html>

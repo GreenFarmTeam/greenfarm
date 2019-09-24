@@ -10,12 +10,13 @@
 <body>
     <table th:if="${vo.businessList.size()}!=0" border="1">
         <tr>
-            <td>申请流水号</td>
-            <td>申请人名称</td>
+            <td>店铺编号</td>
+            <td>申请人昵称</td>
             <td>店铺名称</td>
             <td>操作</td>
         </tr>
         <tr th:each="br:${vo.businessList}">
+            <td th:text="${br.businessUid}"></td>
             <td th:text="${br.getUser().getUserUsername()}"></td>
             <td th:text="${br.getBusinessShopName()}"></td>
             <td>
@@ -28,9 +29,9 @@
     <hr/>
     <div th:if="${vo.businessList.size()}!=0">
 
-        <a th:if="${vo.pageInfo.isFirstPage}==true"     disabled="disabled">首页</a>
-        <a th:if="${vo.pageInfo.isFirstPage}==false"    th:href="@{/greenfarm/admin/management/business/loadAll(page=1)}">首页</a>
-        <a th:if="${vo.pageInfo.hasPreviousPage}==false"disabled="disabled">上一页</a>
+        <a th:if="${vo.pageInfo.isFirstPage}==true" disabled="disabled">首页</a>
+        <a th:if="${vo.pageInfo.isFirstPage}==false" th:href="@{/greenfarm/admin/management/business/loadAll(page=1)}">首页</a>
+        <a th:if="${vo.pageInfo.hasPreviousPage}==false" disabled="disabled">上一页</a>
         <a th:if="${vo.pageInfo.hasPreviousPage}==true" th:href="@{/greenfarm/admin/management/business/loadAll(page=${vo.pageInfo.pageNum}-1)}">上一页</a>
 
         <!--<a th:if="${pg}!=${vo.pageInfo.pageNum}" th:each="pg:${vo.pageInfo.navigatepageNums}" th:href="@{/greenfarm/admin/management/business/review(page=${pg})}" th:text="${pg}"></a>-->
@@ -56,7 +57,5 @@
             <td colspan="4">当前暂无商家</td>
         </tr>
     </table>
-
-    <script type="text/javascript" th:src="@{/gfstatic/js/management/admin/business-detail.js}"></script>
 </body>
 </html>

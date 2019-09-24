@@ -1,5 +1,5 @@
-$("#gf_agree").on('click', function () {
-    var reviewUid = $("#gf_review_uid").val();
+$("a[name='gf_agree']").on('click', function () {
+    var reviewUid = $(this).attr("value");
     layer.confirm('确定同意该申请？', {btn:['是','否'], skin:'layui-layer-lan', closeBtn:0}, function() {
         $.ajax({
             type : "GET",
@@ -19,8 +19,8 @@ $("#gf_agree").on('click', function () {
 });
 
 
-$("#gf_disagree").on('click', function () {
-    var reviewUid = $("#gf_review_uid").val();
+$("a[name='gf_disagree']").on('click', function () {
+    var reviewUid = $(this).attr("value");
     layer.confirm('确定驳回该申请？', {btn:['是','否'], skin:'layui-layer-lan', closeBtn:0}, function() {
         layer.confirm('需要告知未审核通过理由！', {btn:['是'], skin:'layui-layer-lan', closeBtn:0}, function() {
             $(location).attr("href", getPathPrefix() + "greenfarm/admin/management/business/review/disagree/" + reviewUid);

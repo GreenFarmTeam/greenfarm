@@ -12,7 +12,7 @@
     <table th:if="${vo.businessReviewList.size()}!=0" border="1">
         <tr>
             <td>申请流水号</td>
-            <td>申请会员号</td>
+            <td>会员号</td>
             <td>提交时间</td>
             <td>操作</td>
         </tr>
@@ -22,9 +22,9 @@
             <td th:text="${#dates.format(br.reviewSubmitTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
             <td>
                 <a th:href="@{/greenfarm/admin/management/business/review/detail/{reviewId}(reviewId=${br.reviewUid})}">详细信息</a>
-                <a href="javaScript:void(0)" id="gf_disagree">驳回申请</a>
-                <a href="javaScript:void(0)" id="gf_agree">同意申请</a>
-                <input type="hidden" id="gf_review_uid" th:value="${br.reviewUid}"/>
+                <!-- TODO BUG -->
+                <a href="javaScript:void(0)" name="gf_agree" th:value="${br.reviewUid}">同意申请</a>
+                <a href="javaScript:void(0)" name="gf_disagree" th:value="${br.reviewUid}">驳回申请</a>
             </td>
         </tr>
     </table>
