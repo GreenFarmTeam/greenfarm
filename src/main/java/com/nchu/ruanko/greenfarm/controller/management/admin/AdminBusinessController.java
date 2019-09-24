@@ -117,7 +117,6 @@ public class AdminBusinessController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("vo", businessService.listAllLegalBusinessWithPage(pageNum, pageSize, PAGE_NAVIGATION_SIZE));
         modelAndView.setViewName("management/admin/business-checked");
-        /*businessService.listAllLegalBusinessWithPage(pageNum, pageSize, PAGE_NAVIGATION_SIZE);*/
         return modelAndView;
     }
 

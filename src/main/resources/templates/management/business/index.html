@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <title>商家中心临时页面</title>
-    <!--<link rel="stylesheet" th:href="@{/gfstatic/templateone/res/layui/css/layui.css}"/>-->
     <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
@@ -23,11 +22,22 @@
             <td>店铺名称</td>
             <td th:text="${session.business.businessShopName}"></td>
         </tr>
+        <tr>
+            <td>店铺描述</td>
+            <td th:text="${session.business.businessShopDescription}"></td>
+        </tr>
+        <tr>
+            <td>经营范围</td>
+            <td>
+                <span th:if="${scopes.size()}!=0" th:each="sp:${scopes}" th:text="${sp.productType.typeName}"></span>
+            </td>
+        </tr>
     </table>
-    <!-- TODO 店铺开启或关闭 -->
     <hr/>
-    <a href="#">店铺详情</a>
+    <h4>商品管理</h4>
+    <a href="#">我的商品</a>
+    <a th:href="@{/business/management/product/add}">上架商品</a>
+    <a th:href="@{/business/management/product/review}">审核记录</a>
     <hr/>
-
 </body>
 </html>

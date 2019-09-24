@@ -33,6 +33,7 @@ public class BusinessIndexController {
         Business business = businessService.getBusinessByUserUID(user.getUserUid());
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("management/business/index");
+        modelAndView.addObject("scopes", businessService.listBusinessScopesByBusinessUID(business.getBusinessUid()));
         session.setAttribute("business", business);
         return modelAndView;
     }

@@ -60,9 +60,6 @@ public interface BusinessDAO {
             @Result(property = "businessShopDescription", column = "bus_shop_desc"),
             @Result(property = "businessShopState", column = "bus_shop_state")
     })
-    /**
-     * 查询某个商家根据商家ID
-     */
     @Select("SELECT *" +
             " FROM gf_tb_business" +
             " WHERE bus_uid=#{uid}")

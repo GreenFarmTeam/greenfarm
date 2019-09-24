@@ -43,7 +43,6 @@ function countDown() {
 
 // 绑定
 $("#gf_sure").on('click', function () {
-    // TODO
     var phone = $("#gf_phone").val();
     var vcode = $("#gf_vcode").val();
     var uid = $("#gf_uid").val();

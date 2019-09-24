@@ -22,3 +22,14 @@ var addressNameRegex = /^[0-9a-zA-Z\u4E00-\u9FA5]{2,10}$/;
 // 收货详细地址正则
 var addressRegex = /^[0-9a-zA-Z\u4E00-\u9FA5]{5,25}$/;
 
+// 商品名称正则
+var productNameRegex = /^[0-9a-zA-Z\u4E00-\u9FA5]{2,25}$/;
+
+// 商品单价正则
+var productPriceRegex = /^([1-9]\d{1,7})(\.\d{2})$/;
+
+// 商品单位正则
+var productUnitRegex = /^[\u4E00-\u9FA5]{0,10}$/;
+
+// 商品描述正则
+var productDescriptionRegex = /^[0-9a-zA-Z\u4E00-\u9FA5]{0,125}$/;

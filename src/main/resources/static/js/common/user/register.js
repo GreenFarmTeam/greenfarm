@@ -12,7 +12,6 @@ $("#gf_register_by_mobile").on("change", function () {
 $("#gf_register_by_mail").on("change", function () {
     $("#gf_phone").val("").attr("disabled", "disabled");
     $("#gf_vcode").val("").attr("disabled", "disabled");
-    // TODO 有关这个获取验证码的按钮怎么处理
     $("#gf_get_vcode").attr("disabled", "disabled");
     $("#gf_mail").removeAttr("disabled");
 });

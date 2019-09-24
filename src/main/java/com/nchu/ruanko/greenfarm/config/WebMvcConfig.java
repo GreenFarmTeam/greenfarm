@@ -6,7 +6,6 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-
 /**
  * 有关 MVC 的相关配置
  *
@@ -38,6 +37,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         // 为方便将来拦截器“放行”，引用静态资源加“/gfstatic/”前缀
         registry.addResourceHandler("/gfstatic/**").addResourceLocations("classpath:/META-INF/resources/", "classpath:/resources/", "classpath:/static/", "classpath:/public/");
+
+        // 上传的文件路径映射
+        // TODO 根据实际电脑上去更改
+        registry.addResourceHandler("/file/upload/**").addResourceLocations("file:E:/greenfarm/file/");
     }
 
     /**
@@ -51,4 +54,5 @@ public class WebMvcConfig implements WebMvcConfigurer {
     public void addViewControllers(ViewControllerRegistry registry) {
         // TODO
     }
+
 }
