@@ -121,4 +121,20 @@ public interface ProductDAO {
             " WHERE prdt_ctime='1000-01-01 00:00:00'")
     List<String> listNoPassReviewProductUIDs();
 
+    /**
+     * 获取当前商家审核通过的商品
+     *
+     * @param businessUid
+     * @return
+     */
+    @ResultMap(value = "productMapper1")
+    @Select("SELECT *" +
+            " FROM gf_tb_product" +
+            " WHERE prdt_business_uid=#{uid}" +
+            " AND prdt_ctime IS NOT NULL" +
+            " AND prdt_ctime<>'1000-01-01 00:00:00'" +
+            " AND prdt_ctime<>'1001-01-01 00:00:00'" +
+            " ORDER BY prdt_ctime DESC")
+    List<Product> listPassReviewProductsByBusinessUID(@Param(value = "uid") String businessUid);
+
 }

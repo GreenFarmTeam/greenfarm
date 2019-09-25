@@ -65,4 +65,14 @@ public interface ProductImageDAO {
             " AND img_is_main=0")
     List<ProductImage> listProductOtherImagesByProductUID(@Param(value = "uid") String productUid);
 
+    /**
+     *
+     * @param productUid
+     * @return
+     */
+    @Select("SELECT img_path" +
+            " FROM gf_tb_product_image" +
+            " WHERE img_product_uid=#{uid}")
+    List<String> listProductImagesPathByProductUID(@Param(value = "uid") String productUid);
+
 }

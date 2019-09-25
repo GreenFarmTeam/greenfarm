@@ -1,0 +1,43 @@
+<!-- TODO 商家已审核通过的商品（我的商品）临时页面 -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>商家已审核通过的商品（我的商品）临时页面</title>
+    <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
+</head>
+<body>
+    <table border="1">
+        <tr>
+            <td>商品名称</td>
+            <td>商品单价</td>
+            <td>商品主图片</td>
+            <td>商品库存</td>
+            <td>操作</td>
+        </tr>
+        <tr th:if="${vo.businessProductVOList.size()}==0">
+            <td colspan="5">暂无成功上架商品数据</td>
+        </tr>
+        <tr th:if="${vo.businessProductVOList.size()}!=0" th:each="pd:${vo.businessProductVOList}">
+            <td th:text="${pd.product.productName}"></td>
+            <td th:if="${pd.product.productUnit}==null" th:text="${pd.product.productPrice+'元'}"></td>
+            <td th:if="${pd.product.productUnit}!=null" th:text="${pd.product.productPrice+'元/'+pd.product.productUnit}"></td>
+            <td th:if="${pd.mainImage}==null">暂无商品主图片</td>
+            <td th:if="${pd.mainImage}!=null">
+                <a th:href="@{${pd.mainImage.productImagePath}}">
+                    <img th:src="@{${pd.mainImage.productImagePath}}" width="100px" height="100px"/>
+                </a>
+            </td>
+            <td th:text="${pd.product.productStock}"></td>
+            <td>
+                <a href="javaScript:void(0)" name="gf_detail" th:value="${pd.product.productUid}">详情</a>
+                <a href="#">修改库存</a>
+                <a href="#">下架商品</a>
+            </td>
+        </tr>
+    </table>
+    <script type="text/javascript" th:src="@{/gfstatic/js/management/business/product-checked.js}"></script>
+</body>
+</html>

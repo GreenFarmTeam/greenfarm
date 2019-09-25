@@ -2,21 +2,19 @@ package com.nchu.ruanko.greenfarm.service.impl;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.nchu.ruanko.greenfarm.constant.FileConstant;
 import com.nchu.ruanko.greenfarm.dao.ProductDAO;
 import com.nchu.ruanko.greenfarm.dao.ProductImageDAO;
 import com.nchu.ruanko.greenfarm.dao.ProductReviewDAO;
 import com.nchu.ruanko.greenfarm.pojo.entity.Product;
 import com.nchu.ruanko.greenfarm.pojo.entity.ProductImage;
 import com.nchu.ruanko.greenfarm.pojo.entity.ProductReview;
-import com.nchu.ruanko.greenfarm.pojo.vo.AdminProductReviewPageVO;
-import com.nchu.ruanko.greenfarm.pojo.vo.AdminProductReviewVO;
-import com.nchu.ruanko.greenfarm.pojo.vo.BusinessProductReviewPageVO;
-import com.nchu.ruanko.greenfarm.pojo.vo.BusinessProductReviewVO;
+import com.nchu.ruanko.greenfarm.pojo.vo.*;
 import com.nchu.ruanko.greenfarm.service.ProductService;
 import com.nchu.ruanko.greenfarm.util.string.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.io.File;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -48,7 +46,7 @@ public class ProductServiceImpl implements ProductService {
      * @param businessUid
      */
     @Override
-    public void addProduct(Product product, ProductImage productMainImage, List<ProductImage> productOtherImages, String productTypeUid, String businessUid) {
+    public void businessAddProduct(Product product, ProductImage productMainImage, List<ProductImage> productOtherImages, String productTypeUid, String businessUid) {
         /* 商品基本信息 */
         String productUid = StringUtils.createUUID();
         product.setProductUid(productUid);
@@ -93,7 +91,7 @@ public class ProductServiceImpl implements ProductService {
      * @return BusinessProductReviewPageVO
      */
     @Override
-    public BusinessProductReviewPageVO listBusinessProductReviewRecords(String businessUid, int pageNum, int pageSize, int navigationSize) {
+    public BusinessProductReviewPageVO businessListProductReviewRecords(String businessUid, int pageNum, int pageSize, int navigationSize) {
         BusinessProductReviewPageVO vo = new BusinessProductReviewPageVO();
 
         PageHelper.startPage(pageNum, pageSize);
@@ -124,7 +122,7 @@ public class ProductServiceImpl implements ProductService {
      * @return AdminProductReviewPageVO
      */
     @Override
-    public AdminProductReviewPageVO listAdminProductReview(int pageNum, int pageSize, int navigationSize) {
+    public AdminProductReviewPageVO adminListProductReview(int pageNum, int pageSize, int navigationSize) {
         AdminProductReviewPageVO vo = new AdminProductReviewPageVO();
 
         PageHelper.startPage(pageNum, pageSize);
@@ -183,14 +181,77 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+    /**
+     * 商家删除未通过审核的商品的信息
+     *
+     * @param businessUid
+     */
     @Override
     public void businessClearNoPassProductReview(String businessUid) {
         List<String> productUidList = productDAO.listNoPassReviewProductUIDs();
         if (productUidList.size() != 0) {
             for (String productUid : productUidList) {
-                
+                productReviewDAO.deleteProductReviewByProductUID(productUid);
+                List<String> imagePathList = productImageDAO.listProductImagesPathByProductUID(productUid);
+                for (String imagePath : imagePathList) {
+                    File file = new File(FileConstant.FILE_UPLOAD_PATH + "\\" + imagePath.substring(imagePath.lastIndexOf("/") + 1));
+                    if (file.exists() && file.isFile()) {
+                        file.delete();
+                    }
+                }
+                productImageDAO.deleteProductImageByProductUID(productUid);
+                productDAO.deleteProductByProductUID(productUid);
             }
         }
+    }
+
+
+    /**
+     * 待讨论
+     *
+     * @param businessUid
+     * @param pageNum
+     * @param pageSize
+     * @param navigationSize
+     * @return
+     */
+    @Override
+    public BusinessProductPageVO businessListProducts(String businessUid, int pageNum, int pageSize, int navigationSize) {
+        BusinessProductPageVO vo = new BusinessProductPageVO();
+
+        PageHelper.startPage(pageNum, pageSize);
+        List<Product> productList = productDAO.listPassReviewProductsByBusinessUID(businessUid);
+        PageInfo<Product> pageInfo = new PageInfo<>(productList, navigationSize);
+
+        List<BusinessProductVO> businessProductVOList = new ArrayList<>();
+
+        for (Product product : productList) {
+            BusinessProductVO productVO = new BusinessProductVO();
+            productVO.setProduct(product);
+            productVO.setMainImage(productImageDAO.getProductMainImageByProductUID(product.getProductUid()));
+            productVO.setOtherImages(productImageDAO.listProductOtherImagesByProductUID(product.getProductUid()));
+            businessProductVOList.add(productVO);
+        }
+
+        vo.setPageInfo(pageInfo);
+        vo.setBusinessProductVOList(businessProductVOList);
+
+        return vo;
+    }
+
+    /**
+     * 商家获取某一成功上架商品的详细信息
+     *
+     * @param productUid
+     * @return
+     */
+    @Override
+    public BusinessProductVO businessGetProductByProductUID(String productUid) {
+        BusinessProductVO vo = new BusinessProductVO();
+        vo.setProduct(productDAO.getProductByProductUID(productUid));
+        vo.setMainImage(productImageDAO.getProductMainImageByProductUID(productUid));
+        vo.setOtherImages(productImageDAO.listProductOtherImagesByProductUID(productUid));
+        return vo;
     }
 
 }

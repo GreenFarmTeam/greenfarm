@@ -28,7 +28,7 @@ public class AdminProductController {
     public ModelAndView adminReviewProductPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "10") int pageSize) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("management/admin/review-product");
-        modelAndView.addObject("vo", productService.listAdminProductReview(pageNum, pageSize, PAGE_NAVIGATION_SIZE));
+        modelAndView.addObject("vo", productService.adminListProductReview(pageNum, pageSize, PAGE_NAVIGATION_SIZE));
         return modelAndView;
     }
 

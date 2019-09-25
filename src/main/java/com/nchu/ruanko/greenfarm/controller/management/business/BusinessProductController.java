@@ -1,9 +1,12 @@
 package com.nchu.ruanko.greenfarm.controller.management.business;
 
 import com.alibaba.fastjson.JSONObject;
+import com.nchu.ruanko.greenfarm.constant.FileConstant;
+import com.nchu.ruanko.greenfarm.constant.PageConstant;
 import com.nchu.ruanko.greenfarm.pojo.entity.Business;
 import com.nchu.ruanko.greenfarm.pojo.entity.Product;
 import com.nchu.ruanko.greenfarm.pojo.entity.ProductImage;
+import com.nchu.ruanko.greenfarm.pojo.vo.BusinessProductVO;
 import com.nchu.ruanko.greenfarm.service.BusinessService;
 import com.nchu.ruanko.greenfarm.service.ProductService;
 import com.nchu.ruanko.greenfarm.util.string.StringUtils;
@@ -21,6 +24,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,12 +39,9 @@ public class BusinessProductController {
     @Autowired
     private ProductService productService;
 
-    // 根据实际情况去修改
-    private static final String FILE_UPLOAD_PATH = "E:\\greenfarm\\file";
-
-    private static final String FILE_UPLOAD_VIRTUAL_PATH_PREFIX = "/file/upload/";
-
     private static final int PAGE_NAVIGATION_SIZE = 10;
+
+    private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     /**
      * 跳转至“商家上架商品”的页面
@@ -85,7 +87,7 @@ public class BusinessProductController {
         product.setProductUnit(productUnit);
         product.setProductDescription(productDescription);
 
-        File folder = new File(FILE_UPLOAD_PATH);
+        File folder = new File(FileConstant.FILE_UPLOAD_PATH);
         if (!folder.exists() || !folder.isDirectory()) {
             folder.mkdirs();
         }
@@ -98,7 +100,7 @@ public class BusinessProductController {
                 mainImage.transferTo(new File(folder, fileNewName));
                 productMainImage = new ProductImage();
                 productMainImage.setProductImageUid(uid);
-                productMainImage.setProductImagePath(FILE_UPLOAD_VIRTUAL_PATH_PREFIX + fileNewName);
+                productMainImage.setProductImagePath(FileConstant.FILE_UPLOAD_VIRTUAL_PATH_PREFIX + fileNewName);
             } catch (IOException e) {
                 json.put("flag", false);
                 json.put("reason", "文件上传失败！system");
@@ -116,7 +118,7 @@ public class BusinessProductController {
                     otherImage.transferTo(new File(folder, fileNewName));
                     ProductImage productOtherImage = new ProductImage();
                     productOtherImage.setProductImageUid(uid);
-                    productOtherImage.setProductImagePath(FILE_UPLOAD_VIRTUAL_PATH_PREFIX + fileNewName);
+                    productOtherImage.setProductImagePath(FileConstant.FILE_UPLOAD_VIRTUAL_PATH_PREFIX + fileNewName);
                     productOtherImages.add(productOtherImage);
                 } catch (IOException e) {
                     json.put("flag", false);
@@ -127,7 +129,7 @@ public class BusinessProductController {
             }
         }
 
-        productService.addProduct(product, productMainImage, productOtherImages, productType, businessUid);
+        productService.businessAddProduct(product, productMainImage, productOtherImages, productType, businessUid);
         json.put("flag", true);
         return json.toString();
     }
@@ -144,8 +146,92 @@ public class BusinessProductController {
         HttpSession session = request.getSession();
         Business business = (Business) session.getAttribute("business");
         modelAndView.setViewName("management/business/product-review");
-        modelAndView.addObject("vo", productService.listBusinessProductReviewRecords(business.getBusinessUid(), pageNum, pageSize, PAGE_NAVIGATION_SIZE));
+        modelAndView.addObject("vo", productService.businessListProductReviewRecords(business.getBusinessUid(), pageNum, pageSize, PAGE_NAVIGATION_SIZE));
         return modelAndView;
+    }
+
+    /**
+     * 商家删除全部未审核通过的商品的信息
+     *
+     * @param request
+     * @return
+     */
+    @ApiOperation(value = "businessManagementClearNoPassProductOperation", notes = "商家删除未审核通过的商品的信息")
+    @GetMapping(value = "/business/management/product/remove/nopass/operation")
+    @ResponseBody
+    public String businessManagementClearNoPassProductOperation(HttpServletRequest request) {
+        JSONObject json = new JSONObject();
+        HttpSession session = request.getSession();
+        Business business = (Business) session.getAttribute("business");
+        productService.businessClearNoPassProductReview(business.getBusinessUid());
+        json.put("flag", true);
+        return json.toString();
+    }
+
+    /**
+     * 跳转至“商家的所有成功上架的商品”的页面
+     *
+     * @return ModelAndView
+     */
+    @ApiOperation(value = "businessManagementProductPage", notes = "跳转至“商家的所有成功上架的商品”的页面")
+    @GetMapping(value = "/business/management/product")
+    public ModelAndView businessManagementProductPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "10") int pageSize, HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView();
+        HttpSession session = request.getSession();
+        Business business = (Business) session.getAttribute("business");
+        modelAndView.setViewName("management/business/product-checked");
+        modelAndView.addObject("vo", productService.businessListProducts(business.getBusinessUid(), pageNum, pageSize, PageConstant.PAGE_NAVIGATION_SIZE));
+        return modelAndView;
+    }
+
+    /**
+     * 商家获取某一成功上架商品的详细信息
+     *
+     * @param productUid uid
+     * @return JSON
+     */
+    @ApiOperation(value = "businessManagementProductDetailOperation", notes = "商家获取某一成功上架商品的详细信息")
+    @GetMapping(value = "/business/management/product/detail")
+    @ResponseBody
+    public String businessManagementProductDetailOperation(@RequestParam(name = "uid") String productUid) {
+        JSONObject json = new JSONObject();
+
+        BusinessProductVO vo = productService.businessGetProductByProductUID(productUid);
+        json.put("name", vo.getProduct().getProductName());
+        json.put("upDate", dateFormat.format(vo.getProduct().getProductUpDate()));
+        json.put("stock", vo.getProduct().getProductStock());
+
+        if (vo.getProduct().getProductUnit() == null) {
+            json.put("price", vo.getProduct().getProductPrice() + "元");
+        } else {
+            json.put("price", vo.getProduct().getProductPrice() + "元/" + vo.getProduct().getProductUnit());
+        }
+
+        if (vo.getProduct().getProductDescription() == null) {
+            json.put("description", "暂无描述");
+        } else {
+            json.put("description", vo.getProduct().getProductDescription());
+        }
+
+        if (vo.getMainImage() == null) {
+            json.put("mainImage", "暂无主图片");
+        } else {
+            json.put("mainImage", vo.getMainImage().getProductImagePath());
+        }
+
+        List<String> pathList = new ArrayList<>();
+        if (vo.getOtherImages().size() == 0) {
+            json.put("otherImages", pathList);
+        } else {
+            for (ProductImage productImage : vo.getOtherImages()) {
+                pathList.add(productImage.getProductImagePath());
+            }
+            json.put("otherImages", pathList);
+        }
+
+        json.put("flag", true);
+
+        return json.toString();
     }
 
 }
