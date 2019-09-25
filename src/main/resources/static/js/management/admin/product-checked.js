@@ -2,7 +2,7 @@ $("a[name='gf_detail']").on('click', function () {
     var productUid = $(this).attr("value");
     $.ajax({
         type : "GET",
-        url : "/business/management/product/detail",
+        url : "/greenfarm/admin/management/product/detail/operation",
         dataType : "json",
         data : {
             "uid" : productUid
@@ -18,6 +18,10 @@ $("a[name='gf_detail']").on('click', function () {
                     "<body>" +
                     "<table border='1'>" +
                     "<tr>" +
+                    "<td>商品编号</td>" +
+                    "<td>" + jsonData.uid + "</td>" +
+                    "</tr>" +
+                    "<tr>" +
                     "<td>商品名称</td>" +
                     "<td>" + jsonData.name + "</td>" +
                     "</tr>" +
@@ -26,18 +30,49 @@ $("a[name='gf_detail']").on('click', function () {
                     "<td>" + jsonData.price + "</td>" +
                     "</tr>" +
                     "<tr>" +
-                    "<td>商品库存</td>" +
-                    "<td>" + jsonData.stock + "</td>" +
+                    "<td>商品类型</td>" +
+                    "<td>" + jsonData.type + "</td>" +
                     "</tr>" +
                     "<tr>" +
                     "<td>商品描述</td>" +
                     "<td>" + jsonData.description + "</td>" +
                     "</tr>" +
                     "<tr>" +
+                    "<td>商品当前库存</td>" +
+                    "<td>" + jsonData.stock + "</td>" +
+                    "</tr>" +
+                    "<tr>" +
                     "<td>商品成功上架日期</td>" +
                     "<td>" + jsonData.upDate + "</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td>商品提交审核日期</td>" +
+                    "<td>" + jsonData.submitDate + "</td>" +
                     "</tr>";
                 var suffix = "</table>" +
+                    "<hr/>" +
+                    "<table border='1'>" +
+                    "<tr>" +
+                    "<td>店铺编号</td>" +
+                    "<td>" + jsonData.businessUid + "</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td>店铺名称</td>" +
+                    "<td>" + jsonData.businessName + "</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td>店铺描述</td>" +
+                    "<td>" + jsonData.businessDescription + "</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td>商家会员号</td>" +
+                    "<td>" + jsonData.username + "</td>" +
+                    "</tr>" +
+                    "<tr>" +
+                    "<td>商家昵称</td>" +
+                    "<td>" + jsonData.nickname + "</td>" +
+                    "</tr>" +
+                    "</table>" +
                     "</body>" +
                     "</html>";
                 if (jsonData.mainImage.indexOf("/") !== -1) {
@@ -56,7 +91,6 @@ $("a[name='gf_detail']").on('click', function () {
                         "</tr>"
                 }
                 if (jsonData.otherImages.length !== 0) {
-                    console.log(jsonData.otherImages);
                     content = content + "<tr>" +
                         "<td>商品其他图片</td>" +
                         "<td>";
@@ -83,5 +117,29 @@ $("a[name='gf_detail']").on('click', function () {
                 });
             }
         }
+    });
+});
+
+$("a[name='gf_down']").on('click', function () {
+    var productUid = $(this).attr("value");
+    layer.confirm('确定下架该商品（下架前的订单仍然有效）？', {btn:['是','否'], skin:'layui-layer-lan', closeBtn:0}, function() {
+        $.ajax({
+            type : "GET",
+            url : "/greenfarm/admin/management/product/down/operation",
+            dataType : "json",
+            data : {
+                "uid" : productUid
+            },
+            success : function (jsonData) {
+                if (jsonData.flag === true) {
+                    layer.closeAll();
+                    layer.confirm('操作成功！', {btn:['是'], skin:'layui-layer-lan', closeBtn:0}, function () {
+                        $(location).attr("href", getPathPrefix() + "greenfarm/admin/management/product");
+                    });
+                }
+            }
+        });
+    }, function () {
+        // null operation
     });
 });

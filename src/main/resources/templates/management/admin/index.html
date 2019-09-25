@@ -31,7 +31,10 @@
     <h4>商品管理</h4>
     <ul>
         <li>
-            <a href="#">已有商品</a>
+            <a th:href="@{/greenfarm/admin/management/product}">已上架商品</a>
+        </li>
+        <li>
+            <a th:href="@{/greenfarm/admin/management/product/down}">已下架商品</a>
         </li>
         <li>
             <a th:href="@{/greenfarm/admin/management/product/review}">商品审核</a>

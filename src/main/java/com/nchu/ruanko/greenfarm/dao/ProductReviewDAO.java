@@ -87,4 +87,14 @@ public interface ProductReviewDAO {
             " WHERE rev_uid=#{uid}")
     String getProductUIDByProductReviewUID(@Param(value = "uid") String productReviewUid);
 
+    /**
+     *
+     * @param productUid
+     * @return
+     */
+    @Select("SELECT rev_rtime" +
+            " FROM gf_tb_product_review" +
+            " WHERE rev_product_uid=#{uid}")
+    Date getProductReviewDateByProductUID(@Param(value = "uid") String productUid);
+
 }

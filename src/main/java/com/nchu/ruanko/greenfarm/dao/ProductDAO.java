@@ -2,7 +2,6 @@ package com.nchu.ruanko.greenfarm.dao;
 
 import com.nchu.ruanko.greenfarm.pojo.entity.Product;
 import org.apache.ibatis.annotations.*;
-
 import java.util.Date;
 import java.util.List;
 
@@ -122,7 +121,7 @@ public interface ProductDAO {
     List<String> listNoPassReviewProductUIDs();
 
     /**
-     * 获取当前商家审核通过的商品
+     * 获取当前商家 审核通过 且 上架 的商品
      *
      * @param businessUid
      * @return
@@ -134,7 +133,36 @@ public interface ProductDAO {
             " AND prdt_ctime IS NOT NULL" +
             " AND prdt_ctime<>'1000-01-01 00:00:00'" +
             " AND prdt_ctime<>'1001-01-01 00:00:00'" +
+            " AND prdt_ctime<>'1002-01-01 00:00:00'" +
             " ORDER BY prdt_ctime DESC")
-    List<Product> listPassReviewProductsByBusinessUID(@Param(value = "uid") String businessUid);
+    List<Product> listPassReviewAndUpProductsByBusinessUID(@Param(value = "uid") String businessUid);
+
+    /**
+     * 获取全部 审核通过 且 上架 的商品
+     *
+     * @return
+     */
+    @ResultMap(value = "productMapper1")
+    @Select("SELECT *" +
+            " FROM gf_tb_product" +
+            " WHERE prdt_ctime IS NOT NULL" +
+            " AND prdt_ctime<>'1000-01-01 00:00:00'" +
+            " AND prdt_ctime<>'1001-01-01 00:00:00'" +
+            " AND prdt_ctime<>'1002-01-01 00:00:00'" +
+            " ORDER BY prdt_business_uid ASC")
+    List<Product> listPassReviewAndUpProduct();
+
+    /**
+     * 获取全部 通过审核 且 下架商品
+     *
+     * @return
+     */
+    @ResultMap(value = "productMapper1")
+    @Select("SELECT *" +
+            " FROM gf_tb_product" +
+            " WHERE prdt_ctime='1001-01-01 00:00:00'" +
+            " OR prdt_ctime='1002-01-01 00:00:00'" +
+            " ORDER BY prdt_business_uid ASC")
+    List<Product> listPassReviewAndDownProducts();
 
 }

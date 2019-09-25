@@ -220,7 +220,7 @@ public class ProductServiceImpl implements ProductService {
         BusinessProductPageVO vo = new BusinessProductPageVO();
 
         PageHelper.startPage(pageNum, pageSize);
-        List<Product> productList = productDAO.listPassReviewProductsByBusinessUID(businessUid);
+        List<Product> productList = productDAO.listPassReviewAndUpProductsByBusinessUID(businessUid);
         PageInfo<Product> pageInfo = new PageInfo<>(productList, navigationSize);
 
         List<BusinessProductVO> businessProductVOList = new ArrayList<>();
@@ -240,7 +240,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     /**
-     * 商家获取某一成功上架商品的详细信息
+     * 商家获取某一 成功上架 商品的详细信息
      *
      * @param productUid
      * @return
@@ -253,5 +253,100 @@ public class ProductServiceImpl implements ProductService {
         vo.setOtherImages(productImageDAO.listProductOtherImagesByProductUID(productUid));
         return vo;
     }
+
+    /**
+     * 管理员获取全部成功上架商品的信息
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param navigationSize
+     * @return
+     */
+    @Override
+    public AdminProductPageVO adminListProducts(int pageNum, int pageSize, int navigationSize) {
+        AdminProductPageVO vo = new AdminProductPageVO();
+
+        PageHelper.startPage(pageNum, pageSize);
+        List<Product> productList = productDAO.listPassReviewAndUpProduct();
+        PageInfo<Product> pageInfo = new PageInfo<>(productList, navigationSize);
+
+        List<AdminProductVO> adminProductVOList = new ArrayList<>();
+        for (Product product : productList) {
+            AdminProductVO productVO = new AdminProductVO();
+            productVO.setProduct(product);
+            productVO.setMainImage(productImageDAO.getProductMainImageByProductUID(product.getProductUid()));
+            productVO.setOtherImages(productImageDAO.listProductOtherImagesByProductUID(product.getProductUid()));
+            adminProductVOList.add(productVO);
+        }
+        vo.setPageInfo(pageInfo);
+        vo.setAdminProductVOList(adminProductVOList);
+        return vo;
+    }
+
+    @Override
+    public AdminProductVO adminGetProductByProductUID(String productUid) {
+        AdminProductVO vo = new AdminProductVO();
+        vo.setProduct(productDAO.getProductByProductUID(productUid));
+        vo.setMainImage(productImageDAO.getProductMainImageByProductUID(productUid));
+        vo.setOtherImages(productImageDAO.listProductOtherImagesByProductUID(productUid));
+        vo.setReview(productReviewDAO.getProductReviewByProductUID(productUid));
+        return vo;
+    }
+
+    @Override
+    public void adminDownProduct(String productUid) {
+        try {
+            productDAO.updateProductUpDateByProductUID(dateFormat.parse("1002-01-01 00:00:00"), productUid);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void businessDownProduct(String productUid) {
+        try {
+            productDAO.updateProductUpDateByProductUID(dateFormat.parse("1001-01-01 00:00:00"), productUid);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void adminUpProduct(String productUid) {
+        Date date = productReviewDAO.getProductReviewDateByProductUID(productUid);
+        productDAO.updateProductUpDateByProductUID(date, productUid);
+    }
+
+    @Override
+    public void businessUpProduct(String productUid) {
+        Date date = productReviewDAO.getProductReviewDateByProductUID(productUid);
+        productDAO.updateProductUpDateByProductUID(date, productUid);
+    }
+
+
+    @Override
+    public AdminProductPageVO adminListDownProducts(int pageNum, int pageSize, int navigationSize) {
+        AdminProductPageVO vo = new AdminProductPageVO();
+
+        PageHelper.startPage(pageNum, pageSize);
+        List<Product> productList = productDAO.listPassReviewAndDownProducts();
+        PageInfo<Product> pageInfo = new PageInfo<>(productList, navigationSize);
+
+        List<AdminProductVO> adminProductVOList = new ArrayList<>();
+        for (Product product : productList) {
+            AdminProductVO productVO = new AdminProductVO();
+            productVO.setProduct(product);
+            productVO.setMainImage(productImageDAO.getProductMainImageByProductUID(product.getProductUid()));
+            productVO.setOtherImages(productImageDAO.listProductOtherImagesByProductUID(product.getProductUid()));
+            productVO.setReview(productReviewDAO.getProductReviewByProductUID(product.getProductUid()));
+            adminProductVOList.add(productVO);
+        }
+
+        vo.setPageInfo(pageInfo);
+        vo.setAdminProductVOList(adminProductVOList);
+        return vo;
+    }
+
+
 
 }
