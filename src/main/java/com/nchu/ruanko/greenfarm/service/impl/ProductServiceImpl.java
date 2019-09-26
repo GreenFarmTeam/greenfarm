@@ -347,6 +347,41 @@ public class ProductServiceImpl implements ProductService {
         return vo;
     }
 
+    @Override
+    public BusinessProductPageVO businessListDownProducts(String businessUid, int pageNum, int pageSize, int navigationSize) {
+        BusinessProductPageVO vo = new BusinessProductPageVO();
 
+        PageHelper.startPage(pageNum, pageSize);
+        List<Product> productList = productDAO.listPassReviewAndDownProductsByBusinessUID(businessUid);
+        PageInfo<Product> pageInfo = new PageInfo<>(productList, navigationSize);
+
+        List<BusinessProductVO> businessProductVOList = new ArrayList<>();
+        for (Product product : productList) {
+            BusinessProductVO productVO = new BusinessProductVO();
+            productVO.setProduct(product);
+            productVO.setMainImage(productImageDAO.getProductMainImageByProductUID(product.getProductUid()));
+            productVO.setOtherImages(productImageDAO.listProductOtherImagesByProductUID(product.getProductUid()));
+            businessProductVOList.add(productVO);
+        }
+
+        vo.setBusinessProductVOList(businessProductVOList);
+        vo.setPageInfo(pageInfo);
+        return vo;
+    }
+
+    @Override
+    public void businessSetStockNoLimit(String productUid) {
+        productDAO.updateProductStockByProductUID(null, productUid);
+    }
+
+    @Override
+    public void businessSetStock(int stock, String productUid) {
+        productDAO.updateProductStockByProductUID(stock, productUid);
+    }
+
+    @Override
+    public void businessSetStockNull(String productUid) {
+        productDAO.updateProductStockByProductUID(0, productUid);
+    }
 
 }

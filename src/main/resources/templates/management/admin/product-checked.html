@@ -27,7 +27,7 @@
             <td th:if="${pd.product.productUnit}!=null" th:text="${pd.product.productPrice+'元/'+pd.product.productUnit}"></td>
             <td th:if="${pd.mainImage}==null">暂无商品主图片</td>
             <td th:if="${pd.mainImage}!=null">
-                <a th:href="@{${pd.mainImage.productImagePath}}">
+                <a th:href="@{${pd.mainImage.productImagePath}}" target="_blank">
                     <img th:src="@{${pd.mainImage.productImagePath}}" width="100px" height="100px"/>
                 </a>
             </td>

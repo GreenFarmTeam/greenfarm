@@ -18,6 +18,8 @@ public interface ProductService {
 
     BusinessProductVO businessGetProductByProductUID(String productUid);
 
+    BusinessProductPageVO businessListDownProducts(String businessUid, int pageNum, int pageSize, int navigationSize);
+
     AdminProductPageVO adminListProducts(int pageNum, int pageSize, int navigationSize);
 
     AdminProductVO adminGetProductByProductUID(String productUid);
@@ -37,5 +39,11 @@ public interface ProductService {
     void businessDownProduct(String productUid);
 
     void businessUpProduct(String productUid);
+
+    void businessSetStockNoLimit(String productUid);
+
+    void businessSetStock(int stock, String productUid);
+
+    void businessSetStockNull(String productUid);
 
 }

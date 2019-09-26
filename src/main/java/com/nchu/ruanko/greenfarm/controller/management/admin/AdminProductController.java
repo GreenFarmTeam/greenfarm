@@ -91,26 +91,30 @@ public class AdminProductController {
 
 
     /**
-     * 管理员查看某一个成功上架商品的详细信息
+     * 管理员查看某一个商品的详细信息
      *
      * @param productUid uid
      * @return JSON
      */
-    @ApiOperation(value = "adminProductDetailOperation", notes = "管理员查看某一个成功上架商品的详细信息")
+    @ApiOperation(value = "adminProductDetailOperation", notes = "管理员查看某一个商品的详细信息")
     @GetMapping(value = "/greenfarm/admin/management/product/detail/operation")
     @ResponseBody
     public String adminProductDetailOperation(@RequestParam(name = "uid") String productUid) {
         JSONObject json = new JSONObject();
         AdminProductVO vo = productService.adminGetProductByProductUID(productUid);
-        json.put("uid", vo.getProduct().getProductUid()); //
-        json.put("name", vo.getProduct().getProductName()); //
-        json.put("upDate", dateFormat.format(vo.getProduct().getProductUpDate()));
+        json.put("uid", vo.getProduct().getProductUid());
+        json.put("name", vo.getProduct().getProductName());
+        json.put("upDate", dateFormat.format(vo.getReview().getProductReviewReviewTime()));
         json.put("type", vo.getProduct().getProductType().getTypeName());
         json.put("submitDate", dateFormat.format(vo.getReview().getProductReviewSubmitTime()));
         if (vo.getProduct().getProductStock() == null) {
-            json.put("stock", "库存不限量");
+            json.put("stock", "库存充足");
         } else {
-            json.put("stock", vo.getProduct().getProductStock());
+            if (vo.getProduct().getProductUnit() == null) {
+                json.put("stock", vo.getProduct().getProductStock());
+            } else {
+                json.put("stock", vo.getProduct().getProductStock() + vo.getProduct().getProductUnit());
+            }
         }
         if (vo.getProduct().getProductDescription() == null) {
             json.put("description", "暂无描述");
@@ -156,9 +160,24 @@ public class AdminProductController {
     @GetMapping(value = "/greenfarm/admin/management/product/down/operation")
     @ResponseBody
     public String adminProductDownOperation(@RequestParam(name = "uid") String productUid) {
-        System.out.println(productUid);
         JSONObject json = new JSONObject();
         productService.adminDownProduct(productUid);
+        json.put("flag", true);
+        return json.toString();
+    }
+
+    /**
+     * 管理员恢复上架商品操作
+     *
+     * @param productUid uid
+     * @return JSON
+     */
+    @ApiOperation(value = "adminProductUpOperation", notes = "管理员恢复上架商品操作")
+    @GetMapping(value = "/greenfarm/admin/management/product/up/operation")
+    @ResponseBody
+    public String adminProductUpOperation(@RequestParam(name = "uid") String productUid) {
+        JSONObject json = new JSONObject();
+        productService.adminUpProduct(productUid);
         json.put("flag", true);
         return json.toString();
     }

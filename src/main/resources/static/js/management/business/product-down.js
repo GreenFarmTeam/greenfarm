@@ -1,3 +1,28 @@
+$("a[name='gf_up']").on('click', function () {
+    var productUid = $(this).attr("value");
+    layer.confirm('确定恢复上架该商品？', {btn:['是','否'], skin:'layui-layer-lan', closeBtn:0}, function () {
+        $.ajax({
+            type : "GET",
+            url : "/business/management/product/up/operation",
+            dataType : "json",
+            data : {
+                "uid" : productUid
+            },
+            success : function (jsonData) {
+                if (jsonData.flag === true) {
+                    layer.closeAll();
+                    layer.confirm('操作成功！', {btn:['是'], skin:'layui-layer-lan', closeBtn:0}, function () {
+                        $(location).attr("href", getPathPrefix() + "business/management/product/down");
+                    });
+                }
+            }
+        });
+    }, function () {
+        // null operation
+    });
+});
+
+
 $("a[name='gf_detail']").on('click', function () {
     var productUid = $(this).attr("value");
     $.ajax({
@@ -36,10 +61,6 @@ $("a[name='gf_detail']").on('click', function () {
                     "<tr>" +
                     "<td>商品描述</td>" +
                     "<td>" + jsonData.description + "</td>" +
-                    "</tr>" +
-                    "<tr>" +
-                    "<td>商品成功上架日期</td>" +
-                    "<td>" + jsonData.upDate + "</td>" +
                     "</tr>";
                 var suffix = "</table>" +
                     "</body>" +
@@ -88,67 +109,4 @@ $("a[name='gf_detail']").on('click', function () {
             }
         }
     });
-});
-
-$("a[name='gf_down']").on('click', function () {
-    var productUid = $(this).attr("value");
-    layer.confirm('确定下架该商品（下架前的订单仍然有效）？', {btn:['是','否'], skin:'layui-layer-lan', closeBtn:0}, function () {
-        $.ajax({
-            type : "GET",
-            url : "/business/management/product/down/operation",
-            dataType : "json",
-            data : {
-                "uid" : productUid
-            },
-            success : function (jsonData) {
-                if (jsonData.flag === true) {
-                    layer.closeAll();
-                    layer.confirm('操作成功！', {btn:['是'], skin:'layui-layer-lan', closeBtn:0}, function () {
-                        $(location).attr("href", getPathPrefix() + "business/management/product");
-                    });
-                }
-            }
-        });
-    }, function () {
-        // null operation
-    });
-});
-
-
-$("a[name='gf_stock']").on('click', function () {
-    var productUid = $(this).attr("value");
-    layer.closeAll();
-    var content = "<!DOCTYPE html>" +
-        "<html>" +
-        "<head>" +
-        "<meta charset='UTF-8'>" +
-        "<script type='text/javascript' src='/gfstatic/webjars/jquery/3.4.1/jquery.min.js'></script>" +
-        "<script type='text/javascript' src='/gfstatic/templateone/res/layui/layui.all.js'></script>" +
-        "<script type='text/javascript' src='/gfstatic/js/common/url.js'></script>" +
-        "<script type='text/javascript' src='/gfstatic/js/common/regex.js'></script>" +
-        "</head>" +
-        "<body>" +
-        "<form>" +
-        "<h4>库存</h4>" +
-        "<input type='text' id='gf_stock'/>" +
-        "<br/>" +
-        "<br/>" +
-        "<input type='button' value='确定' id='gf_stock_sure'/>" +
-        "</form>" +
-        "<hr/>" +
-        "<a href='javascript:void(0);' name='gf_stock_nolimit'>设置为“库存充足”</a>" +
-        "<br/>" +
-        "<a href='javascript:void(0);' name='gf_stock_null'>设置库存为零</a>" +
-        "<input type='hidden' value='" + productUid + "' id='gf_product_uid'/>" +
-        "<script type='text/javascript' src='/gfstatic/js/management/business/product-stock.js'></script>" +
-        "</body>" +
-        "</html>";
-    layer.open({
-        type: 1,
-        skin: 'layui-layer-rim',
-        area: ['420px', '240px'],
-        shadeClose: true,
-        content: content
-    });
-
 });

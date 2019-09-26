@@ -33,3 +33,6 @@ var productUnitRegex = /^[\u4E00-\u9FA5]{0,10}$/;
 
 // 商品描述正则
 var productDescriptionRegex = /^[0-9a-zA-Z\u4E00-\u9FA5]{0,125}$/;
+
+// 商品库存正则
+var stockRegex = /^[1-9]\d{1,7}$/;

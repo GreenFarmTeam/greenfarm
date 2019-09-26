@@ -49,6 +49,16 @@ public interface ProductDAO {
 
     /**
      *
+     * @param stock
+     * @param productUid
+     */
+    @Update("UPDATE gf_tb_product" +
+            " SET prdt_stock=#{stock}" +
+            " WHERE prdt_uid=#{uid}")
+    void updateProductStockByProductUID(@Param(value = "stock") Integer stock, @Param(value = "uid") String productUid);
+
+    /**
+     *
      * @param productUid
      */
     @Delete("DELETE FROM gf_tb_product" +
@@ -164,5 +174,19 @@ public interface ProductDAO {
             " OR prdt_ctime='1002-01-01 00:00:00'" +
             " ORDER BY prdt_business_uid ASC")
     List<Product> listPassReviewAndDownProducts();
+
+    /**
+     * 获取当前商家下架的商品
+     *
+     * @param businessUid
+     * @return
+     */
+    @ResultMap(value = "productMapper1")
+    @Select("SELECT *" +
+            " FROM gf_tb_product" +
+            " WHERE prdt_business_uid=#{uid}" +
+            " AND (prdt_ctime='1001-01-01 00:00:00'" +
+            " OR prdt_ctime='1002-01-01 00:00:00')")
+    List<Product> listPassReviewAndDownProductsByBusinessUID(@Param(value = "uid") String businessUid);
 
 }

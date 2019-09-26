@@ -175,7 +175,7 @@ public class BusinessProductController {
      */
     @ApiOperation(value = "businessManagementProductPage", notes = "跳转至“商家的所有成功上架的商品”的页面")
     @GetMapping(value = "/business/management/product")
-    public ModelAndView businessManagementProductPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "1") int pageSize, HttpServletRequest request) {
+    public ModelAndView businessManagementProductPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "10") int pageSize, HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
         HttpSession session = request.getSession();
         Business business = (Business) session.getAttribute("business");
@@ -185,12 +185,12 @@ public class BusinessProductController {
     }
 
     /**
-     * 商家获取某一成功上架商品的详细信息
+     * 商家获取某一个商品的详细信息
      *
      * @param productUid uid
      * @return JSON
      */
-    @ApiOperation(value = "businessManagementProductDetailOperation", notes = "商家获取某一成功上架商品的详细信息")
+    @ApiOperation(value = "businessManagementProductDetailOperation", notes = "商家获取某一个商品的详细信息")
     @GetMapping(value = "/business/management/product/detail")
     @ResponseBody
     public String businessManagementProductDetailOperation(@RequestParam(name = "uid") String productUid) {
@@ -199,8 +199,17 @@ public class BusinessProductController {
         BusinessProductVO vo = productService.businessGetProductByProductUID(productUid);
         json.put("name", vo.getProduct().getProductName());
         json.put("upDate", dateFormat.format(vo.getProduct().getProductUpDate()));
-        json.put("stock", vo.getProduct().getProductStock());
+        json.put("type", vo.getProduct().getProductType().getTypeName());
 
+        if (vo.getProduct().getProductStock() == null) {
+            json.put("stock", "库存充足");
+        } else {
+            if (vo.getProduct().getProductUnit() == null) {
+                json.put("stock", vo.getProduct().getProductStock());
+            } else {
+                json.put("stock", vo.getProduct().getProductStock() + vo.getProduct().getProductUnit());
+            }
+        }
         if (vo.getProduct().getProductUnit() == null) {
             json.put("price", vo.getProduct().getProductPrice() + "元");
         } else {
@@ -231,6 +240,107 @@ public class BusinessProductController {
 
         json.put("flag", true);
 
+        return json.toString();
+    }
+
+    /**
+     *
+     * @param pageNum
+     * @param pageSize
+     * @param request
+     * @return ModelAndView
+     */
+    @ApiOperation(value = "businessManagementProductDownPage", notes = "")
+    @GetMapping(value = "/business/management/product/down")
+    public ModelAndView businessManagementProductDownPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "10") int pageSize, HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView();
+        HttpSession session = request.getSession();
+        Business business = (Business) session.getAttribute("business");
+        modelAndView.setViewName("management/business/product-down");
+        modelAndView.addObject("vo", productService.businessListDownProducts(business.getBusinessUid(), pageNum, pageSize, PageConstant.PAGE_NAVIGATION_SIZE));
+        return modelAndView;
+    }
+
+    /**
+     * 商家下架自己某一商品
+     *
+     * @param productUid uid
+     * @return JSON
+     */
+    @ApiOperation(value = "businessManagementProductDownOperation", notes = "商家下架自己某一商品")
+    @GetMapping(value = "/business/management/product/down/operation")
+    @ResponseBody
+    public String businessManagementProductDownOperation(@RequestParam(name = "uid") String productUid) {
+        JSONObject json = new JSONObject();
+        productService.businessDownProduct(productUid);
+        json.put("flag", true);
+        return json.toString();
+    }
+
+    /**
+     * 商家恢复上架商品
+     *
+     * @param productUid uid
+     * @return JSON
+     */
+    @ApiOperation(value = "businessManagementProductUpOperation", notes = "商家恢复上架商品")
+    @GetMapping(value = "/business/management/product/up/operation")
+    @ResponseBody
+    public String businessManagementProductUpOperation(@RequestParam(name = "uid") String productUid) {
+        JSONObject json = new JSONObject();
+        productService.businessUpProduct(productUid);
+        json.put("flag", true);
+        return json.toString();
+    }
+
+
+    /**
+     * 商家修改库存
+     *
+     * @param stock
+     * @param productUid
+     * @return
+     */
+    @ApiOperation(value = "businessManagementProductModifyStock", notes = "商家修改库存")
+    @PostMapping(value = "/business/management/product/stock/operation")
+    @ResponseBody
+    public String businessManagementProductModifyStock(@RequestParam(name = "stock") Integer stock, @RequestParam(name = "uid") String productUid) {
+        JSONObject json = new JSONObject();
+        productService.businessSetStock(stock, productUid);
+        json.put("flag", true);
+        return json.toString();
+    }
+
+    /**
+     * 商家修改库存为无上限
+     *
+     * @param productUid uid
+     * @return JSON
+     */
+    @ApiOperation(value = "businessManagementProductModifyStockNoLimit", notes = "商家修改库存为无上限")
+    @GetMapping(value = "/business/management/product/stock/nolimit/operation")
+    @ResponseBody
+    public String businessManagementProductModifyStockNoLimit(@RequestParam(value = "uid") String productUid) {
+        JSONObject json = new JSONObject();
+        productService.businessSetStockNoLimit(productUid);
+        json.put("flag", true);
+        return json.toString();
+    }
+
+
+    /**
+     * 商家修改库存为零
+     *
+     * @param productUid uid
+     * @return JSON
+     */
+    @ApiOperation(value = "businessManagementProductModifyStockNull", notes = "商家修改库存为零")
+    @GetMapping(value = "/business/management/product/stock/null/operation")
+    @ResponseBody
+    public String businessManagementProductModifyStockNull(@RequestParam(value = "uid") String productUid) {
+        JSONObject json = new JSONObject();
+        productService.businessSetStockNull(productUid);
+        json.put("flag", true);
         return json.toString();
     }
 
