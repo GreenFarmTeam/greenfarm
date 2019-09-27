@@ -122,16 +122,21 @@ public class RegisterController {
     public String userRegisterWithMailActivateOperation(@RequestParam(name = "uid") String uid, HttpServletRequest request) {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("tempUser");
-        if (!user.getUserUid().equals(uid)) {
-            // TODO 返回错误页面
-            System.out.println("error");
-            session.removeAttribute("tempUser");
-            return null;
+        if (user != null) {
+            if (!user.getUserUid().equals(uid)) {
+                // TODO 返回错误页面
+                System.out.println("error");
+                session.removeAttribute("tempUser");
+                return null;
+            } else {
+                // 激活后，返回“消费者使用密码登录”界面
+                userService.addUser(user);
+                session.removeAttribute("tempUser");
+                return "redirect:/user/password/login";
+            }
         } else {
-            // 激活后，返回“消费者使用密码登录”界面
-            userService.addUser(user);
-            session.removeAttribute("tempUser");
-            return "redirect:/user/password/login";
+            // TODO 返回错误页面
+            return null;
         }
     }
 
