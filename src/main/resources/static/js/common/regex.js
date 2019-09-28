@@ -26,7 +26,7 @@ var addressRegex = /^[0-9a-zA-Z\u4E00-\u9FA5]{5,25}$/;
 var productNameRegex = /^[0-9a-zA-Z\u4E00-\u9FA5]{2,25}$/;
 
 // 商品单价正则
-var productPriceRegex = /^([1-9]\d{1,7})(\.\d{2})$/;
+var productPriceRegex = /^([1-9]{1}\d{0,6})(\.\d{2})$/;
 
 // 商品单位正则
 var productUnitRegex = /^[\u4E00-\u9FA5]{0,10}$/;
@@ -35,4 +35,16 @@ var productUnitRegex = /^[\u4E00-\u9FA5]{0,10}$/;
 var productDescriptionRegex = /^[0-9a-zA-Z\u4E00-\u9FA5]{0,125}$/;
 
 // 商品库存正则
-var stockRegex = /^[1-9]\d{1,7}$/;
+var stockRegex = /^[1-9]{1}\d{0,6}$/;
+
+// 农场租金正则
+var farmPriceRegex = /^([1-9]{1}\d{0,6})(\.\d{2})$/;
+
+// 农场租期年限正则 255
+var farmYearRegex = /^[1-9]{1}\d{0,2}$/;
+
+// 农场面积正则 65535
+var farmAreaRegex = /^[1-9]{1}\d{0,4}$/;
+
+// 农场描述正则
+var farmDescriptionRegex = /^[0-9a-zA-Z\u4E00-\u9FA5]{0,125}$/;

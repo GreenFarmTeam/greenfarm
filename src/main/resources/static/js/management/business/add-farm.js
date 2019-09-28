@@ -1,4 +1,9 @@
-$("#gf_agree").on('change', function () {
+window.onload = function () {
+    var map = initMap("gf_map");
+    markPointByClick(map, "gf_lng", "gf_lat");
+};
+
+$("#gf_agree").on("change", function () {
     var flag = $(this).is(":checked");
     if (flag === true) {
         $("#gf_sure").removeAttr("disabled");
@@ -9,21 +14,24 @@ $("#gf_agree").on('change', function () {
 
 $("#gf_sure").on('click', function () {
     var formData = new FormData();
-    var name = $("#gf_name").val();
-    var price = $("#gf_price").val();
-    var unit = $("#gf_unit").val();
-    var description = $("#gf_desc").val();
     var type = $("#gf_type").val();
+    var price = $("#gf_price").val(); // regex
+    var year = $("#gf_year").val(); // regex
+    var area = $("#gf_area").val(); // regex
+    var unit = $("#gf_unit").val();
+    var description = $("#gf_desc").val(); // regex
     var mainImage = document.getElementById("gf_main_img").files;
     var otherImages = document.getElementById("gf_other_img").files;
-    if (productNameRegex.test(name) === false || productPriceRegex.test(price) === false || productUnitRegex.test(unit) === false || productDescriptionRegex.test(description) === false) {
+    var lng = $("#gf_lng").val();
+    var lat = $("#gf_lat").val();
+    if (farmPriceRegex.test(price) === false || farmYearRegex.test(year) === false || farmAreaRegex.test(area) === false || farmDescriptionRegex.test(description) === false) {
         layer.alert('存在信息格式错误！', {skin:'layui-layer-lan', closeBtn: 0});
     } else {
-        if (type === "default") {
-            layer.alert('请选择商品类型！', {skin:'layui-layer-lan', closeBtn: 0});
+        if (parseInt(year) > 255 || parseInt(area) > 65535) {
+            layer.alert('年限不允许超过255 且 面积不允许超过 65535！', {skin:'layui-layer-lan', closeBtn: 0});
         } else {
-            if (type === "6781b727493c41a2b0bfe2f9df69600e") {
-                layer.alert('农场相关操作请转至“农场管理”！', {skin:'layui-layer-lan', closeBtn: 0});
+            if (lng === "" || lat === "") {
+                layer.alert('请在地图上标注农场的位置！', {skin:'layui-layer-lan', closeBtn: 0});
             } else {
                 var flagMain = true;
                 var flagOther = true;
@@ -31,11 +39,11 @@ $("#gf_sure").on('click', function () {
                 if (mainImage.length !== 0) {
                     var suffixMain = mainImage[0].name.substring(mainImage[0].name.lastIndexOf("."));
                     if (suffixMain !== ".jpg" && suffixMain !== ".jpeg" && suffixMain !== ".gif" && suffixMain !== ".png" && suffixMain !== ".JPG" && suffixMain !== ".JPEG" && suffixMain !== ".GIF" && suffixMain !== ".PNG") {
-                        layer.alert('商品主图片文件格式不符！', {skin:'layui-layer-lan', closeBtn: 0});
+                        layer.alert('农场主图片文件格式不符！', {skin:'layui-layer-lan', closeBtn: 0});
                         flagMain = false;
                     } else {
                         if (mainImage[0].size >= 2 * 1024 * 1024) {
-                            layer.alert('商品主图片大小不能超过2MB！', {skin:'layui-layer-lan', closeBtn: 0});
+                            layer.alert('农场主图片大小不能超过2MB！', {skin:'layui-layer-lan', closeBtn: 0});
                             flagMain = false;
                         } else {
                             flagMain = true;
@@ -45,7 +53,7 @@ $("#gf_sure").on('click', function () {
 
                 if (otherImages.length !== 0) {
                     if (otherImages.length > 5) {
-                        layer.alert('商品其他图片的数量不能超过5张！', {skin:'layui-layer-lan', closeBtn: 0});
+                        layer.alert('农场其他图片的数量不能超过5张！', {skin:'layui-layer-lan', closeBtn: 0});
                         flagOther = false;
                     } else {
                         var sum = 0;
@@ -61,11 +69,11 @@ $("#gf_sure").on('click', function () {
                             }
                         }
                         if (i !== otherImages.length) {
-                            layer.alert('商品其他图片存在文件格式不符 或 单个图片大小超过2MB！', {skin:'layui-layer-lan', closeBtn: 0});
+                            layer.alert('农场其他图片存在文件格式不符 或 单个图片大小超过2MB！', {skin:'layui-layer-lan', closeBtn: 0});
                             flagOther = false;
                         } else {
                             if (sum >= 10 * 1024 * 1024) {
-                                layer.alert('商品其他图片大小不能超过10MB！', {skin:'layui-layer-lan', closeBtn: 0});
+                                layer.alert('农场其他图片大小不能超过10MB！', {skin:'layui-layer-lan', closeBtn: 0});
                                 flagOther = false;
                             } else {
                                 flagOther = true;
@@ -75,13 +83,14 @@ $("#gf_sure").on('click', function () {
                 }
 
                 if (flagMain === true && flagOther === true) {
-                    layer.confirm('确定要上架该商品？', {btn:['是','否'], skin:'layui-layer-lan', closeBtn:0}, function () {
-                        formData.append("name", name);
-                        formData.append("price", price);
+                    layer.confirm('确定要发布该农场信息？', {btn:['是','否'], skin:'layui-layer-lan', closeBtn:0}, function () {
                         formData.append("type", type);
-                        if ($.trim(unit) !== "") {
-                            formData.append("unit", unit);
-                        }
+                        formData.append("price", price);
+                        formData.append("year", year);
+                        formData.append("area", area);
+                        formData.append("unit", unit);
+                        formData.append("lng", lng);
+                        formData.append("lat", lat);
                         if ($.trim(description) !== "") {
                             formData.append("description", description);
                         }
@@ -95,7 +104,7 @@ $("#gf_sure").on('click', function () {
                         }
                         $.ajax({
                             type : "POST",
-                            url : "/business/management/product/add/operation",
+                            url : "/business/management/farm/add/operation",
                             dataType : "json",
                             data : formData,
                             contentType : false,
@@ -106,11 +115,10 @@ $("#gf_sure").on('click', function () {
                                     layer.confirm('操作成功，请等待审核！', {btn:['是'], skin:'layui-layer-lan', closeBtn:0}, function () {
                                         $(location).attr("href", getPathPrefix() + "business/management/index");
                                     });
-                                } else {
-                                    layer.alert(jsonData.reason, {skin:'layui-layer-lan', closeBtn: 0});
                                 }
                             }
                         });
+
                     }, function () {
                         // null operation
                     });
@@ -118,4 +126,5 @@ $("#gf_sure").on('click', function () {
             }
         }
     }
+
 });

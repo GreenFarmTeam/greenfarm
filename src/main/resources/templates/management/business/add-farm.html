@@ -1,0 +1,75 @@
+<!-- TODO 发布农场租赁信息临时页面 -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>发布农场租赁信息临时页面</title>
+    <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/regex.js}"></script>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=f48fcde49f6822707df87e6e395b4d08"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/map.js}"></script>
+    <style rel="stylesheet">
+        #gf_map {
+            width : 600px;
+            height : 450px;
+        }
+    </style>
+</head>
+<body>
+    <form>
+        <label for="gf_type">土地类型</label>
+        <select id="gf_type">
+            <option th:if="${farmTypeList.size()}!=0" th:each="tp:${farmTypeList}" th:value="${tp.farmTypeUid}" th:text="${tp.farmTypeName}"></option>
+        </select>
+        <br/>
+        <br/>
+        <label for="gf_price">租金</label>
+        <input type="text" id="gf_price"/>
+        <br/>
+        <br/>
+        <label for="gf_year">出租年份</label>
+        <input type="text" id="gf_year"/>
+        <br/>
+        <br/>
+        <label for="gf_area">面积（亩）</label>
+        <input type="text" id="gf_area"/>
+        <br/>
+        <br/>
+        <label for="gf_unit">价格单位（请务必选择出清晰的单位）</label>
+        <select id="gf_unit">
+            <option value="1">元/亩/年</option>
+            <option value="2">元/亩</option>
+            <option value="3">元/年</option>
+            <option value="4">元</option>
+        </select>
+        <br/>
+        <br/>
+        <label for="gf_desc">描述</label>
+        <textarea id="gf_desc"></textarea>
+        <br/>
+        <br/>
+        <label for="gf_main_img">主图片</label>
+        <input type="file" id="gf_main_img" accept="image/jpeg,image/png,image/gif">
+        <br/>
+        <br/>
+        <label for="gf_other_img">其他图片</label>
+        <input type="file" id="gf_other_img" multiple="multiple" accept="image/jpeg,image/png,image/gif">
+        <br/>
+        <br/>
+        <label for="gf_map">位置（请在地图中标注出农场的具体的位置）</label>
+        <div id="gf_map"></div>
+        <input type="hidden" id="gf_lng"/>
+        <input type="hidden" id="gf_lat"/>
+        <br/>
+        <br/>
+        <input type="checkbox" id="gf_agree"/>
+        <label for="gf_agree">承诺信息的准确性以及信息发布规范</label>
+        <br/>
+        <br/>
+        <input type="button" value="提交" id="gf_sure" disabled="disabled"/>
+    </form>
+    <script type="text/javascript" th:src="@{/gfstatic/js/management/business/add-farm.js}"></script>
+</body>
+</html>

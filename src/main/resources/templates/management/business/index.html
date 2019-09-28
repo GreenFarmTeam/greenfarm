@@ -40,5 +40,13 @@
     <a th:href="@{/business/management/product/add}">申请上架商品</a>
     <a th:href="@{/business/management/product/review}">商品审核记录</a>
     <hr/>
+    <h4>农场管理</h4>
+    <a href="javascript:void(0);" id="gf_farm_up">我发布的农场租赁信息</a>
+    <a href="javascript:void(0);" id="gf_farm_down">我下线的农场租赁信息</a>
+    <a href="javascript:void(0);" id="gf_farm_submit">申请发布农场租赁信息</a>
+    <a href="javascript:void(0);" id="gf_farm_review">农场租赁信息审核记录</a>
+    <input type="hidden" th:value="${session.business.businessUid}" id="gf_business_uid"/>
+    <hr/>
+    <script type="text/javascript" th:src="@{/gfstatic/js/management/business/index.js}"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-// TODO 先引入：<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=f48fcde49f6822707df87e6e395b4d08"></script>
+// 先引入：<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=f48fcde49f6822707df87e6e395b4d08"></script>
 
 // 初始化地图
 // 参数：地图的容器，一般是<div>，通过id去选择
