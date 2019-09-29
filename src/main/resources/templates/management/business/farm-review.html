@@ -1,0 +1,83 @@
+<!-- TODO 农场审核信息查看临时页面 -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>农场审核信息查看临时页面</title>
+    <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
+</head>
+<body>
+    <table border="1">
+        <tr>
+            <td>土地类型</td>
+            <td>出租年数</td>
+            <td>面积</td>
+            <td>价格</td>
+            <td>描述</td>
+            <td>主图片</td>
+            <td>其他图片</td>
+            <td>位置</td>
+            <td>提交时间</td>
+            <td>审核时间</td>
+            <td>审核结果</td>
+            <td>未通过原因</td>
+        </tr>
+        <tr th:if="${vo.businessFarmReviewVOList.size()}==0">
+            <td colspan="8">暂无数据</td>
+        </tr>
+        <tr th:if="${vo.businessFarmReviewVOList.size()}!=0" th:each="review:${vo.businessFarmReviewVOList}">
+            <td th:text="${review.farm.type.farmTypeName}"></td>
+            <td th:text="${review.farm.farmYear}+'年'"></td>
+            <td th:text="${review.farm.farmArea}+'亩'"></td>
+            <td th:text="${review.farm.farmPrice}+${review.farm.farmUnit}"></td>
+            <td th:if="${review.farm.farmDescription}==null">无描述</td>
+            <td th:if="${review.farm.farmDescription}!=null" th:text="${review.farm.farmDescription}"></td>
+            <td th:if="${review.mainImage}==null">无主图片</td>
+            <td th:if="${review.mainImage}!=null">
+                <a th:href="@{${review.mainImage.farmImagePath}}" target="_blank">
+                    <img th:src="@{${review.mainImage.farmImagePath}}" width="100px" height="100px"/>
+                </a>
+            </td>
+            <td th:if="${review.otherImageList.size()}==0">无其他图片</td>
+            <td th:if="${review.otherImageList.size()}!=0">
+                <a th:each="img:${review.otherImageList}" th:href="@{${img.farmImagePath}}" target="_blank">
+                    <img th:src="${img.farmImagePath}" width="100px" height="100px"/>
+                </a>
+            </td>
+            <td>
+                <a th:href="@{/business/management/farm/map/{lng}/{lat}(lng=${review.farm.farmLongitude},lat=${review.farm.farmLatitude})}" target="_blank">查看地图</a>
+                <a href="javascript:void(0);" name="gf_location" th:attr="data-lng=${review.farm.farmLongitude},data-lat=${review.farm.farmLatitude}">查看2</a>
+            </td>
+            <td th:text="${#dates.format(review.farmReview.farmReviewSubmitTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:if="${review.farmReview.farmReviewReviewTime}==null" colspan="3">审核中</td>
+            <td th:if="${review.farmReview.farmReviewReviewTime}!=null" th:text="${#dates.format(review.farmReview.farmReviewReviewTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+            <td th:if="${review.farmReview.farmReviewReviewTime}!=null and ${review.farmReview.farmReviewResult}==1" colspan="2">通过</td>
+            <td th:if="${review.farmReview.farmReviewReviewTime}!=null and ${review.farmReview.farmReviewResult}==0">未通过</td>
+            <td th:if="${review.farmReview.farmReviewReviewTime}!=null and ${review.farmReview.farmReviewResult}==0" th:text="${review.farmReview.farmReviewReason}"></td>
+        </tr>
+    </table>
+    <hr/>
+    <div th:if="${vo.businessFarmReviewVOList.size()}!=0">
+        <a th:if="${vo.pageInfo.isFirstPage}==true" disabled="disabled">首页</a>
+        <a th:if="${vo.pageInfo.isFirstPage}==false" th:href="@{/business/management/farm/review(page=1)}">首页</a>
+
+        <a th:if="${vo.pageInfo.hasPreviousPage}==false" disabled="disabled">上一页</a>
+        <a th:if="${vo.pageInfo.hasPreviousPage}==true" th:href="@{/business/management/farm/review(page=${vo.pageInfo.pageNum}-1)}">上一页</a>
+
+        <!--<a th:if="${pg}!=${vo.pageInfo.pageNum}" th:each="pg:${vo.pageInfo.navigatepageNums}" th:href="@{/greenfarm/admin/management/business/review(page=${pg})}" th:text="${pg}"></a>-->
+        <!--<a th:if="${pg}==${vo.pageInfo.pageNum}" th:each="pg:${vo.pageInfo.navigatepageNums}" th:text="${pg}" disabled="disabled"></a>-->
+
+        <a th:each="pg:${vo.pageInfo.navigatepageNums}" th:href="@{/business/management/farm/review(page=${pg})}" th:text="${pg}"></a>
+
+
+        <a th:if="${vo.pageInfo.hasNextPage}==false" disabled="disabled">下一页</a>
+        <a th:if="${vo.pageInfo.hasNextPage}==true" th:href="@{/business/management/farm/review(page=${vo.pageInfo.pageNum}+1)}">下一页</a>
+
+        <a th:if="${vo.pageInfo.isLastPage}==true" disabled="disabled">末页</a>
+        <a th:if="${vo.pageInfo.isLastPage}==false" th:href="@{/business/management/farm/review(page=${vo.pageInfo.pages})}">末页</a>
+    </div>
+    <script type="text/javascript" th:src="@{/gfstatic/js/management/business/farm-review.js}"></script>
+</body>
+</html>

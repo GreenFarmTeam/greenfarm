@@ -3,6 +3,7 @@ package com.nchu.ruanko.greenfarm.controller.management.business;
 import com.alibaba.fastjson.JSONObject;
 import com.nchu.ruanko.greenfarm.constant.FarmUnitEnum;
 import com.nchu.ruanko.greenfarm.constant.FileConstant;
+import com.nchu.ruanko.greenfarm.constant.PageConstant;
 import com.nchu.ruanko.greenfarm.pojo.entity.Business;
 import com.nchu.ruanko.greenfarm.pojo.entity.Farm;
 import com.nchu.ruanko.greenfarm.pojo.entity.FarmImage;
@@ -12,10 +13,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
@@ -119,6 +117,26 @@ public class BusinessFarmController {
         json.put("flag", true);
 
         return json.toString();
+    }
+
+    @ApiOperation(value = "businessManagementFarmReviewPage", notes = "跳转至“商家的农场信息审核记录”的页面")
+    @GetMapping(value = "/business/management/farm/review")
+    public ModelAndView businessManagementFarmReviewPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "10") int pageSize, HttpServletRequest request) {
+        ModelAndView modelAndView = new ModelAndView();
+        HttpSession session = request.getSession();
+        Business business = (Business) session.getAttribute("business");
+        modelAndView.setViewName("management/business/farm-review");
+        modelAndView.addObject("vo", farmService.businessListFarmReviewRecords(business.getBusinessUid(), pageNum, pageSize, PageConstant.PAGE_NAVIGATION_SIZE));
+        return modelAndView;
+    }
+
+    @GetMapping(value = "/business/management/farm/map/{lng}/{lat}")
+    public ModelAndView businessManagementFarmMap(@PathVariable(name = "lng") String lng, @PathVariable(name = "lat") String lat) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("management/business/farm-map");
+        modelAndView.addObject("lng", lng);
+        modelAndView.addObject("lat", lat);
+        return modelAndView;
     }
 
 }

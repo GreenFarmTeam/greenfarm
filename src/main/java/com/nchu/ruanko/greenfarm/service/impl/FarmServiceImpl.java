@@ -1,14 +1,19 @@
 package com.nchu.ruanko.greenfarm.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.nchu.ruanko.greenfarm.dao.*;
 import com.nchu.ruanko.greenfarm.pojo.entity.Farm;
 import com.nchu.ruanko.greenfarm.pojo.entity.FarmImage;
 import com.nchu.ruanko.greenfarm.pojo.entity.FarmReview;
 import com.nchu.ruanko.greenfarm.pojo.entity.FarmType;
+import com.nchu.ruanko.greenfarm.pojo.vo.BusinessFarmReviewPageVO;
+import com.nchu.ruanko.greenfarm.pojo.vo.BusinessFarmReviewVO;
 import com.nchu.ruanko.greenfarm.service.FarmService;
 import com.nchu.ruanko.greenfarm.util.string.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -67,4 +72,28 @@ public class FarmServiceImpl implements FarmService {
         farmReview.setFarmReviewReason(null);
         farmReviewDAO.insertFarmReview(farmReview, farmUid);
     }
+
+    @Override
+    public BusinessFarmReviewPageVO businessListFarmReviewRecords(String businessUid, int pageNum, int pageSize, int navigationSize) {
+        BusinessFarmReviewPageVO vo = new BusinessFarmReviewPageVO();
+
+        PageHelper.startPage(pageNum, pageSize);
+        List<Farm> farmList = farmDAO.listFarmsByBusinessUID(businessUid);
+        PageInfo<Farm> pageInfo = new PageInfo<>(farmList, navigationSize);
+
+        List<BusinessFarmReviewVO> businessFarmReviewPageVOList = new ArrayList<>();
+        for (Farm farm : farmList) {
+            BusinessFarmReviewVO reviewVO = new BusinessFarmReviewVO();
+            reviewVO.setFarm(farm);
+            reviewVO.setMainImage(farmImageDAO.getFarmMainImageByFarmUID(farm.getFarmUid()));
+            reviewVO.setOtherImageList(farmImageDAO.listFarmOtherImagesByFarmUID(farm.getFarmUid()));
+            reviewVO.setFarmReview(farmReviewDAO.getFarmReviewByFarmUID(farm.getFarmUid()));
+            businessFarmReviewPageVOList.add(reviewVO);
+        }
+
+        vo.setPageInfo(pageInfo);
+        vo.setBusinessFarmReviewVOList(businessFarmReviewPageVOList);
+        return vo;
+    }
+
 }
