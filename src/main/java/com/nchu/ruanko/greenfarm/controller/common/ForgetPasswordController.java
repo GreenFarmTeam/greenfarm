@@ -53,7 +53,7 @@ public class ForgetPasswordController {
     /**
      * 验证“会员号”，验证成功后进行才能进行下一步
      *
-     * @param key 会员号
+     * @param key 会员号/手机号/邮箱
      * @param vcode 验证码
      * @param request HTTP 请求
      * @return JSON

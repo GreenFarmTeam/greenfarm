@@ -191,11 +191,12 @@ public class UserServiceImpl implements UserService {
      * 基于注册时所用的“邮箱”或“手机”生成“会员号”
      *
      * 一定要考虑如何避免重复
-     *
+     *邮箱：mqq+qq号
      * @param str 邮箱或手机号
      * @return 会员号
      */
     private String generateDefaultUsername(String str) {
+
         String uid = StringUtils.createUUID();
         StringBuilder stringBuilder = new StringBuilder();
         for (int i = 1; i <= 5; i++) {

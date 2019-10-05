@@ -8,6 +8,7 @@ import java.util.Date;
 public class Farm {
 
     private String farmUid;
+    private String farmName;
     private Float farmPrice;
     private String farmUnit;
     private Integer farmYear;
@@ -16,8 +17,17 @@ public class Farm {
     private String farmLongitude;
     private String farmLatitude;
     private Date farmUpDate;
+    private Integer farmState;
     private Business business;
     private FarmType type;
+
+    public Integer getFarmState() {
+        return farmState;
+    }
+
+    public void setFarmState(Integer farmState) {
+        this.farmState = farmState;
+    }
 
     public String getFarmUid() {
         return farmUid;
@@ -105,6 +115,14 @@ public class Farm {
 
     public void setType(FarmType type) {
         this.type = type;
+    }
+
+    public String getFarmName() {
+        return farmName;
+    }
+
+    public void setFarmName(String farmName) {
+        this.farmName = farmName;
     }
 
     @Override

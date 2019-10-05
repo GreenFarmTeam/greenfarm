@@ -283,6 +283,11 @@ public class ProductServiceImpl implements ProductService {
         return vo;
     }
 
+    /**
+     * 加载某一个产品的详细信息
+     * @param productUid
+     * @return
+     */
     @Override
     public AdminProductVO adminGetProductByProductUID(String productUid) {
         AdminProductVO vo = new AdminProductVO();
@@ -311,6 +316,10 @@ public class ProductServiceImpl implements ProductService {
         }
     }
 
+    /**
+     * 管理员同意上架某产品
+     * @param productUid
+     */
     @Override
     public void adminUpProduct(String productUid) {
         Date date = productReviewDAO.getProductReviewDateByProductUID(productUid);

@@ -88,7 +88,7 @@ public interface ProductReviewDAO {
     String getProductUIDByProductReviewUID(@Param(value = "uid") String productReviewUid);
 
     /**
-     *
+     *得到某产品的审核日期
      * @param productUid
      * @return
      */

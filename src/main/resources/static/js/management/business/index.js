@@ -19,7 +19,7 @@ $("#gf_farm_up").on('click', function () {
     if (flag === false) {
         layer.alert('无权进行此方面的业务！', {skin:'layui-layer-lan', closeBtn: 0});
     } else {
-        // $(location).attr("href", getPathPrefix() + "business/management/index");
+        $(location).attr("href", getPathPrefix() + "business/management/farm/up");
     }
 });
 
@@ -27,7 +27,7 @@ $("#gf_farm_down").on('click', function () {
     if (flag === false) {
         layer.alert('无权进行此方面的业务！', {skin:'layui-layer-lan', closeBtn: 0});
     } else {
-        // $(location).attr("href", getPathPrefix() + "business/management/index");
+        $(location).attr("href", getPathPrefix() + "business/management/farm/down");
     }
 });
 

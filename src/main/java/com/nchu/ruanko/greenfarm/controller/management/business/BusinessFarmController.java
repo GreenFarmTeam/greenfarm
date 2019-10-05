@@ -130,13 +130,69 @@ public class BusinessFarmController {
         return modelAndView;
     }
 
-    @GetMapping(value = "/business/management/farm/map/{lng}/{lat}")
-    public ModelAndView businessManagementFarmMap(@PathVariable(name = "lng") String lng, @PathVariable(name = "lat") String lat) {
+    /**
+     * 加载商家发布的农场的信息
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @ApiOperation(value="businessManagementFarmUpPage",notes ="跳转至商家的上架农场页面")
+    @GetMapping(value="/business/management/farm/up")
+    public ModelAndView businessManagementFarmUpPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "10") int pageSize, HttpServletRequest request){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("management/business/farm-map");
-        modelAndView.addObject("lng", lng);
-        modelAndView.addObject("lat", lat);
+        HttpSession session = request.getSession();
+        Business business = (Business) session.getAttribute("business");
+        modelAndView.setViewName("management/business/upping-farm");
+        modelAndView.addObject("vo", farmService.businessListFarm(business.getBusinessUid(),pageNum, pageSize, PageConstant.PAGE_NAVIGATION_SIZE,11));
         return modelAndView;
+    }
+
+    /**
+     * 加载商家下架的农场的信息
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    @ApiOperation(value="businessManagementFarmDownPage",notes ="跳转至商家的下架农场页面")
+    @GetMapping(value="/business/management/farm/down")
+    public ModelAndView businessManagementFarmDownPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "10") int pageSize, HttpServletRequest request){
+        ModelAndView modelAndView = new ModelAndView();
+        HttpSession session = request.getSession();
+        Business business = (Business) session.getAttribute("business");
+        modelAndView.setViewName("management/business/downing-farm");
+        modelAndView.addObject("vo", farmService.businessListFarm(business.getBusinessUid(),pageNum, pageSize, PageConstant.PAGE_NAVIGATION_SIZE,1));
+        return modelAndView;
+    }
+    /**
+     * 商家下架某农场的操作
+     *
+     * @param farmUid
+     * @return
+     */
+    @ApiOperation(value = "businessFarmDownOperation", notes = "商家下架某农场的操作")
+    @GetMapping(value = "/greenfarm/business/management/farm/down/operation")
+    @ResponseBody
+    public String businessFarmDownOperation(@RequestParam(name = "uid") String farmUid) {
+        JSONObject json = new JSONObject();
+        farmService.businessDownFarm(farmUid);
+        json.put("flag", true);
+        return json.toString();
+    }
+
+    /**
+     * 商家上架某农场的操作
+     *
+     * @param farmUid
+     * @return
+     */
+    @ApiOperation(value = "businessFarmDownOperation", notes = "商家上架某农场的操作")
+    @GetMapping(value = "/greenfarm/business/management/farm/up/operation")
+    @ResponseBody
+    public String businessFarmUpOperation(@RequestParam(name = "uid") String farmUid) {
+        JSONObject json = new JSONObject();
+        farmService.businessUpFarm(farmUid);
+        json.put("flag", true);
+        return json.toString();
     }
 
 }

@@ -10,7 +10,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author GreenFarm
  */
 @SpringBootApplication
-@MapperScan("com.nchu.ruanko.greenfarm.dao")
 public class GreenfarmApplication {
 
     public static void main(String[] args) {

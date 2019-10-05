@@ -3,6 +3,8 @@ package com.nchu.ruanko.greenfarm.dao;
 import com.nchu.ruanko.greenfarm.pojo.entity.FarmReview;
 import org.apache.ibatis.annotations.*;
 
+import java.util.Date;
+
 @Mapper
 public interface FarmReviewDAO {
 
@@ -23,4 +25,17 @@ public interface FarmReviewDAO {
             " WHERE rev_farm_uid=#{uid}")
     FarmReview getFarmReviewByFarmUID(@Param(value = "uid") String farmUid);
 
+    @Select("SELECT rev_farm_uid" +
+            " FROM gf_tb_farm_review" +
+            " WHERE rev_uid=#{farmReviewUid}")
+    String getFarmIdByFarmReviewId(String farmReviewUid);
+
+    @Update("update gf_tb_farm_review "+
+            "set rev_rtime=#{date}" +
+            " WHERE rev_uid=#{uid}")
+    void updateFarmReviewReviewTimeByFarmReviewUID(@Param(value = "date")Date date,@Param(value = "uid") String farmReviewUid);
+    @Update(" update gf_tb_farm_review "+
+            " set rev_result=#{result},rev_reason=#{reason} " +
+            " WHERE rev_uid=#{uid}")
+    void updateFarmReviewResultAndFarmReviewReasonByFarmReviewUID(@Param(value = "result")int i,@Param(value = "reason") Object o,@Param(value = "uid") String farmReviewUid);
 }
