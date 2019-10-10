@@ -3,39 +3,75 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>会员注册临时页面</title>
+    <title>会员注册</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/gfstatic/templateone/res/static/css/main.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/gfstatic/templateone/res/static/css/login.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/gfstatic/templateone/res/static/css/admin.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/gfstatic/templateone/res/layui/css/layui.css}">
     <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/regex.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
 </head>
 <body>
-    <form>
-        <input type="radio" name="gf_register_method" id="gf_register_by_mail" value="2"/>邮箱验证注册
-        <br/>
-        <input type="radio" name="gf_register_method" id="gf_register_by_mobile" checked="checked" value="1"/>手机号验证注册
-        <hr/>
-        <label for="gf_password_a">密码</label>
-        <input type="password" id="gf_password_a"/>
-        <br/>
-        <br/>
-        <label for="gf_password_b">确认密码</label>
-        <input type="password" id="gf_password_b"/>
-        <hr/>
-        <label for="gf_mail">邮箱</label>
-        <input type="text" id="gf_mail" autocomplete="off" disabled="disabled"/>
-        <hr/>
-        <label for="gf_phone">联系电话</label>
-        <input type="text" id="gf_phone"/>
-        <br/>
-        <br/>
-        <label for="gf_vcode">验证码</label>
+    <div class="layadmin-user-login layadmin-user-display-show" id="LAY-user-login" style="display: none;">
+        <div class="layadmin-user-login-main">
+            <div class="layadmin-user-login-box layadmin-user-login-header">
+                <h2>绿色农场会员注册</h2>
+            </div>
+            <form>
+            <div class="layadmin-user-login-box layadmin-user-login-body layui-form">
+                <!--选择注册方式-->
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <input type="radio" name="gf_register_method" id="gf_register_by_mail" value="2" lay-filter="register_method" title="邮箱验证注册">
+                        <input type="radio" name="gf_register_method" id="gf_register_by_mobile" checked value="1" lay-filter="register_method" title="手机验证注册">
+                    </div>
+                </div>
+                <!--手机-->
+                <div class="layui-form-item">
+                    <label class="layadmin-user-login-icon layui-icon layui-icon-cellphone" for="gf_phone"></label>
+                    <input type="text" name="cellphone" id="gf_phone" lay-verify="phone" placeholder="手机" class="layui-input">
+                </div>
+                <!--邮箱-->
+                <div class="layui-form-item">
+                    <label class="layadmin-user-login-icon layui-icon layui-icon-cellphone" for="gf_mail"></label>
+                    <input type="text" name="mail" id="gf_mail" autocomplete="off" disabled="disabled" lay-verify="phone" style="display: none" placeholder="邮箱" class="layui-input">
+                </div>
+                <!--手机验证码-->
+                <div class="layui-form-item">
+                    <div class="layui-row">
+                        <div class="layui-col-xs7">
+                            <label class="layadmin-user-login-icon layui-icon layui-icon-vercode" for="gf_vcode"></label>
+                            <input type="text" name="vercode" id="gf_vcode" lay-verify="required" placeholder="手机验证码" class="layui-input">
+                        </div>
+                        <div class="layui-col-xs5">
+                            <div style="margin-left: 10px;">
+                                <button type="button" class="layui-btn layui-btn-primary layui-btn-fluid" id="gf_get_vcode" autocomplete="off">获取验证码</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--密码-->
+                <div class="layui-form-item">
+                    <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="gf_password_a"></label>
+                    <input type="password" name="password" id="gf_password_a" lay-verify="pass" placeholder="密码" class="layui-input">
+                </div>
+                <div class="layui-form-item">
+                    <label class="layadmin-user-login-icon layui-icon layui-icon-password" for="gf_password_b"></label>
+                    <input type="password" name="repass" id="gf_password_b" lay-verify="required" placeholder="确认密码" class="layui-input">
+                </div>
+                <!--注册-->
+                <div class="layui-form-item">
+                    <input type="button" id="gf_register" class="layui-btn layui-btn-fluid" value="注 册">
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
 
-        <input type="text" id="gf_vcode"/>
-        <input type="button" id="gf_get_vcode" autocomplete="off" value="获取短信验证码"/>
-        <hr/>
-        <input type="button" id="gf_register" value="注册"/>
-    </form>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/user/register.js}"></script>
+
 </body>
+
 </html>

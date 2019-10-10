@@ -9,7 +9,7 @@ import com.nchu.ruanko.greenfarm.service.FarmService;
 import com.nchu.ruanko.greenfarm.util.string.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.security.krb5.internal.PAData;
+//import sun.security.krb5.internal.PAData;
 
 import java.text.ParseException;
 import java.util.ArrayList;
