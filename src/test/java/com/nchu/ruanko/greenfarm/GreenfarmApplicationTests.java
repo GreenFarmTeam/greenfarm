@@ -1,15 +1,12 @@
 package com.nchu.ruanko.greenfarm;
 
-import com.nchu.ruanko.greenfarm.dao.BusinessDAO;
-import com.nchu.ruanko.greenfarm.dao.BusinessReviewDAO;
-import com.nchu.ruanko.greenfarm.dao.BusinessScopeDAO;
-import com.nchu.ruanko.greenfarm.dao.ProductTypeDAO;
-import com.nchu.ruanko.greenfarm.pojo.entity.BusinessReview;
-import com.nchu.ruanko.greenfarm.pojo.entity.BusinessScope;
-import com.nchu.ruanko.greenfarm.pojo.entity.ProductType;
+import com.nchu.ruanko.greenfarm.dao.*;
+import com.nchu.ruanko.greenfarm.pojo.entity.*;
 import com.nchu.ruanko.greenfarm.pojo.vo.AdminBusinessReviewPageVO;
+import com.nchu.ruanko.greenfarm.pojo.vo.BusinessProductReviewPageVO;
 import com.nchu.ruanko.greenfarm.service.BusinessService;
 import com.nchu.ruanko.greenfarm.service.MailService;
+import com.nchu.ruanko.greenfarm.service.ProductService;
 import com.nchu.ruanko.greenfarm.util.string.StringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -47,36 +44,56 @@ public class GreenfarmApplicationTests {
     @Autowired
     private BusinessService businessService;
 
+    @Autowired
+    private ProvinceDAO provinceDAO;
+
+    @Autowired
+    private AddressDAO addressDAO;
+
+    @Autowired
+    private ProductDAO productDAO;
+
+    @Autowired
+    private ProductImageDAO productImageDAO;
+
+    @Autowired
+    private ProductReviewDAO productReviewDAO;
+
+    @Autowired
+    private ProductService productService;
+
+    @Autowired
+    private FarmTypeDAO farmTypeDAO;
+
+    @Autowired
+    private FarmDAO farmDAO;
+
+    @Autowired
+    private FarmImageDAO farmImageDAO;
+
+    @Autowired
+    private FarmReviewDAO farmReviewDAO;
+
     @Test
     public void contextLoads() {
-//        User user1 = userDAO.getUserByUsernameAndPassword("2", "3");
-//        System.out.println(user1);
-//        User user2 = userDAO.getUserByPhoneAndPassword("51", "7");
-//        System.out.println(user2);
-//        User user3 = userDAO.getUserByMailAndPassword("6", "3");
-//        System.out.println(user3);
-//        User user4 = userDAO.getUserByUsernameAndPassword("a", "b");
-//        System.out.println(user4);
-//        user3.setUserUid("100");
-//        user3.setUserIsBusiness(1);
-//        userDAO.insertUser(user3);
-//        List<ProductType> productTypes = productTypeDAO.listAllProductTypes();
-//        System.out.println(productTypes);
-//        List<BusinessScope> businessScopeList = businessScopeDAO.listBusinessScopesByBusinessUID("ff238f7eae8b4953b9ad923191e989f7");
-//        System.out.println(businessScopeList);
-//        System.out.println(businessDAO.getBusinessByUID("252b52398a594740b608cd618870c169"));
-//        System.out.println(businessDAO.countBusinessByUserUID("252b52398a594740b608cd618870c169"));
-//        System.out.println(businessDAO.countBusinessByUserUID("1d0602ec9316495182f6506a2dbec573"));
-//        BusinessReview review = new BusinessReview();
-//        review.setReviewUid(StringUtils.createUUID());
-//        review.setReviewSubmitTime(new Date());
-//        businessReviewDAO.insertBusinessReview(review, "ff238f7eae8b4953b9ad923191e989f7");
-//        List<BusinessReview> businessReviewList = businessReviewDAO.listBusinessReviewsByBusinessUID("aac58037374a4ba4afa8274c8256dff4");
-//        System.out.println(businessReviewList);
-//        System.out.println(businessReviewDAO.listUnfinishedBusinessReviews());
-//        AdminBusinessReviewPageVO vo = businessService.listBusinessReviewsWithPage(1, 10, 10);
-//        System.out.println(vo.getPageInfo());
-//        System.out.println(businessReviewDAO.getBusinessReviewByReviewUID("36e76e4c1c6545b4b09873a9201f23a3"));
+//        List<ProductImage> images = productImageDAO.listProductImagesByProductUID("bb6670070a4e4307b79a0a04674c5499");
+//        for (ProductImage image : images) {
+//            System.out.println(image);
+//        }
+//        ProductReview review = productReviewDAO.getProductReviewByProductUID("bb6670070a4e4307b79a0a04674c5499");
+//        System.out.println(review);
+//        BusinessProductReviewPageVO vo = productService.listBusinessProductReviewRecords("176672c18082419caf15213d364a8ca6", 1, 1, 10);
+//        System.out.println(vo.getBusinessProductReviewVOList().isEmpty());
+//        List<Product> productList = productDAO.listProductsByBusinessUID("176672c18082419caf15213d364a8ca6");
+//        System.out.println(productList);
+//        List<Product> productList = productDAO.listUnreviewedProduct();
+//        System.out.println(productList);
+//        List<FarmType> typeList = farmTypeDAO.listFarmTypes();
+//        System.out.println(typeList);
+//        System.out.println(farmDAO.listFarmsByBusinessUID("176672c18082419caf15213d364a8ca6"));
+//        System.out.println(farmImageDAO.getFarmMainImageByFarmUID("06fe449db1d54d1db55cc27212d5db49"));
+//        System.out.println(farmImageDAO.listFarmOtherImagesByFarmUID("06fe449db1d54d1db55cc27212d5db49"));
+//        System.out.println(farmReviewDAO.getFarmReviewByFarmUID("06fe449db1d54d1db55cc27212d5db49"));
     }
 
 }

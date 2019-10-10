@@ -53,7 +53,7 @@
         </dependency>
 
         <!-- MySQL -->
-        <!-- TODO 开发时依据本机数据库选择版本 -->
+        <!-- 开发时依据本机数据库选择版本 -->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
