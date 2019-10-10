@@ -37,6 +37,7 @@ public class AdminBusinessController {
     @ApiOperation(value = "adminReviewBusinessPage", notes = "")
     @GetMapping(value = "/greenfarm/admin/management/business/review")
     public ModelAndView adminReviewBusinessPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "10") int pageSize) {
+        System.out.println("商家审核！！！！！！！！！");
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("management/admin/review-business");
         modelAndView.addObject("vo", businessService.listBusinessReviewsWithPage(pageNum, pageSize, PAGE_NAVIGATION_SIZE));
@@ -56,6 +57,7 @@ public class AdminBusinessController {
         modelAndView.addObject("vo", businessService.getBusinessReviewDetailByReviewUID(reviewUid));
         return modelAndView;
     }
+
 
     /**
      * 管理员同意申请
@@ -116,7 +118,7 @@ public class AdminBusinessController {
     public ModelAndView loadAllLegalBusiness(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "10") int pageSize){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("vo", businessService.listAllLegalBusinessWithPage(pageNum, pageSize, PAGE_NAVIGATION_SIZE));
-        modelAndView.setViewName("management/admin/business-checked");
+        modelAndView.setViewName("management/admin/business-list");
         return modelAndView;
     }
 
@@ -131,10 +133,22 @@ public class AdminBusinessController {
         ModelAndView modelAndView = new ModelAndView();
         AdminBusinessDetailVO vo = new AdminBusinessDetailVO();
         modelAndView.setViewName("management/admin/business-detail");
+        System.out.println("businessUid:"+businessUid);
         vo.setBusiness(businessService.getBusinessDetailByBusinessUID(businessUid));
         vo.setBusinessScopeList(businessService.listBusinessScopesByBusinessUID(businessUid));
         modelAndView.addObject("vo",vo);
         return modelAndView;
+    }
+
+    @ApiOperation(value="adminEditBusinessDetail",notes="管理员修改商家的信息")
+    @PostMapping(value="/admin/management/business/edit/operation")
+    @ResponseBody
+    public String adminEditBusinessDetail(@RequestParam(name = "businessUID") String businessUID,@RequestParam(name = "nickName") String nickName,@RequestParam(name = "shopName") String shopName,@RequestParam(name = "businessDescription") String businessDescription){
+        JSONObject json = new JSONObject();
+        businessService.adminEditBusinessInfo(businessUID,nickName,shopName,businessDescription);
+        json.put("flag", true);
+        json.put("businessUID", businessUID);
+        return json.toString();
     }
 
 }

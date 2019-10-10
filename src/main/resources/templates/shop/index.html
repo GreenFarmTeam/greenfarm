@@ -7,6 +7,9 @@
     <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
     <a th:if="${session.user}==null" th:href="@{/user/password/login}">登录</a>
@@ -24,6 +27,22 @@
     <a th:if="${session.user}!=null" href="javascript:void(0)" id="gf_logout">注销</a>
     <br/>
     <br/>
+
+    <!--<nav class="navbar navbar-inverse" role="navigation" th:if="${productTypeList.size()}==0">
+        暂无审核记录
+    <nav/>-->
+    <nav class="navbar navbar-inverse" role="navigation">
+
+        <div class="container-fluid">
+                <ul class="nav navbar-nav" th:each="rv:${productTypeList}">
+
+                    <li class="active"><a href="javascript:void(0);" name="productType" th:text="${rv.getTypeName()}"></a></li>
+
+                </ul>
+        </div>
+    </nav>
+    <!--<table style=""></table>-->
+
     <script type="text/javascript" th:src="@{/gfstatic/js/common/user/logout.js}"></script>
 </body>
 </html>

@@ -17,6 +17,7 @@
             <td>操作</td>
         </tr>
         <tr th:each="br:${vo.businessReviewList}">
+
             <td th:text="${br.reviewUid}"></td>
             <td th:text="${br.business.user.userUsername}"></td>
             <td th:text="${#dates.format(br.reviewSubmitTime, 'yyyy-MM-dd HH:mm:ss')}"></td>

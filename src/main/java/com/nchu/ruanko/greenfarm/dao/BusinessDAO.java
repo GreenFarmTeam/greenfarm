@@ -107,4 +107,14 @@ public interface BusinessDAO {
             " WHERE bus_user_uid=#{uid}")
     int countBusinessByUserUID(@Param(value = "uid") String userUid);
 
+    /**
+     * 管理员修改商铺描述以及商铺名
+     * @param businessUID
+     * @param shopName
+     * @param businessDescription
+     */
+    @Update("UPDATE gf_tb_business" +
+            " SET bus_shop_name=#{businessShopName},bus_shop_desc=#{businessShopDescription}" +
+            " WHERE bus_uid=#{uid}")
+    void adminUpdateBusinessByBusinessUID(@Param("uid") String businessUID,@Param("businessShopName")String shopName, @Param("businessShopDescription")String businessDescription);
 }
