@@ -30,4 +30,10 @@ public interface FarmImageDAO {
             " AND img_is_main=0")
     List<FarmImage> listFarmOtherImagesByFarmUID(@Param(value = "uid") String farmUid);
 
+
+    @Select("select *"+
+           "from gf_tb_farm_image "+"" +
+            " WHERE img_farm_uid=#{uid}" +
+            " AND img_is_main=1")
+    List<FarmImage> getFarmOtherImageByFarmUID(String farmUid);
 }

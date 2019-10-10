@@ -25,7 +25,9 @@ public class AddressCascadeController {
     private static final String METHOD = "GET";
     private static final String APP_CODE = "b8334e2c6bfe4673afdfba5a9308b909";
 
+    /**非授权信息**/
     private static final String NONE_SUB_STATUS = "203";
+    /**返回0代表成功找到结果**/
     private static final String OK_STATUS = "0";
 
     @GetMapping(value = "/address/level")
@@ -38,7 +40,13 @@ public class AddressCascadeController {
         querys.put("parentid", parentLevelId);
         try {
             HttpResponse response = AliyunHttpUtils.doGet(HOST, PATH, METHOD, headers, querys);
+
+            /*System.out.println("response.getEntity():"+response.getEntity());*/
+
+            /**获得子地区的结果集信息**/
             String tmp = EntityUtils.toString(response.getEntity());
+           /* System.out.println("tmp:"+tmp);*/
+            /**转化成JSON对象方便取出其中的数据**/
             JSONObject apiReturnJson = JSON.parseObject(tmp);
             String status = apiReturnJson.getString("status");
             if (OK_STATUS.equals(status)) {

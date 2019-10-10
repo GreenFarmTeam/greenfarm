@@ -28,6 +28,8 @@ public final class StringUtils {
         return DigestUtils.md5Hex(temp2);
     }
 
+
+
     /**
      * 进行 Base64 编码
      *

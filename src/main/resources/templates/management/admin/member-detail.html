@@ -1,0 +1,140 @@
+<!DOCTYPE html >
+<html lang='cn' xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title>会员详情页面</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/regex.js}"></script>
+    <link th:href="@{/gfstatic/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/bootstrap-responsive.min.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/style-metro.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/style.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/style-responsive.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/default.css}" rel="stylesheet" type="text/css" id="style_color" />
+    <link th:href="@{/gfstatic/css/uniform.default.css}" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" th:href="@{/gfstatic/image/favicon.ico}" />
+</head>
+
+<body>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <h3 class="page-title"><i class="fa fa-user-circle"></i>会员管理</h3>
+        <ul class="breadcrumb">
+            <li>
+                <a href="/admin/user/list.html"><i class="fa fa-home"></i>会员管理</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="#">会员详情</a>
+            </li>
+        </ul>
+    </div>
+    <div class="row-fluid">
+        <div class="portlet box green">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-reorder"></i>
+                    查看会员信息
+                </div>
+            </div>
+            <div class="portlet-body">
+                <form class="form-horizontal" >
+                    <div class="control-group">
+                        <label class="control-label">会员UID：</label>
+                        <div class="controls">
+                            <input name="id" th:value="${vo.userUid}" readonly="readonly" type="text" class="m-wrap media" />
+                            <span class="help-inline"></span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">会员号：</label>
+                        <div class="controls">
+                            <input name="username" th:value="${vo.userUsername}" readonly="readonly"  type="text" class="m-wrap media" />
+                            <!--<span class="help-inline">username</span>-->
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">昵称：</label>
+                        <div class="controls">
+                            <input name="nickName" th:value="${vo.userNickname}"  readonly="readonly" type="text" class="m-wrap media" />
+                            <!-- <span class="help-inline">name</span>-->
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">真实姓名：</label>
+                        <div class="controls">
+                            <input name="realName" th:value="${vo.userRealname}" readonly="readonly"  type="text" class="m-wrap media" />
+                            <!--<span class="help-inline">realName</span>-->
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">联系电话：</label>
+                        <div class="controls">
+                            <td th:if="${vo.userPhone}==null" th:class="error">暂未绑定手机号<input name="phone"  type="hidden" class="m-wrap media" /></td>
+                            <td th:if="${vo.userPhone}!=null">
+                                <input name="phone" th:value="${vo.userPhone}" readonly="readonly"  type="text" class="m-wrap media" />
+                                <!--<span class="help-inline">phone</span>-->
+                            </td>
+
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">电子邮箱：</label>
+                        <div class="controls">
+                            <td th:if="${vo.userMail}==null" th:class="error">暂未绑定邮箱<input name="email" type="hidden" class="m-wrap media" /></td>
+                            <td th:if="${vo.userMail}!=null">
+                                <input name="email" th:value="${vo.userMail}" readonly="readonly" type="text" class="m-wrap media" />
+                                <!--<span class="help-inline">email</span>-->
+                            </td>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">身份证号：</label>
+                        <div class="controls">
+                            <input name="idCard" th:value="${vo.getUserIdcard()}" readonly="readonly" type="text" class="m-wrap media" />
+                            <!--<span class="help-inline">idCard</span>-->
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">注册时间：</label>
+                        <div class="controls">
+                            <input name="registTime"type="text" readonly="readonly" th:value="${#dates.format(vo.userTime,'yyyy-MM-dd HH:mm:ss')}"  class="m-wrap media" />
+                            <!-- <span class="help-inline">registTime</span>-->
+
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" id="back" class="btn"><i class="fa fa-times"></i>返回</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--<script th:src="@{/gfstatic/js/vue/jquery-1.10.1.min.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/jquery-migrate-1.2.1.min.js}" type="text/javascript"></script>
+&lt;!&ndash; IMPORTANT! Load jquery-ui-1.10.1.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip &ndash;&gt;
+<script th:src="@{/gfstatic/js/vue/jquery-ui-1.10.1.custom.min.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/bootstrap.min.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/jquery.slimscroll.min.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/jquery.blockui.min.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/jquery.cookie.min.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/jquery.uniform.min.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/app.js}" type="text/javascript"></script>-->
+    <script th:src="@{/gfstatic/js/management/admin/member-detail.js}" type="text/javascript"></script>
+</body>
+
+</html>

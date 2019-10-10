@@ -13,38 +13,41 @@ var nicknameRegex = /^[0-9a-zA-Z\u4E00-\u9FA5]{1,25}$/;
 // 身份证号正则 正常身份证号
 var idcardRegex = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
 
-// 商店名称正则  数字、字母 汉字6-15位
-var shopNameRegex = /^[0-9a-zA-Z\u4E00-\u9FA5]{6,15}$/;
+// 商店名称正则    数字、字母 汉字4-15位
+var shopNameRegex = /^[0-9a-zA-Z\u4E00-\u9FA5]{4,15}$/;
 
-// 收货地址姓名正则
-var addressNameRegex = /^[0-9a-zA-Z\u4E00-\u9FA5]{2,10}$/;
+// 商铺描述正则         数字、字母 汉字0-255位(含标点)
+var businessShopDescriptionRegex = /^[0-9a-zA-Z\u4E00-\u9FA5\u3002\uff1f\uff01\uff0c\u3001\uff1b\uff1a\u201c\u201d\u2018\u2019\uff08\uff09\u300a\u300b\u3008\u3009\u3010\u3011\u300e\u300f\u300c\u300d\ufe43\ufe44\u3014\u3015\u2026\u2014\uff5e\ufe4f\uffe5]{0,125}$/;
 
-// 收货详细地址正则
-var addressRegex = /^[0-9a-zA-Z\u4E00-\u9FA5]{5,25}$/;
+// 收货地址姓名正则 数字、字母 汉字2-255位
+var addressNameRegex = /^[0-9a-zA-Z\u4E00-\u9FA5]{2,255}$/;
 
-// 商品名称正则
+// 收货详细地址正则 数字、字母 汉字2-255位(含标点)
+var addressRegex = /^[0-9a-zA-Z\u4E00-\u9FA5\u3002\uff1f\uff01\uff0c\u3001\uff1b\uff1a\u201c\u201d\u2018\u2019\uff08\uff09\u300a\u300b\u3008\u3009\u3010\u3011\u300e\u300f\u300c\u300d\ufe43\ufe44\u3014\u3015\u2026\u2014\uff5e\ufe4f\uffe5]{0,125}$/;
+
+// 商品名称正则    数字、字母 汉字2-25位
 var productNameRegex = /^[0-9a-zA-Z\u4E00-\u9FA5]{2,25}$/;
 
-// 商品单价正则
-var productPriceRegex = /^([1-9]{1}\d{0,6})(\.\d{2})$/;
+// 商品单价正则           大于0的且小数点后精确2位的数值
+var productPriceRegex = /^([1-9]{1}\d{0,6}|0{1})(\.\d{2})$/;
 
-// 商品单位正则
-var productUnitRegex = /^[\u4E00-\u9FA5]{0,10}$/;
+// 商品单位正则         汉字1-2位
+var productUnitRegex = /^[\u4E00-\u9FA5]{1,2}$/;
 
-// 商品描述正则
-var productDescriptionRegex = /^[0-9a-zA-Z\u4E00-\u9FA5]{0,125}$/;
+// 商品描述正则         数字、字母 汉字0-255位(含标点)
+var productDescriptionRegex = /^[0-9a-zA-Z\u4E00-\u9FA5\u3002\uff1f\uff01\uff0c\u3001\uff1b\uff1a\u201c\u201d\u2018\u2019\uff08\uff09\u300a\u300b\u3008\u3009\u3010\u3011\u300e\u300f\u300c\u300d\ufe43\ufe44\u3014\u3015\u2026\u2014\uff5e\ufe4f\uffe5]{0,125}$/;
 
-// 商品库存正则
+// 商品库存正则 大于零的整数，最大值9999999
 var stockRegex = /^[1-9]{1}\d{0,6}$/;
 
-// 农场租金正则
-var farmPriceRegex = /^([1-9]{1}\d{0,6})(\.\d{2})$/;
+// 农场租金正则      大于0的且小数点后精确2位的数值
+var farmPriceRegex = /^([1-9]{1}\d{0,6}|0{1})(\.\d{2})$/;
 
-// 农场租期年限正则 255
+// 农场租期年限正则 1-99年
 var farmYearRegex = /^[1-9]{1}\d{0,2}$/;
 
-// 农场面积正则 65535
+// 农场面积正则 1-9999亩
 var farmAreaRegex = /^[1-9]{1}\d{0,4}$/;
 
-// 农场描述正则
-var farmDescriptionRegex = /^[0-9a-zA-Z\u4E00-\u9FA5]{0,125}$/;
+// 农场描述正则 0-9/a-z/A-Z/汉字(含标点)
+var farmDescriptionRegex = /^[0-9a-zA-Z\u4E00-\u9FA5\u3002\uff1f\uff01\uff0c\u3001\uff1b\uff1a\u201c\u201d\u2018\u2019\uff08\uff09\u300a\u300b\u3008\u3009\u3010\u3011\u300e\u300f\u300c\u300d\ufe43\ufe44\u3014\u3015\u2026\u2014\uff5e\ufe4f\uffe5]{0,125}$/;

@@ -20,7 +20,7 @@ $("a[name='gf_location']").on('click', function () {
         type: 1,
         skin: 'layui-layer-rim',
         area: ['600px', '450px'],
-        shadeClose: true,
+        shadeClose: false,
         content: content
     });
 });

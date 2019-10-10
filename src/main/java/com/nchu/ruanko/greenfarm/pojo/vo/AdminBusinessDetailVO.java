@@ -7,6 +7,7 @@ import java.util.List;
 public class AdminBusinessDetailVO {
 
     private Business business;
+
     private List<BusinessScope> businessScopeList;
 
     public Business getBusiness() {

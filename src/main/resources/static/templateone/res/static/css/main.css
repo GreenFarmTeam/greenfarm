@@ -283,15 +283,15 @@ i{font-style: normal;}
 /*login*/
 .login-content .login-bg{width: 100%; background: url(../img/load_bg.jpg) no-repeat; background-size: cover;}
 .login-content .login-bg .login-cont{ height: 772px; position: relative;}
-.login-content .login-bg .login-cont .form-box{width: 300px; height: 390px; border:1px solid #d9dadc; background: #fff; position: absolute; top: 196px; right: 90px; padding:0 30px;}
-.login-content .login-bg .login-cont .form-box legend{font-size: 20px; color: #323232; text-align: center; padding:50px 0;}
 .login-content .login-bg .login-cont .layui-inline,.login-content .login-bg .login-cont .layui-input-inline{width: 100%; position: relative;}
 .login-content .login-bg .login-cont .layui-input-inline .iphone-icon{position: absolute; top: 8px; left: 10px; color: #d3d3d3; font-size: 20px;}
-.login-content .login-bg .login-cont .iphone{margin-bottom: 20px;}
+.login-content .login-bg .login-cont .layui-input-inline input{height:50px;}
+.login-content .login-bg .login-cont .iphone{margin-bottom: 10px;}
 .login-content .login-bg .login-cont .iphone .layui-input{padding-left: 40px;}
 .login-content .login-bg .login-cont .veri-code .layui-btn{width: 102px; background: #eeeeee; text-align: center; color: #333; height: 36px; line-height: 36px; display: inline-block; border:none; cursor: pointer; position: absolute; top: 1px; right: 1px; font-size: 12px; padding:0 14px;}
-.login-content .login-bg .login-cont .login-btn .layui-input-block{margin-left: 0; padding-top: 25px;}
-.login-content .login-bg .login-cont .login-btn .layui-input-block button{width: 100%; background: #cfb2f6; font-size: 18px;}
+.login-content .login-bg .login-cont .login-btn .layui-input-block{margin-left: 0; }
+.login-content .login-bg .login-cont .login-btn .layui-input-block button{width: 100%; font-size: 18px;}
+.layadmin-link{color:#029789!important}.layadmin-link:hover{opacity:.8}
 /*end-login*/
 
 
