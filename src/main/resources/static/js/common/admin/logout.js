@@ -1,3 +1,6 @@
+
+
+
 // 注销
 $("#gf_logout").on('click', function () {
     layer.confirm('确定要退出？', {btn:['是','否'], closeBtn:0}, function() {

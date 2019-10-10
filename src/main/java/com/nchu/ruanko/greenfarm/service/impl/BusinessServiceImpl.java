@@ -14,6 +14,7 @@ import com.nchu.ruanko.greenfarm.pojo.vo.AdminBusinessLegalPageVO;
 import com.nchu.ruanko.greenfarm.pojo.vo.AdminBusinessReviewDetailVO;
 import com.nchu.ruanko.greenfarm.pojo.vo.AdminBusinessReviewPageVO;
 import com.nchu.ruanko.greenfarm.service.BusinessService;
+import com.nchu.ruanko.greenfarm.service.MemberService;
 import com.nchu.ruanko.greenfarm.util.string.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -152,6 +153,21 @@ public class BusinessServiceImpl implements BusinessService {
     @Override
     public boolean checkExistUnfinishedBusinessReviewByBusinessUID(String businessUid) {
         return businessReviewDAO.countBusinessReviewUnfinishedByBusinessUID(businessUid) != 0;
+    }
+
+    /**
+     * 修改商家个人信息
+     * @param businessUID
+     * @param nickName
+     * @param shopName
+     * @param businessDescription
+     */
+    @Override
+    public void adminEditBusinessInfo(String businessUID, String nickName, String shopName, String businessDescription) {
+        System.out.println("businessUID"+businessUID+"shopName"+shopName+"businessDescription"+businessDescription);
+        businessDAO.adminUpdateBusinessByBusinessUID(businessUID,shopName,businessDescription);
+        userDAO.updateUserNicknameByBusinessUID(nickName,businessUID);
+
     }
 
     @Override

@@ -3,6 +3,8 @@ package com.nchu.ruanko.greenfarm.dao;
 import com.nchu.ruanko.greenfarm.pojo.entity.User;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+
 /**
  * 对应数据库的表 gf_tb_user
  *
@@ -218,4 +220,28 @@ public interface UserDAO {
             " WHERE user_uid=#{uid}")
     void updateUserIsBusinessByUID(@Param(value = "isBusiness") Integer isBusiness, @Param(value = "uid") String uid);
 
+    @ResultMap(value = "userMapper1")
+    @Select("select * from gf_tb_user " +
+            "where user_state=1 ")
+    List<User> listAllMembers();
+
+    @Update("UPDATE gf_tb_user" +
+            " SET user_nickname=#{nickname}" +
+            " WHERE user_uid in" +
+            "(" +
+            " select bus_user_uid " +
+            " from gf_tb_business " +
+            " where bus_uid = #{businessUID} " +
+            ")")
+    void updateUserNicknameByBusinessUID(@Param("nickname") String nickName,@Param("businessUID") String businessUID);
+
+    @Update("UPDATE gf_tb_user" +
+            " SET user_state=#{status}" +
+            " WHERE user_uid = #{id}")
+    int updateUserDateByUserId(@Param("id") String memberID,@Param("status") int status);
+
+    @ResultMap(value = "userMapper1")
+    @Select("select * from gf_tb_user " +
+            "where user_state=0 ")
+    List<User> listAllIllegalMembers();
 }

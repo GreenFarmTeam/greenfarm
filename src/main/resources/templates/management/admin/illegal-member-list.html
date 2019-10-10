@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>会员列表</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+    <meta content="" name="description" />
+    <meta content="" name="author" />
+    <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/map.js}"></script>
+    <link th:href="@{/gfstatic/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/bootstrap-responsive.min.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/style-metro.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/style.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/style-responsive.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/default.css}" rel="stylesheet" type="text/css" id="style_color" />
+    <link th:href="@{/gfstatic/css/uniform.default.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/pagination.css}" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" th:href="@{/gfstatic/image/favicon.ico}" />
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <h3 class="page-title"><i class="fa fa-user-circle"></i>会员管理</h3>
+        <ul class="breadcrumb">
+            <li>
+                <a href="#"><i class="fa fa-home"></i>会员管理</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="#">会员审核</a>
+            </li>
+        </ul>
+    </div>
+    <div class="row-fluid">
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-reorder"></i>
+                    会员列表
+                </div>
+            </div>
+            <div class="portlet-body">
+                <table id="userTable" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>会员号</th>
+                        <th>昵称</th>
+                        <th>真实姓名</th>
+                        <th>已为商家</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+
+
+                    <tr th:if="${vo.getAdminMemberVOList().size()}!=0" th:each="pd,userStat : ${vo.getAdminMemberVOList()}">
+                        <td th:text="${userStat.count}"></td>
+                        <td th:text="${pd.member.userUsername}"></td>
+                        <td th:text="${pd.getMember().getUserNickname()}"></td>
+                        <td th:text="${pd.getMember().getUserRealname()}"></td>
+                        <td th:if="${pd.getMember().getUserIsBusiness()}==1">是</td>
+                        <td th:if="${pd.getMember().getUserIsBusiness()}==0">否</td>
+                        <td>
+                            <button style="margin-right:20px;" name="detail" th:value="${pd.member.userUid}" class="btn mini green" ><i class="fa fa-edit"></i>详情</button>
+                            <button class="btn mini red" name="undo-delete" th:value="${pd.member.userUid}"><i class="fa fa-trash"></i>撤销删除</button>
+                        </td>
+                    </tr>
+                </table>
+
+                <!-- 这里显示分页 -->
+                <div th:if="${vo.getAdminMemberVOList().size()}!=0" id="Pagination" class="pagination align_right" >
+                    <a th:if="${vo.pageInfo.isFirstPage}==true" disabled="disabled">首页</a>
+                    <a th:if="${vo.pageInfo.isFirstPage}==false" th:href="@{/greenfarm/admin/management/business/review(page=1)}">首页</a>
+
+                    <a th:if="${vo.pageInfo.hasPreviousPage}==false" disabled="disabled">上一页</a>
+                    <a th:if="${vo.pageInfo.hasPreviousPage}==true" th:href="@{/greenfarm/admin/management/business/review(page=${vo.pageInfo.pageNum}-1)}">上一页</a>
+
+                    <!--<a th:if="${pg}!=${vo.pageInfo.pageNum}" th:each="pg:${vo.pageInfo.navigatepageNums}" th:href="@{/greenfarm/admin/management/business/review(page=${pg})}" th:text="${pg}"></a>-->
+                    <!--<a th:if="${pg}==${vo.pageInfo.pageNum}" th:each="pg:${vo.pageInfo.navigatepageNums}" th:text="${pg}" disabled="disabled"></a>-->
+
+                    <a th:each="pg:${vo.pageInfo.navigatepageNums}" th:href="@{/greenfarm/admin/management/business/review(page=${pg})}" th:text="${pg}"></a>
+
+
+                    <a th:if="${vo.pageInfo.hasNextPage}==false" disabled="disabled">下一页</a>
+                    <a th:if="${vo.pageInfo.hasNextPage}==true" th:href="@{/greenfarm/admin/management/business/review(page=${vo.pageInfo.pageNum}+1)}">下一页</a>
+
+                    <a th:if="${vo.pageInfo.isLastPage}==true" disabled="disabled">末页</a>
+                    <a th:if="${vo.pageInfo.isLastPage}==false" th:href="@{/greenfarm/admin/management/business/review(page=${vo.pageInfo.pages})}">末页</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/gfstatic/js/vue/jquery-1.10.1.min.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/jquery-migrate-1.2.1.min.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/jquery-ui-1.10.1.custom.min.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/bootstrap.min.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/jquery.slimscroll.min.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/jquery.blockui.min.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/jquery.cookie.min.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/jquery.uniform.min.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/app.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/jquery.pagination.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/management/admin/illegal-member-list.js}" th:inline="javascript"  type="text/javascript"></script>
+</body>
+</html>

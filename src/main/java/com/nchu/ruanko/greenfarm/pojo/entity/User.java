@@ -20,6 +20,15 @@ public class User {
     private String userPhoto;
     private Date userTime;
     private Integer userIsBusiness;
+    private Integer userState;
+
+    public Integer getUserState() {
+        return userState;
+    }
+
+    public void setUserState(Integer userState) {
+        this.userState = userState;
+    }
 
     public String getUserUid() {
         return userUid;
