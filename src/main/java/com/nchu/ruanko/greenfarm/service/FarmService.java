@@ -1,11 +1,10 @@
 package com.nchu.ruanko.greenfarm.service;
 
-import com.nchu.ruanko.greenfarm.pojo.entity.Business;
 import com.nchu.ruanko.greenfarm.pojo.entity.Farm;
 import com.nchu.ruanko.greenfarm.pojo.entity.FarmImage;
 import com.nchu.ruanko.greenfarm.pojo.entity.FarmType;
 import com.nchu.ruanko.greenfarm.pojo.vo.AdminFarmPageVO;
-import com.nchu.ruanko.greenfarm.pojo.vo.AdminFarmVo;
+import com.nchu.ruanko.greenfarm.pojo.vo.AdminFarmVO;
 import com.nchu.ruanko.greenfarm.pojo.vo.BusinessFarmPageVO;
 import com.nchu.ruanko.greenfarm.pojo.vo.BusinessFarmReviewPageVO;
 
@@ -23,7 +22,7 @@ public interface FarmService {
 
     AdminFarmPageVO adminListFarm(int pageNum, int pageSize, int pageNavigationSize,int state);
 
-    AdminFarmVo adminGetFarmByFarmUID(String farmUid);
+    AdminFarmVO adminGetFarmByFarmUID(String farmUid);
 
     void adminAgreeFarmReview(String farmReviewUid);
 

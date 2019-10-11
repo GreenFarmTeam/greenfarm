@@ -1,11 +1,10 @@
 package com.nchu.ruanko.greenfarm.controller.management.admin;
 
 import com.alibaba.fastjson.JSONObject;
-import com.nchu.ruanko.greenfarm.pojo.entity.Business;
+import com.nchu.ruanko.greenfarm.constant.PageConstant;
 import com.nchu.ruanko.greenfarm.pojo.vo.AdminBusinessDetailVO;
 import com.nchu.ruanko.greenfarm.service.BusinessService;
 import com.nchu.ruanko.greenfarm.service.UserService;
-import com.nchu.ruanko.greenfarm.util.string.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +36,9 @@ public class AdminBusinessController {
     @ApiOperation(value = "adminReviewBusinessPage", notes = "")
     @GetMapping(value = "/greenfarm/admin/management/business/review")
     public ModelAndView adminReviewBusinessPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "10") int pageSize) {
-        System.out.println("商家审核！！！！！！！！！");
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("management/admin/review-business");
-        modelAndView.addObject("vo", businessService.listBusinessReviewsWithPage(pageNum, pageSize, PAGE_NAVIGATION_SIZE));
+        modelAndView.addObject("vo", businessService.listBusinessReviewsWithPage(pageNum, pageSize, PageConstant.PAGE_NAVIGATION_SIZE));
         return modelAndView;
     }
 
@@ -117,7 +115,7 @@ public class AdminBusinessController {
     @GetMapping(value="/greenfarm/admin/management/business/loadAll")
     public ModelAndView loadAllLegalBusiness(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "10") int pageSize){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("vo", businessService.listAllLegalBusinessWithPage(pageNum, pageSize, PAGE_NAVIGATION_SIZE));
+        modelAndView.addObject("vo", businessService.listAllLegalBusinessWithPage(pageNum, pageSize, PageConstant.PAGE_NAVIGATION_SIZE));
         modelAndView.setViewName("management/admin/business-list");
         return modelAndView;
     }
@@ -133,7 +131,6 @@ public class AdminBusinessController {
         ModelAndView modelAndView = new ModelAndView();
         AdminBusinessDetailVO vo = new AdminBusinessDetailVO();
         modelAndView.setViewName("management/admin/business-detail");
-        System.out.println("businessUid:"+businessUid);
         vo.setBusiness(businessService.getBusinessDetailByBusinessUID(businessUid));
         vo.setBusinessScopeList(businessService.listBusinessScopesByBusinessUID(businessUid));
         modelAndView.addObject("vo",vo);

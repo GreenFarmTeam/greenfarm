@@ -2,14 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>会员列表</title>
-    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
-    <meta content="" name="description" />
-    <meta content="" name="author" />
+    <title>商家列表</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"/>
+
     <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/map.js}"></script>
+
     <link th:href="@{/gfstatic/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
     <link th:href="@{/gfstatic/css/bootstrap-responsive.min.css}" rel="stylesheet" type="text/css" />
     <link th:href="@{/gfstatic/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
@@ -20,18 +20,19 @@
     <link th:href="@{/gfstatic/css/uniform.default.css}" rel="stylesheet" type="text/css" />
     <link th:href="@{/gfstatic/css/pagination.css}" rel="stylesheet" type="text/css" />
     <link rel="shortcut icon" th:href="@{/gfstatic/image/favicon.ico}" />
+
 </head>
 <body>
 <div class="container-fluid">
     <div class="row-fluid">
-        <h3 class="page-title"><i class="fa fa-user-circle"></i>用户管理</h3>
+        <h3 class="page-title"><i class="fa fa-user-circle"></i>当前所有商家</h3>
         <ul class="breadcrumb">
             <li>
-                <a href="#"><i class="fa fa-home"></i>用户管理</a>
+                <a href="javascript:void(0);"><i class="fa fa-home"></i>商家管理</a>
                 <i class="fa fa-angle-right"></i>
             </li>
             <li>
-                <a href="#">商家列表</a>
+                <a href="javascript:void(0);">当前所有商家</a>
             </li>
         </ul>
     </div>
@@ -46,26 +47,24 @@
             <div class="portlet-body">
                 <table id="userTable" class="table table-bordered table-striped">
                     <thead>
-                    <tr>
-                        <td>序号</td>
-                        <td>店铺编号</td>
-                        <td>申请人</td>
-                        <td>店铺名称</td>
-                        <td>店铺状态</td>
-                        <td>操作</td>
-                    </tr>
+                        <tr>
+                            <td>序号</td>
+                            <td>店铺编号</td>
+                            <td>店铺名称</td>
+                            <td>商家会员号</td>
+                            <td>操作</td>
+                        </tr>
                     </thead>
-
-
-                    <tr th:if="${vo.businessList.size()}!=0" th:each="pd,userStat : ${vo.businessList}">
-                        <td th:text="${userStat.count}"></td>
-                        <td th:text="${pd.getBusinessUid()}"></td>
-                        <td th:text="${pd.getUser().getUserRealname()}"></td>
-                        <td th:text="${pd.getBusinessShopName()}"></td>
-                        <td th:if="${pd.getBusinessShopState()}==0">关闭</td>
-                        <td th:if="${pd.getBusinessShopState()}==1">营业</td>
+                    <tr th:if="${vo.businessList.size()}==0">
+                        <td colspan="5">当前暂无数据</td>
+                    </tr>
+                    <tr th:if="${vo.businessList.size()}!=0" th:each="bu,stat:${vo.businessList}">
+                        <td th:text="${stat.count}"></td>
+                        <td th:text="${bu.businessUid}"></td>
+                        <td th:text="${bu.businessShopName}"></td>
+                        <td th:text="${bu.user.userUsername}"></td>
                         <td>
-                            <button style="margin-right:20px;" name="edit" class="btn mini green" th:value="${pd.getBusinessUid()}" ><i class="fa fa-edit"></i> 编辑</button>
+                            <button style="margin-right:20px;" name="detail" class="btn mini green" th:value="${bu.businessUid}" ><i class="fa fa-edit"></i>详情</button>
                         </td>
                     </tr>
                 </table>
@@ -73,22 +72,19 @@
                 <!-- 这里显示分页 -->
                 <div th:if="${vo.businessList.size()}!=0" id="Pagination" class="pagination align_right" >
                     <a th:if="${vo.pageInfo.isFirstPage}==true" disabled="disabled">首页</a>
-                    <a th:if="${vo.pageInfo.isFirstPage}==false" th:href="@{/greenfarm/admin/management/business/review(page=1)}">首页</a>
+                    <a th:if="${vo.pageInfo.isFirstPage}==false" th:href="@{/greenfarm/admin/management/business/loadAll(page=1)}">首页</a>
 
                     <a th:if="${vo.pageInfo.hasPreviousPage}==false" disabled="disabled">上一页</a>
-                    <a th:if="${vo.pageInfo.hasPreviousPage}==true" th:href="@{/greenfarm/admin/management/business/review(page=${vo.pageInfo.pageNum}-1)}">上一页</a>
+                    <a th:if="${vo.pageInfo.hasPreviousPage}==true" th:href="@{/greenfarm/admin/management/business/loadAll(page=${vo.pageInfo.pageNum}-1)}">上一页</a>
 
-                    <!--<a th:if="${pg}!=${vo.pageInfo.pageNum}" th:each="pg:${vo.pageInfo.navigatepageNums}" th:href="@{/greenfarm/admin/management/business/review(page=${pg})}" th:text="${pg}"></a>-->
-                    <!--<a th:if="${pg}==${vo.pageInfo.pageNum}" th:each="pg:${vo.pageInfo.navigatepageNums}" th:text="${pg}" disabled="disabled"></a>-->
-
-                    <a th:each="pg:${vo.pageInfo.navigatepageNums}" th:href="@{/greenfarm/admin/management/business/review(page=${pg})}" th:text="${pg}"></a>
+                    <a th:each="pg:${vo.pageInfo.navigatepageNums}" th:href="@{/greenfarm/admin/management/business/loadAll(page=${pg})}" th:text="${pg}"></a>
 
 
                     <a th:if="${vo.pageInfo.hasNextPage}==false" disabled="disabled">下一页</a>
-                    <a th:if="${vo.pageInfo.hasNextPage}==true" th:href="@{/greenfarm/admin/management/business/review(page=${vo.pageInfo.pageNum}+1)}">下一页</a>
+                    <a th:if="${vo.pageInfo.hasNextPage}==true" th:href="@{/greenfarm/admin/management/business/loadAll(page=${vo.pageInfo.pageNum}+1)}">下一页</a>
 
                     <a th:if="${vo.pageInfo.isLastPage}==true" disabled="disabled">末页</a>
-                    <a th:if="${vo.pageInfo.isLastPage}==false" th:href="@{/greenfarm/admin/management/business/review(page=${vo.pageInfo.pages})}">末页</a>
+                    <a th:if="${vo.pageInfo.isLastPage}==false" th:href="@{/greenfarm/admin/management/business/loadAll(page=${vo.pageInfo.pages})}">末页</a>
 
                 </div>
             </div>

@@ -1,4 +1,3 @@
-<!-- TODO 管理员登录临时界面 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
@@ -42,7 +41,7 @@
                                     <div class="layui-inline iphone">
                                         <div class="layui-input-inline">
                                             <i class="layui-icon layui-icon-user iphone-icon"></i>
-                                            <input type="text" id="gf_username" name="gf_username" class="layui-input" placeholder="会员号/手机号/邮箱" autocomplete="off">
+                                            <input type="text" id="gf_username" name="gf_username" class="layui-input" placeholder="账号" autocomplete="off">
                                         </div>
                                     </div>
                                 </div>
@@ -57,13 +56,13 @@
                                 </div>
                                 <div class="layui-form-item" style="float: right">
                                     <div class="layui-inline layui-col-space5">
-                                        <a class="layadmin-link" th:href="@{/user/password/login}">返回会员登录</a>
+                                        <!--<a class="layadmin-link" th:href="@{/user/password/login}">返回会员登录</a>-->
                                     </div>
                                 </div>
                                 <!-- 登录 -->
                                 <div class="layui-form-item login-btn">
                                     <div class="layui-input-block">
-                                        <button class="layui-btn" id="gf_sure" lay-submit="" lay-filter="component-form-element">登录</button>
+                                        <button type="button" class="layui-btn" id="gf_sure">登录</button>
                                     </div>
                                 </div>
                             </form>
@@ -75,7 +74,7 @@
     </div>
 </div>
 
-<script type="text/javascript" th:src="@{/gfstatic/js/common/user/login.js}"></script>
+<script type="text/javascript" th:src="@{/gfstatic/js/common/admin/login.js}"></script>
 
 </body>
 </html>

@@ -1,14 +1,10 @@
 jQuery(document).ready(function () {
-
     App.init();
-    //$("#login").click(login);
-
-
 });
+
 $("#gf_sure").on('click', function () {
     var username = $("#gf_username").val();
     var password = $("#gf_password").val();
-    layer.alert("username"+username)
     if ($.trim(username) === "" || $.trim(password) === "") {
         layer.alert('请填写完整信息！', {skin:'layui-layer-lan', closeBtn: 0});
     } else {

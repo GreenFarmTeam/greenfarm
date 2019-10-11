@@ -200,7 +200,6 @@ public class LoginController {
     @ResponseBody
     public String administratorLoginWithPasswordOperation(@RequestParam(name = "username") String username, @RequestParam(name = "password") String password, HttpServletRequest request) {
         JSONObject json = new JSONObject();
-        System.out.println("username"+username+" password"+password);
         Administrator administrator = administratorService.getAdministratorByUsernameAndPassword(username, password);
         if (administrator == null) {
             json.put("flag", false);

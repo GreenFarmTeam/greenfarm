@@ -134,12 +134,16 @@
             <version>3.9</version>
         </dependency>
 
-
-
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>jquery</artifactId>
             <version>3.4.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alipay.sdk</groupId>
+            <artifactId>alipay-sdk-java</artifactId>
+            <version>4.7.12.ALL</version>
         </dependency>
 
     </dependencies>

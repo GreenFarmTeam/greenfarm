@@ -3,9 +3,7 @@ package com.nchu.ruanko.greenfarm.controller.management.admin;
 import com.alibaba.fastjson.JSONObject;
 import com.nchu.ruanko.greenfarm.constant.PageConstant;
 import com.nchu.ruanko.greenfarm.pojo.entity.FarmImage;
-import com.nchu.ruanko.greenfarm.pojo.entity.ProductImage;
-import com.nchu.ruanko.greenfarm.pojo.vo.AdminFarmVo;
-import com.nchu.ruanko.greenfarm.pojo.vo.AdminProductVO;
+import com.nchu.ruanko.greenfarm.pojo.vo.AdminFarmVO;
 import com.nchu.ruanko.greenfarm.service.FarmService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -91,7 +89,7 @@ public class AdminFarmController {
     @ResponseBody
     public String adminFarmDetailOperation(@RequestParam(name = "uid") String farmUid) {
         JSONObject json = new JSONObject();
-        AdminFarmVo vo = farmService.adminGetFarmByFarmUID(farmUid);
+        AdminFarmVO vo = farmService.adminGetFarmByFarmUID(farmUid);
         json.put("uid", vo.getFarm().getFarmUid());
         json.put("name", vo.getFarm().getFarmName());
         json.put("price",vo.getFarm().getFarmPrice());

@@ -2,12 +2,11 @@ package com.nchu.ruanko.greenfarm.pojo.vo;
 
 import com.github.pagehelper.PageInfo;
 import com.nchu.ruanko.greenfarm.pojo.entity.User;
-
 import java.util.List;
 
 public class AdminMemberPageVO {
-    private PageInfo<User> pageInfo;
 
+    private PageInfo<User> pageInfo;
     private List<AdminMemberVO> adminMemberVOList;
 
     public PageInfo<User> getPageInfo() {
@@ -33,4 +32,5 @@ public class AdminMemberPageVO {
                 ", adminMemberVOList=" + adminMemberVOList +
                 '}';
     }
+
 }
