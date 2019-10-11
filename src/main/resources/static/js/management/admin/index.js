@@ -20,7 +20,7 @@ function changePage(page) {
     } else if (page === 'product-up') {
         $("#product").addClass("active").find("a").eq(0).append($('<span class="selected"></span>'));
         $("#product-up").addClass("active");
-        $("#mainFrame").attr("src", "/greenfarm/admin/management/product");
+        $("#mainFrame").attr("src", "/greenfarm/admin/management/product/up");
     } else if (page === 'product-down') {
         $("#product").addClass("active").find("a").eq(0).append($('<span class="selected"></span>'));
         $("#product-down").addClass("active");
