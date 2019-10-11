@@ -65,7 +65,7 @@
     <a th:if="${vo.pageInfo.isLastPage}==true" disabled="disabled">末页</a>
     <a th:if="${vo.pageInfo.isLastPage}==false" th:href="@{/greenfarm/admin/management/farm(page=${vo.pageInfo.pages})}">末页</a>
 </div>
-<script type="text/javascript" th:src="@{/gfstatic/js/management/admin/upping-farm.js}"></script>
+<script type="text/javascript" th:src="@{/gfstatic/js/management/admin/farm-upping.js}"></script>
 <script type="text/javascript" th:src="@{/gfstatic/js/management/business/farm-map.js}"></script>
 </body>
 </html>

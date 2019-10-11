@@ -37,7 +37,7 @@ public class AdminBusinessController {
     @GetMapping(value = "/greenfarm/admin/management/business/review")
     public ModelAndView adminReviewBusinessPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "10") int pageSize) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("business-review");
+        modelAndView.setViewName("management/admin/business-review");
         modelAndView.addObject("vo", businessService.listBusinessReviewsWithPage(pageNum, pageSize, PageConstant.PAGE_NAVIGATION_SIZE));
         return modelAndView;
     }
@@ -51,7 +51,7 @@ public class AdminBusinessController {
     @GetMapping(value = "/greenfarm/admin/management/business/review/detail/{reviewUid}")
     public ModelAndView adminReviewBusinessDetailPage(@PathVariable(name = "reviewUid") String reviewUid) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("business-review-detail");
+        modelAndView.setViewName("management/admin/business-review-detail");
         modelAndView.addObject("vo", businessService.getBusinessReviewDetailByReviewUID(reviewUid));
         return modelAndView;
     }
@@ -84,7 +84,7 @@ public class AdminBusinessController {
     @GetMapping("/greenfarm/admin/management/business/review/disagree/{reviewUid}")
     public ModelAndView disagreeReviewPage(@PathVariable(name = "reviewUid") String reviewUid) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("business-review-disagree-reason");
+        modelAndView.setViewName("management/admin/business-review-disagree-reason");
         modelAndView.addObject("reviewUid", reviewUid);
         return modelAndView;
     }
