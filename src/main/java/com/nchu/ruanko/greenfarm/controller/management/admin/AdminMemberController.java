@@ -49,7 +49,7 @@ public class AdminMemberController {
         System.out.println("加载所有不合法会员");
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("vo", memberService.listAllIllegalMemberWithPage(pageNum, pageSize, PAGE_NAVIGATION_SIZE));
-        modelAndView.setViewName("management/admin/illegal-member-list");
+        modelAndView.setViewName("member-illegal-list");
         return modelAndView;
     }
 

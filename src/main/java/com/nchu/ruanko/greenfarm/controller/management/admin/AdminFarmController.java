@@ -46,7 +46,7 @@ public class AdminFarmController {
     @GetMapping(value = "/greenfarm/admin/management/farm/review")
     public ModelAndView loadAllNoCheckedFarmPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "10") int pageSize){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("management/admin/review-farm");
+        modelAndView.setViewName("farm-review");
         modelAndView.addObject("vo", farmService.adminListFarm(pageNum, pageSize, PageConstant.PAGE_NAVIGATION_SIZE,0));
         return modelAndView;
     }
@@ -74,7 +74,7 @@ public class AdminFarmController {
     @GetMapping(value = "/greenfarm/admin/management/farm/up")
     public ModelAndView loadAllIsUppingFarmPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "10") int pageSize){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("management/admin/upping-farm");
+        modelAndView.setViewName("farm-upping");
         modelAndView.addObject("vo", farmService.adminListFarm(pageNum, pageSize, PageConstant.PAGE_NAVIGATION_SIZE,11));
         return modelAndView;
     }
