@@ -37,7 +37,7 @@ public class AdminProductController {
     @GetMapping(value = "/greenfarm/admin/management/product/review")
     public ModelAndView adminReviewProductPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "10") int pageSize) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("product-review");
+        modelAndView.setViewName("management/admin/product-review");
         modelAndView.addObject("vo", productService.adminListProductReview(pageNum, pageSize, PAGE_NAVIGATION_SIZE));
         return modelAndView;
     }

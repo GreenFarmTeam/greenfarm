@@ -18,17 +18,29 @@ function changePage(page) {
         $("#business-review").addClass("active");
         $("#mainFrame").attr("src", "/greenfarm/admin/management/business/review");
     } else if (page === 'product-up') {
-
+        $("#product").addClass("active").find("a").eq(0).append($('<span class="selected"></span>'));
+        $("#product-up").addClass("active");
+        $("#mainFrame").attr("src", "/greenfarm/admin/management/product");
     } else if (page === 'product-down') {
-
+        $("#product").addClass("active").find("a").eq(0).append($('<span class="selected"></span>'));
+        $("#product-down").addClass("active");
+        $("#mainFrame").attr("src", "/greenfarm/admin/management/product/down");
     } else if (page === 'product-review') {
-
+        $("#product").addClass("active").find("a").eq(0).append($('<span class="selected"></span>'));
+        $("#product-review").addClass("active");
+        $("#mainFrame").attr("src", "/greenfarm/admin/management/product/review");
     } else if (page === 'farm-up') {
-
-    } else if (page === 'farm-down') {
-
+        $("#farm").addClass("active").find("a").eq(0).append($('<span class="selected"></span>'));
+        $("#farm-up").addClass("active");
+        $("#mainFrame").attr("src", "/greenfarm/admin/management/farm/up");
+    } else if (page === 'farm-down-admin') {
+        $("#farm").addClass("active").find("a").eq(0).append($('<span class="selected"></span>'));
+        $("#farm-down").addClass("active");
+        $("#mainFrame").attr("src", "/greenfarm/admin/management/farm/down");
     } else if (page === 'farm-review') {
-
+        $("#farm").addClass("active").find("a").eq(0).append($('<span class="selected"></span>'));
+        $("#farm-review").addClass("active");
+        $("#mainFrame").attr("src", "/greenfarm/admin/management/farm/review");
     } else {
         
     }
