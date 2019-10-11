@@ -25,10 +25,10 @@
 <body>
 <div class="container-fluid">
     <div class="row-fluid">
-        <h3 class="page-title"><i class="fa fa-user-circle"></i>当前所有商家</h3>
+        <h3 class="page-title"><i class="fa fa-user-circle"></i>当前上架农产品</h3>
         <ul class="breadcrumb">
             <li>
-                <a href="javascript:void(0);"><i class="fa fa-home"></i>商家管理</a>
+                <a href="javascript:void(0);"><i class="fa fa-home"></i>农场品</a>
                 <i class="fa fa-angle-right"></i>
             </li>
             <li>
@@ -77,22 +77,22 @@
                 <!-- 这里显示分页 -->
                 <div th:if="${vo.adminProductVOList.size()}!=0" id="Pagination" class="pagination align_right" >
                     <a th:if="${vo.pageInfo.isFirstPage}==true" disabled="disabled">首页</a>
-                    <a th:if="${vo.pageInfo.isFirstPage}==false" th:href="@{/greenfarm/admin/management/product(page=1)}">首页</a>
+                    <a th:if="${vo.pageInfo.isFirstPage}==false" th:href="@{/greenfarm/admin/management/product/up(page=1)}">首页</a>
 
                     <a th:if="${vo.pageInfo.hasPreviousPage}==false" disabled="disabled">上一页</a>
-                    <a th:if="${vo.pageInfo.hasPreviousPage}==true" th:href="@{/greenfarm/admin/management/product(page=${vo.pageInfo.pageNum}-1)}">上一页</a>
+                    <a th:if="${vo.pageInfo.hasPreviousPage}==true" th:href="@{/greenfarm/admin/management/product/up(page=${vo.pageInfo.pageNum}-1)}">上一页</a>
 
                     <!--<a th:if="${pg}!=${vo.pageInfo.pageNum}" th:each="pg:${vo.pageInfo.navigatepageNums}" th:href="@{/greenfarm/admin/management/business/review(page=${pg})}" th:text="${pg}"></a>-->
                     <!--<a th:if="${pg}==${vo.pageInfo.pageNum}" th:each="pg:${vo.pageInfo.navigatepageNums}" th:text="${pg}" disabled="disabled"></a>-->
 
-                    <a th:each="pg:${vo.pageInfo.navigatepageNums}" th:href="@{/greenfarm/admin/management/product(page=${pg})}" th:text="${pg}"></a>
+                    <a th:each="pg:${vo.pageInfo.navigatepageNums}" th:href="@{/greenfarm/admin/management/product/up(page=${pg})}" th:text="${pg}"></a>
 
 
                     <a th:if="${vo.pageInfo.hasNextPage}==false" disabled="disabled">下一页</a>
-                    <a th:if="${vo.pageInfo.hasNextPage}==true" th:href="@{/greenfarm/admin/management/product(page=${vo.pageInfo.pageNum}+1)}">下一页</a>
+                    <a th:if="${vo.pageInfo.hasNextPage}==true" th:href="@{/greenfarm/admin/management/product/up(page=${vo.pageInfo.pageNum}+1)}">下一页</a>
 
                     <a th:if="${vo.pageInfo.isLastPage}==true" disabled="disabled">末页</a>
-                    <a th:if="${vo.pageInfo.isLastPage}==false" th:href="@{/greenfarm/admin/management/product(page=${vo.pageInfo.pages})}">末页</a>
+                    <a th:if="${vo.pageInfo.isLastPage}==false" th:href="@{/greenfarm/admin/management/product/up(page=${vo.pageInfo.pages})}">末页</a>
                 </div>
             </div>
         </div>

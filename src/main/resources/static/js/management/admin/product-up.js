@@ -134,7 +134,7 @@ $("a[name='gf_down']").on('click', function () {
                 if (jsonData.flag === true) {
                     layer.closeAll();
                     layer.confirm('操作成功！', {btn:['是'], skin:'layui-layer-lan', closeBtn:0}, function () {
-                        $(location).attr("href", getPathPrefix() + "greenfarm/admin/management/product");
+                        $(location).attr("href", getPathPrefix() + "greenfarm/admin/management/product/up");
                     });
                 }
             }

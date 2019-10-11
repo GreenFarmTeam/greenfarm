@@ -24,14 +24,14 @@
 <body>
 <div class="container-fluid">
     <div class="row-fluid">
-        <h3 class="page-title"><i class="fa fa-user-circle"></i>待审核商家</h3>
+        <h3 class="page-title"><i class="fa fa-user-circle"></i>待审核农产品</h3>
         <ul class="breadcrumb">
             <li>
-                <a href="javascript:void(0);"><i class="fa fa-home"></i>商家管理</a>
+                <a href="javascript:void(0);"><i class="fa fa-home"></i>农产品管理</a>
                 <i class="fa fa-angle-right"></i>
             </li>
             <li>
-                <a href="javascript:void(0);">待审核商品</a>
+                <a href="javascript:void(0);">待审核农产品</a>
             </li>
         </ul>
     </div>
@@ -58,19 +58,6 @@
                         <td>操作</td>
                     </tr>
                     </thead>
-                    <tr th:if="${vo.businessReviewList.size()}==0">
-                        <td colspan="5">当前暂无数据</td>
-                    </tr>
-                    <tr th:if="${vo.businessReviewList.size()}!=0" th:each="bu,stat:${vo.businessReviewList}">
-                        <td th:text="${stat.count}"></td>
-                        <td th:text="${bu.reviewUid}"></td>
-                        <td th:text="${bu.business.user.userUsername}"></td>
-                        <td th:text="${#dates.format(bu.reviewSubmitTime,'yyyy-MM-dd HH:mm:ss')}"></td>
-                        <td>
-                            <button style="margin-right:20px;" name="gf_detail" th:value="${bu.reviewUid}" class="btn mini green"><i class="fa fa-edit"></i>详情</button>
-                            <button style="margin-right:20px;" name="gf_agree" th:value="${bu.reviewUid}" class="btn mini blue"><i class="fa fa-edit"></i>同意</button>
-                            <button style="margin-right:20px;" name="gf_disagree" th:value="${bu.reviewUid}" class="btn mini red"><i class="fa fa-edit"></i>驳回</button>
-                        </td>
                     <tr th:if="${vo.adminProductReviewVOList.size()}==0">
                         <td colspan="9">暂无审核记录</td>
                     </tr>

@@ -35,7 +35,7 @@ public class AdminProductController {
      */
     @ApiOperation(value = "adminReviewProductPage", notes = "跳转至“管理员商品审核”的页面")
     @GetMapping(value = "/greenfarm/admin/management/product/review")
-    public ModelAndView adminReviewProductPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "10") int pageSize) {
+    public ModelAndView adminReviewProductPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "3") int pageSize) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("management/admin/product-review");
         modelAndView.addObject("vo", productService.adminListProductReview(pageNum, pageSize, PAGE_NAVIGATION_SIZE));
@@ -50,7 +50,7 @@ public class AdminProductController {
      */
     @ApiOperation(value = "adminProductDownPage", notes = "跳转至“管理员查看当前所有下架商品（客户主动下架/管理员下架）信息”页面")
     @GetMapping(value = "/greenfarm/admin/management/product/down")
-    public ModelAndView adminProductDownPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "10") int pageSize) {
+    public ModelAndView adminProductDownPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "3") int pageSize) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("management/admin/product-down");
         modelAndView.addObject("vo", productService.adminListDownProducts(pageNum, pageSize, PageConstant.PAGE_NAVIGATION_SIZE));
@@ -65,7 +65,7 @@ public class AdminProductController {
      */
     @ApiOperation(value = "adminProductPage", notes = "跳转至“管理员查看所有成功上架的商品”的界面")
     @GetMapping(value = "/greenfarm/admin/management/product/up")
-    public ModelAndView adminProductPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "10") int pageSize) {
+    public ModelAndView adminProductPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "3") int pageSize) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("management/admin/product-up");
         modelAndView.addObject("vo", productService.adminListProducts(pageNum, pageSize, PageConstant.PAGE_NAVIGATION_SIZE));
