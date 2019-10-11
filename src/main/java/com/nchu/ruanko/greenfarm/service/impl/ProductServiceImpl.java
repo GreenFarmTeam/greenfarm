@@ -9,6 +9,7 @@ import com.nchu.ruanko.greenfarm.dao.ProductReviewDAO;
 import com.nchu.ruanko.greenfarm.pojo.entity.Product;
 import com.nchu.ruanko.greenfarm.pojo.entity.ProductImage;
 import com.nchu.ruanko.greenfarm.pojo.entity.ProductReview;
+import com.nchu.ruanko.greenfarm.pojo.entity.ProductType;
 import com.nchu.ruanko.greenfarm.pojo.vo.*;
 import com.nchu.ruanko.greenfarm.service.ProductService;
 import com.nchu.ruanko.greenfarm.util.string.StringUtils;
@@ -391,6 +392,108 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void businessSetStockNull(String productUid) {
         productDAO.updateProductStockByProductUID(0, productUid);
+    }
+
+    /**
+     * 根据产品类型加载所有的商品
+     * @param classificationId
+     * @return
+     */
+    @Override
+    public MemberProductPageVo listAllProductByclassificationId(String classificationId,int pageNum, int pageSize, int navigationSize) {
+
+        MemberProductPageVo memberProductPageVo = new MemberProductPageVo();
+        List<MemberProductVo> memberProductVoList = new ArrayList<>();
+        List<Product> productList = productDAO.selectAllProdcutsByClassificationId(classificationId);
+
+        PageHelper.startPage(pageNum, pageSize);
+        PageInfo<Product> pageInfo = new PageInfo<>(productList, navigationSize);
+        for(Product product : productList){
+            MemberProductVo memberProductVo = new MemberProductVo();
+            memberProductVo.setReview(productReviewDAO.getProductReviewByProductUID(product.getProductUid()));
+            memberProductVo.setProduct(product);
+
+            memberProductVo.setOtherImages(productImageDAO.listProductOtherImagesByProductUID(product.getProductUid()));
+            ProductImage mainProductImage = productImageDAO.getProductMainImageByProductUID(product.getProductUid());
+            if(mainProductImage==null){
+                memberProductVo.setMainImage(new ProductImage());
+            }else
+                memberProductVo.setMainImage(mainProductImage);
+
+            memberProductVoList.add(memberProductVo);
+        }
+        memberProductPageVo.setPageInfo(pageInfo);
+        memberProductPageVo.setMemberProductVoList(memberProductVoList);
+        return memberProductPageVo;
+    }
+
+    /**
+     * 会员加载所有热门的商品
+     * @return
+     */
+    @Override
+    public List<MemberProductVo> loadAllHotProducts() {
+        List<Product> productList = productDAO.listAllRecommendProducts();
+        List<MemberProductVo> memberProductVoList = new ArrayList<>();
+        for(Product product : productList){
+            MemberProductVo memberProductVo = new MemberProductVo();
+            ProductImage mainProductImage = productImageDAO.getProductMainImageByProductUID(product.getProductUid());
+            List<ProductImage> otherProductImageList = productImageDAO.listProductOtherImagesByProductUID(product.getProductUid());
+            if(mainProductImage==null){
+                memberProductVo.setMainImage(new ProductImage());
+            }else
+                memberProductVo.setMainImage(mainProductImage);
+            memberProductVo.setOtherImages(otherProductImageList);
+            memberProductVo.setProduct(product);
+            memberProductVo.setReview(productReviewDAO.getProductReviewByProductUID(product.getProductUid()));
+            memberProductVoList.add(memberProductVo);
+        }
+        return memberProductVoList;
+    }
+
+    /**
+     * 会员根据产品Id加载产品详情
+     * @param productId
+     * @return
+     */
+    @Override
+    public MemberProductVo loadProductByproductID(String productId) {
+        MemberProductVo vo = new MemberProductVo();
+        vo.setProduct(productDAO.getProductByProductUID(productId));
+        ProductImage mainProductImage = productImageDAO.getProductMainImageByProductUID(productId);
+        if(mainProductImage==null){
+            vo.setMainImage(new ProductImage());
+        }else
+            vo.setMainImage(mainProductImage);
+        vo.setOtherImages(productImageDAO.listProductOtherImagesByProductUID(productId));
+        vo.setReview(productReviewDAO.getProductReviewByProductUID(productId));
+        return vo;
+    }
+
+    @Override
+    public MemberProductPageVo loadAllNotHotProductsPage(int pageNum, int pageSize, int navigationSize) {
+        MemberProductPageVo memberProductPageVo = new MemberProductPageVo();
+
+        PageHelper.startPage(pageNum, pageSize);
+        List<Product> productList = productDAO.listAllNotRecommendProducts();
+        PageInfo<Product> pageInfo = new PageInfo<>(productList, navigationSize);
+        List<MemberProductVo> memberProductVoList = new ArrayList<>();
+        for(Product product : productList){
+            MemberProductVo memberProductVo = new MemberProductVo();
+            ProductImage mainProductImage = productImageDAO.getProductMainImageByProductUID(product.getProductUid());
+            List<ProductImage> otherProductImageList = productImageDAO.listProductOtherImagesByProductUID(product.getProductUid());
+            if(mainProductImage==null){
+                memberProductVo.setMainImage(new ProductImage());
+            }else
+                memberProductVo.setMainImage(mainProductImage);
+            memberProductVo.setOtherImages(otherProductImageList);
+            memberProductVo.setProduct(product);
+            memberProductVo.setReview(productReviewDAO.getProductReviewByProductUID(product.getProductUid()));
+            memberProductVoList.add(memberProductVo);
+        }
+        memberProductPageVo.setMemberProductVoList(memberProductVoList);
+        memberProductPageVo.setPageInfo(pageInfo);
+        return memberProductPageVo;
     }
 
 }

@@ -18,4 +18,13 @@ public class ProductTypeServiceImpl implements ProductTypeService {
         return productTypeDAO.listAllProductTypes();
     }
 
+    /**
+     * 根据产品类型ID获取产品类型
+     * @return
+     */
+    @Override
+    public ProductType loadProuctTypeById(String productId) {
+        return productTypeDAO.getProductTypeByUID(productId);
+    }
+
 }

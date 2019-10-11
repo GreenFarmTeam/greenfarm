@@ -1,6 +1,7 @@
 package com.nchu.ruanko.greenfarm.dao;
 
 import com.nchu.ruanko.greenfarm.pojo.entity.Product;
+import com.nchu.ruanko.greenfarm.pojo.entity.ProductType;
 import org.apache.ibatis.annotations.*;
 import java.util.Date;
 import java.util.List;
@@ -189,4 +190,21 @@ public interface ProductDAO {
             " OR prdt_ctime='1002-01-01 00:00:00')")
     List<Product> listPassReviewAndDownProductsByBusinessUID(@Param(value = "uid") String businessUid);
 
+    @ResultMap(value = "productMapper1")
+    @Select("SELECT *" +
+            " FROM gf_tb_product,gf_tb_product_type" +
+            " WHERE type_uid=#{uid} and gf_tb_product_type.type_uid = gf_tb_product.prdt_type_uid")
+    List<Product> selectAllProdcutsByClassificationId(@Param("uid") String classificationId);
+
+    @ResultMap(value = "productMapper1")
+    @Select("SELECT *" +
+            " FROM gf_tb_product" +
+            " WHERE prdt_is_recommend=1")
+    List<Product> listAllRecommendProducts();
+
+    @ResultMap(value = "productMapper1")
+    @Select("SELECT *" +
+            " FROM gf_tb_product" +
+            " WHERE prdt_is_recommend=0")
+    List<Product> listAllNotRecommendProducts();
 }

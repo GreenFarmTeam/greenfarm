@@ -2,6 +2,7 @@ package com.nchu.ruanko.greenfarm.service;
 
 import com.nchu.ruanko.greenfarm.pojo.entity.Product;
 import com.nchu.ruanko.greenfarm.pojo.entity.ProductImage;
+import com.nchu.ruanko.greenfarm.pojo.entity.ProductType;
 import com.nchu.ruanko.greenfarm.pojo.vo.*;
 
 import java.util.List;
@@ -46,4 +47,11 @@ public interface ProductService {
 
     void businessSetStockNull(String productUid);
 
+    MemberProductPageVo listAllProductByclassificationId(String classificationId,int pageNum, int pageSize, int navigationSize);
+
+    List<MemberProductVo> loadAllHotProducts();
+
+    MemberProductVo loadProductByproductID(String productId);
+
+    MemberProductPageVo loadAllNotHotProductsPage(int pageNum, int pageSize, int navigationSize);
 }

@@ -164,7 +164,7 @@ public class BusinessServiceImpl implements BusinessService {
      */
     @Override
     public void adminEditBusinessInfo(String businessUID, String nickName, String shopName, String businessDescription) {
-        System.out.println("businessUID"+businessUID+"shopName"+shopName+"businessDescription"+businessDescription);
+
         businessDAO.adminUpdateBusinessByBusinessUID(businessUID,shopName,businessDescription);
         userDAO.updateUserNicknameByBusinessUID(nickName,businessUID);
 

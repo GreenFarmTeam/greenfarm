@@ -7,6 +7,7 @@ import com.nchu.ruanko.greenfarm.pojo.entity.ProductType;
 import com.nchu.ruanko.greenfarm.pojo.vo.AdminBusinessReviewPageVO;
 import com.nchu.ruanko.greenfarm.pojo.vo.AdminFarmVo;
 import com.nchu.ruanko.greenfarm.service.*;
+import com.nchu.ruanko.greenfarm.service.impl.ProductServiceImpl;
 import com.nchu.ruanko.greenfarm.util.string.StringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,9 +36,15 @@ public class GreenfarmApplicationTests {
     private BusinessService businessService;
 
 
+    @Autowired
+    private ProductServiceImpl productService;
+
+
+
+
     @Test
     public void contextLoads() {
-        userDAO.updateUserNicknameByBusinessUID("王慎瑜先生","b312b63cef28406c8dfe1217565811d8");
+
 
        /* System.out.println(farmDAO.listAllNoCheckedFarm());*/
     }
