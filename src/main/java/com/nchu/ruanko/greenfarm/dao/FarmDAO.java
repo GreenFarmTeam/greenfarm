@@ -100,9 +100,10 @@ public interface FarmDAO {
     void updateFarmState(@Param("state")int up_state,@Param("uid") String farmUid);
 
     @ResultMap(value = "farmMapper1")
-    @Select("Select * from "+"" +
-            "gf_tb_farm,gf_tb_farm_review " +
-            "where gf_tb_farm.farm_uid=gf_tb_farm_review.rev_farm_uid and gf_tb_farm_review.rev_rtime is not null"
+    @Select("SELECT *" +
+            " FROM gf_tb_farm,gf_tb_farm_review" +
+            " WHERE gf_tb_farm.farm_uid=gf_tb_farm_review.rev_farm_uid " +
+            " AND gf_tb_farm_review.rev_rtime IS NOT NULL"
     )
     List<Farm> listAllCheckedFarm();
 

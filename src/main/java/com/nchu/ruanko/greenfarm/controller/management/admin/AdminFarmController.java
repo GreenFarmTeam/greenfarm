@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +26,7 @@ public class AdminFarmController {
      * @param pageSize
      * @return
      */
-    @ApiOperation(value="loadAllLegalFarm", notes="加载所有的已经审核完毕的农场")
+    @ApiOperation(value="loadAllLegalFarm", notes="加载所有的已经审核完毕的农场记录")
     @GetMapping(value = "/greenfarm/admin/management/farm")
     public ModelAndView loadAllLegalFarmPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "10") int pageSize){
         ModelAndView modelAndView = new ModelAndView();
@@ -46,7 +45,7 @@ public class AdminFarmController {
     @GetMapping(value = "/greenfarm/admin/management/farm/review")
     public ModelAndView loadAllNoCheckedFarmPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "10") int pageSize){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("farm-review");
+        modelAndView.setViewName("management/admin/farm-review");
         modelAndView.addObject("vo", farmService.adminListFarm(pageNum, pageSize, PageConstant.PAGE_NAVIGATION_SIZE,0));
         return modelAndView;
     }
@@ -74,7 +73,7 @@ public class AdminFarmController {
     @GetMapping(value = "/greenfarm/admin/management/farm/up")
     public ModelAndView loadAllIsUppingFarmPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "10") int pageSize){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("farm-upping");
+        modelAndView.setViewName("management/admin/farm-upping");
         modelAndView.addObject("vo", farmService.adminListFarm(pageNum, pageSize, PageConstant.PAGE_NAVIGATION_SIZE,11));
         return modelAndView;
     }
@@ -107,7 +106,7 @@ public class AdminFarmController {
         switch (vo.getFarm().getFarmState()){
             case 0:json.put("farm_state", "未审核状态");break;
             case 11:json.put("farm_state", "上架状态");break;
-            case 01:json.put("farm_state", "农场主下架状态");break;
+            case 1:json.put("farm_state", "农场主下架状态");break;
             case 10:json.put("farm_state", "管理员下架状态");break;
             default:;break;
 
@@ -133,7 +132,6 @@ public class AdminFarmController {
         json.put("username", vo.getFarm().getBusiness().getUser().getUserUsername());
         json.put("nickname", vo.getFarm().getBusiness().getUser().getUserNickname());
 
-        System.out.println("进来了！");
         json.put("flag", true);
         return json.toString();
     }
@@ -201,8 +199,5 @@ public class AdminFarmController {
         json.put("flag", true);
         return json.toString();
     }
-
-
-
 
 }
