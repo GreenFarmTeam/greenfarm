@@ -6,7 +6,10 @@
     <meta name="renderer" content="webkit"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <title>SkyMall | 商城</title>
-
+    <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/map.js}"></script>
     <link rel="stylesheet" th:href="@{/gfstatic/layui/css/layui.css}"/>
     <link th:href="@{/gfstatic/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/gfstatic/css/common.css}" rel="stylesheet" type="text/css"/>
@@ -29,111 +32,73 @@
                     </table>
                 </div>
             </div>
-            <div class="layui-row" id="order_form">
-                <div class="layui-col-md5 layui-col-sm5 layui-col-xs12 layui-col-md-offset7">
-                    <form class="layui-form" action="../order/submit.do">
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">收货人：</label>
-                            <div class="layui-input-block">
-                                <input type="text" name="name" required="required" lay-verify="required"
-                                       placeholder="请输入收货人"
-                                       autocomplete="off" class="layui-input"/>
-                            </div>
-                        </div>
+        </div>
 
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">电话：</label>
-                            <div class="layui-input-block">
-                                <input type="text" name="phone" required="required" lay-verify="required"
-                                       placeholder="请输入收货人电话"
-                                       autocomplete="off" class="layui-input"/>
-                            </div>
-                        </div>
+        <div class="layui-row">
+            <div class="layui-col-md12"><h1 class="site-h1"><i class="fa fa-subway" style="color: #FF5722;"></i>
+                &nbsp;我的收货地址</h1></div>
+        </div>
 
-                        <div class="layui-form-item">
-                            <label class="layui-form-label">地址：</label>
-                            <div class="layui-input-block">
-                                <input type="text" name="addr" required="required" lay-verify="required"
-                                       placeholder="请输入收货人地址"
-                                       autocomplete="off" class="layui-input"/>
-                            </div>
-                        </div>
-
-                        <div class="layui-form-item">
-                            <div class="layui-input-block" style="text-align: right;">
-                                <span id="total" class="price1"></span>&emsp;
-                                <button class="layui-btn layui-btn-lg layui-btn-radius layui-btn-danger"
-                                        lay-submit="lay-submit" lay-filter="formDemo">提交订单
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-
+        <div class="layui-row" style="text-align: center;">
+            <div class="layui-row" id="order_address" style="overflow-x: auto;">
+                <div class="layui-col-md12">
+                    <table class="layui-table" lay-skin="nob" id="address">
+                    </table>
                 </div>
             </div>
         </div>
-        <script>
-            //            <![CDATA[
-            $(function () {
-                //加载购物车信息
-                loadCart();
-            });
+        <div class="layui-row" id="order_form">
+            <div class="layui-col-md5 layui-col-sm5 layui-col-xs12 layui-col-md-offset7">
+                <form class="layui-form" action="../order/submit.do">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">收货人：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="name" required="required" lay-verify="required"
+                                   placeholder="请输入收货人"
+                                   autocomplete="off" class="layui-input"/>
+                        </div>
+                    </div>
 
-            layui.use('form', function () {
-                var form = layui.form;
-            });
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">联系电话：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="phone" required="required" lay-verify="required"
+                                   placeholder="请输入收货人电话"
+                                   autocomplete="off" class="layui-input"/>
+                        </div>
+                    </div>
 
-            function loadCart() {
-                $.get("listCart.do", function (data) {
-                    if (data.state == 0) {
-                        var table = $("#cart");
-                        if (data.data.length <= 0) {
-                            layer.msg("您的购物车中暂无商品，快去购物吧！");
-                            $("#order_form").fadeOut();
-                            return;
-                        }
-                        appendToPage(table, data.data);
-                    } else {
-                        layer.msg(data.message);
-                    }
-                });
-            }
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">收货地址：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="addr" readonly="readonly" required="required" lay-verify="required"
+                                   placeholder="请输入收货人地址"
+                                   autocomplete="off" class="layui-input"/>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">详细地址：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="detail-addr" required="required" lay-verify="required"
+                                   placeholder="请输入详细地址"
+                                   autocomplete="off" class="layui-input"/>
+                        </div>
+                    </div>
 
-            var total = 0;
+                    <div class="layui-form-item">
+                        <div class="layui-input-block" style="text-align: right;">
+                            <span id="total" class="price1"></span>&emsp;
+                            <button class="layui-btn layui-btn-lg layui-btn-radius layui-btn-danger"
+                                    id="gf_sure" lay-filter="formDemo">提交订单
+                            </button>
+                        </div>
+                    </div>
+                </form>
 
-            function appendToPage(table, items) {
+            </div>
+        </div>
 
-                $(items).each(function (index, item) {
-                    var tr = $("<tr style='max-height: 200px;'></tr>");
-                    tr.append($("<td style=''><img class='img_responsive' src='" + item.product.image + "'/></td>"));
-                    tr.append($("<td style='text-align: left;width: 180px;'>" + item.product.title + "</td>"));
-                    tr.append($("<td>单价：" + item.product.shopPrice + "</td>"));
-                    tr.append($("<td>数量：" + item.count + "</td>"));
-                    tr.append($("<td>总价：￥" + item.subTotal + "</td>"));
-                    tr.append($("<td><button onclick='remove(this," + item.product.id + "," + item.subTotal + ")' class='layui-btn layui-btn-radius layui-btn-danger'>删除</button></td>"));
-                    table.append(tr);
-                    total += item.subTotal;
-                });
-                $("#total").html("总价：￥" + total);
-            }
-
-            //移除购物车
-            function remove(btn, productId, subTotal) {
-                $.get("delCart.do?productId=" + productId, function (data) {
-                    if (data.state == 0) {
-                        layer.msg("删除成功！");
-                        $(btn).parent().parent().fadeOut();
-                        total -= subTotal;
-                        $("#total").html("总价：￥" + total);
-                    } else {
-                        layer.msg(data.message);
-                    }
-                })
-            }
-
-
-            //            ]]>
-        </script>
+        <script type="text/javascript" th:src="@{/gfstatic/js/management/shop/cart.js}"></script>
     </div>
 <!--底部-->
     <div th:replace="shop/common::foot"></div>

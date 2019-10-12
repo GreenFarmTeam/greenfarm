@@ -19,9 +19,10 @@ public interface AddressDAO {
             @Result(property = "addressCity", column = "addr_city"),
             @Result(property = "addressDistrict", column = "addr_district"),
             @Result(property = "addressDetail", column = "addr_desc"),
+            @Result(property = "addressPhone", column = "addr_phone"),
             @Result(property = "user", column = "addr_user_uid", one = @One(select = "com.nchu.ruanko.greenfarm.dao.UserDAO.getUserByUID"))
     })
-    @Select("SELECT addr_uid,addr_name,addr_province,addr_city,addr_district,addr_desc" +
+    @Select("SELECT *" +
             " FROM gf_tb_address" +
             " WHERE addr_user_uid=#{uid}")
     List<Address> listAddressesByUserUID(@Param(value = "uid") String userUid);
@@ -32,7 +33,7 @@ public interface AddressDAO {
      * @return
      */
     @ResultMap(value = "addressMapper1")
-    @Select("SELECT addr_uid,addr_name,addr_province,addr_city,addr_district,addr_desc" +
+    @Select("SELECT *" +
             " FROM gf_tb_address" +
             " WHERE addr_uid=#{uid}")
     Address getAddressByAddressUID(@Param(value = "uid") String addressUid);
