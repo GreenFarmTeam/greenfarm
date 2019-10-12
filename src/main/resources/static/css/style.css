@@ -36,7 +36,7 @@ Reset and overrides
 ***/
 /* general body settings */
 body { 
-  color: #000; 
+  color: #363636;
   font-family: 'Microsoft Yahei';
   padding: 0px !important;
   margin: 0px !important;
@@ -911,7 +911,7 @@ Page title
   font-size: 30px;
   letter-spacing: -1px;
   display: block;
-  color: #666;
+  color: #373737;
   margin: 20px 0px 15px 0px;
   font-weight: 300;
   font-family: 'Open Sans';

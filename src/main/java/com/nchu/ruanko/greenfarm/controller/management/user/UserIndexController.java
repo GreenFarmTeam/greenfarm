@@ -28,4 +28,16 @@ public class UserIndexController {
         return modelAndView;
     }
 
+    /**
+     * 加载个人资料
+     * @return ModelAndView
+     */
+    @ApiOperation(value="loadAllLegalFarm", notes="加载个人资料")
+    @GetMapping(value = "/user/management/profile")
+    public ModelAndView loadAllNoCheckedFarmPage(){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("management/user/profile");
+        return modelAndView;
+    }
+
 }
