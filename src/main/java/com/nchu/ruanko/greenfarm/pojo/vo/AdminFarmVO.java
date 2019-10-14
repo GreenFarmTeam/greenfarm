@@ -4,7 +4,7 @@ import com.nchu.ruanko.greenfarm.pojo.entity.*;
 
 import java.util.List;
 
-public class AdminFarmVo {
+public class AdminFarmVO {
 
     private Farm farm;
     private FarmReview review;
@@ -55,7 +55,7 @@ public class AdminFarmVo {
 
     @Override
     public String toString() {
-        return "AdminFarmVo{" +
+        return "AdminFarmVO{" +
                 "farm=" + farm +
                 ", review=" + review +
                 ", mainImage=" + mainImage +

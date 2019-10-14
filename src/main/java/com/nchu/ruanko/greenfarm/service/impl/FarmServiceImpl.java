@@ -9,9 +9,8 @@ import com.nchu.ruanko.greenfarm.service.FarmService;
 import com.nchu.ruanko.greenfarm.util.string.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sun.security.krb5.internal.PAData;
+//import sun.security.krb5.internal.PAData;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -136,10 +135,10 @@ public class FarmServiceImpl implements FarmService {
         /**对farm信息进行分页展示**/
         PageInfo<Farm> farmInfo =new PageInfo<>(farmList,pageNavigationSize) ;
 
-        List<AdminFarmVo> AdminFarmPageVOList = new ArrayList<>();
+        List<AdminFarmVO> AdminFarmPageVOList = new ArrayList<>();
 
         for(Farm farm : farmList){
-            AdminFarmVo adminFarmVo = new AdminFarmVo();
+            AdminFarmVO adminFarmVo = new AdminFarmVO();
             adminFarmVo.setFarm(farm);
             adminFarmVo.setReview(farmReviewDAO.getFarmReviewByFarmUID(farm.getFarmUid()));
             adminFarmVo.setMainImage(farmImageDAO.getFarmMainImageByFarmUID(farm.getFarmUid()));
@@ -201,8 +200,8 @@ public class FarmServiceImpl implements FarmService {
      * @return
      */
     @Override
-    public AdminFarmVo adminGetFarmByFarmUID(String farmUid) {
-        AdminFarmVo vo = new AdminFarmVo();
+    public AdminFarmVO adminGetFarmByFarmUID(String farmUid) {
+        AdminFarmVO vo = new AdminFarmVO();
         vo.setFarm(farmDAO.getFarmByFarmUID(farmUid));
         vo.setMainImage(farmImageDAO.getFarmMainImageByFarmUID(farmUid));
         vo.setOtherImages(farmImageDAO.listFarmOtherImagesByFarmUID(farmUid));

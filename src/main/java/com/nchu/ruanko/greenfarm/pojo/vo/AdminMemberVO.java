@@ -1,9 +1,7 @@
 package com.nchu.ruanko.greenfarm.pojo.vo;
 
 import com.nchu.ruanko.greenfarm.pojo.entity.Address;
-import com.nchu.ruanko.greenfarm.pojo.entity.Business;
 import com.nchu.ruanko.greenfarm.pojo.entity.User;
-
 import java.util.List;
 
 public class AdminMemberVO {
@@ -34,4 +32,5 @@ public class AdminMemberVO {
                 ", addressList=" + addressList +
                 '}';
     }
+
 }

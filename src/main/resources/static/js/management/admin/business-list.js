@@ -1,7 +1,7 @@
 /**
- * 修改商家个人信息
+ * 商家详情
  */
-$("button[name='edit']").on('click', function () {
+$("button[name='detail']").on('click', function () {
     var businessId = $(this).attr("value");
     $("#mainFrame",window.parent.document).attr("src","/greenfarm/admin/management/business/detail/"+businessId);
 });

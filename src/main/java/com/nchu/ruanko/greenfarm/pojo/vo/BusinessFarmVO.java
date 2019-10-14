@@ -56,7 +56,7 @@ public class BusinessFarmVO {
 
     @Override
     public String toString() {
-        return "AdminFarmVo{" +
+        return "AdminFarmVO{" +
                 "farm=" + farm +
                 ", review=" + review +
                 ", mainImage=" + mainImage +

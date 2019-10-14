@@ -1,78 +1,80 @@
-<!-- TODO 管理员登录临时界面 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>管理员登录临时界面</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <meta content="" name="description"/>
-    <meta content="" name="author"/>
-    <script>
-        if (window != top)
-            top.location.href = location.href;
-    </script>
+    <title>管理员登录界面</title>
     <!--<script th:include="@{}"> </script>-->
-    <link th:href="@{/gfstatic/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
-    <link th:href="@{/gfstatic/css/bootstrap-responsive.min.css}" rel="stylesheet" type="text/css"/>
-    <link th:href="@{/gfstatic/css/style-metro.css}" rel="stylesheet" type="text/css"/>
-    <link th:href="@{/gfstatic/css/style.css}" rel="stylesheet" type="text/css"/>
-    <link th:href="@{/gfstatic/css/style-responsive.css}" rel="stylesheet" type="text/css"/>
-    <link th:href="@{/gfstatic/css/default.css}" rel="stylesheet" type="text/css" id="style_color"/>
-    <link th:href="@{/gfstatic/css/login.css}" rel="stylesheet" type="text/css"/>
-    <link th:href="@{/gfstatic/css/uniform.default.css}" rel="stylesheet" type="text/css"/>
-    <link rel="shortcut icon" th:href="@{/gfstatic/image/favicon.ico}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/gfstatic/templateone/res/layui/css/layui.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/gfstatic/templateone/res/static/css/main.css}">
     <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
 </head>
-<body class="login">
-    <div class="logo">
-        <img th:src="@{/gfstatic/image/logo-big.png}" alt=""/>
-    </div>
-    <div class="content">
-        <form class="form-vertical login-form">
 
-            <h3 class="form-title"> 请登录</h3>
-           <!-- 用户户名-->
-            <div class="control-group">
-                <label class="control-label visible-ie8 visible-ie9">用户名</label>
-                <div class="controls">
-                    <div class="input-icon left">
-                        <i class="icon-user"></i>
-                        <input id="gf_username" class="m-wrap placeholder-no-fix"  type="text" placeholder="用户名" name="username"/>
+<body>
+<div class="header">
+    <div class="headerLayout w1200">
+        <div class="headerCon">
+            <h1 class="mallLogo">
+                <a href="#" title="绿色农场">
+                    <img th:src="@{/gfstatic/templateone/res/static/img/logo.png}"/>
+                    <h4 style="display:inline; color:#029789">绿色农场互联网商城</h4>
+                </a>
+            </h1>
+        </div>
+    </div>
+</div>
+
+<div class="content content-nav-base  login-content">
+    <div class="login-bg">
+        <div class="login-cont w1200">
+            <div class="layui-row">
+                <div class="layui-col-md4 layui-col-md-offset7">
+                    <div class="layui-card" style="background-color: #eeeeee">
+                        <div class="layui-card-header layui-col-space10" style="padding-top: 10px">
+                            <h2 style="display:inline">管理员登录</h2>
+                        </div>
+                        <div class="layui-card-body">
+                            <form class="layui-form">
+                                <div class="layui-form-item">
+                                    <!-- 账号 -->
+                                    <div class="layui-inline iphone">
+                                        <div class="layui-input-inline">
+                                            <i class="layui-icon layui-icon-user iphone-icon"></i>
+                                            <input type="text" id="gf_username" name="gf_username" class="layui-input" placeholder="账号" autocomplete="off">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <!-- 密码 -->
+                                    <div class="layui-inline iphone">
+                                        <div class="layui-input-inline">
+                                            <i class="layui-icon layui-icon-password iphone-icon"></i>
+                                            <input type="password" id="gf_password" name="gf_password" class="layui-input" placeholder="密码" autocomplete="off">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item" style="float: right">
+                                    <div class="layui-inline layui-col-space5">
+                                        <a class="layadmin-link" th:href="@{/user/password/login}">返回会员登录</a>
+                                    </div>
+                                </div>
+                                <!-- 登录 -->
+                                <div class="layui-form-item login-btn">
+                                    <div class="layui-input-block">
+                                        <button type="button" class="layui-btn" id="gf_sure">登录</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        <!--    密码-->
-            <div class="control-group">
-
-                <label class="control-label visible-ie8 visible-ie9">密码</label>
-                <div class="controls">
-                    <div class="input-icon left">
-                        <i class="icon-lock"></i>
-                        <input id="gf_password" class="m-wrap placeholder-no-fix" type="password" placeholder="密码" name="password"/>
-                    </div>
-                </div>
-            </div>
-
-            <!--  表单按钮-->
-            <div class="form-actions">
-                <button type="reset" class="btn red ">
-                    重置
-                </button>
-                <button id='gf_sure' type="submit" class="btn green pull-right">
-                    登录
-                </button>
-            </div>
-        </form>
+        </div>
     </div>
-    <div class="copyright">
+</div>
 
-        2013 &copy; Metronic. Admin Dashboard Template.
+<script type="text/javascript" th:src="@{/gfstatic/js/common/admin/login.js}"></script>
 
-    </div>
-    <script th:src="@{/gfstatic/js/vue/jquery-1.10.1.min.js}" type="text/javascript"></script>
-    <script th:src="@{/gfstatic/js/vue/bootstrap.min.js}" type="text/javascript"></script>
-    <script type="text/javascript" th:src="@{/gfstatic/js/common/admin/login.js}"></script>
 </body>
 </html>

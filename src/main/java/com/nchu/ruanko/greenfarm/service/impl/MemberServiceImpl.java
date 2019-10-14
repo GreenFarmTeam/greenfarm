@@ -5,9 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.nchu.ruanko.greenfarm.dao.AddressDAO;
 import com.nchu.ruanko.greenfarm.dao.UserDAO;
 import com.nchu.ruanko.greenfarm.pojo.entity.Address;
-import com.nchu.ruanko.greenfarm.pojo.entity.BusinessReview;
 import com.nchu.ruanko.greenfarm.pojo.entity.User;
-import com.nchu.ruanko.greenfarm.pojo.vo.AdminBusinessReviewPageVO;
 import com.nchu.ruanko.greenfarm.pojo.vo.AdminMemberPageVO;
 import com.nchu.ruanko.greenfarm.pojo.vo.AdminMemberVO;
 import com.nchu.ruanko.greenfarm.service.MemberService;
@@ -15,12 +13,12 @@ import com.nchu.ruanko.greenfarm.util.string.StringUtils;
 import org.hibernate.validator.internal.util.StringHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class MemberServiceImpl implements MemberService {
+
     @Autowired
     private UserDAO userDAO;
 
@@ -42,7 +40,7 @@ public class MemberServiceImpl implements MemberService {
         PageInfo<User> pageInfo = new PageInfo<>(userList, pageNavigationSize);
         List<AdminMemberVO> adminMemberVOList = new ArrayList<>();
 
-        for(User user : userList ){
+        for(User user : userList){
             AdminMemberVO adminMemberVO = new AdminMemberVO();
             List<Address> addressList = addressDAO.listAddressesByUserUID(user.getUserUid());
             adminMemberVO.setAddressList(addressList);

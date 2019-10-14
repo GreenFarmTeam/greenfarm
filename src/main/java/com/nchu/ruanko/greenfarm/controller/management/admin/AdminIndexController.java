@@ -23,4 +23,11 @@ public class AdminIndexController {
         return modelAndView;
     }
 
+    @GetMapping(value = "/greenfarm/admin/management/welcome")
+    public ModelAndView adminManagementWelcomePage() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("management/admin/welcome");
+        return modelAndView;
+    }
+
 }

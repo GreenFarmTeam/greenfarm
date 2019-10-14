@@ -67,13 +67,13 @@ public interface BusinessDAO {
 
     /**
      * 查询所有合法的商家
-     * @return
      */
     @ResultMap(value = "businessMapper1")
-    @Select("select * from gf_tb_business,gf_tb_business_review " +
-            "where rev_result=1 and gf_tb_business.bus_uid=rev_bus_uid")
+    @Select("SELECT *" +
+            " FROM gf_tb_business,gf_tb_business_review" +
+            " WHERE gf_tb_business_review.rev_result=1" +
+            " AND gf_tb_business.bus_uid=gf_tb_business_review.rev_bus_uid")
     List<Business>  listAllLegalBusiness();
-
 
 
     /**

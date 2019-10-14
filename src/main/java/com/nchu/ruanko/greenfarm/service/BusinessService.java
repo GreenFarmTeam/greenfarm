@@ -42,6 +42,5 @@ public interface BusinessService {
 
     boolean checkExistUnfinishedBusinessReviewByBusinessUID(String businessUid);
 
-
     void adminEditBusinessInfo(String businessUID, String nickName, String shopName, String businessDescription);
 }

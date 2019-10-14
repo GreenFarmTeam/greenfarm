@@ -7,7 +7,7 @@ import java.util.List;
 
 public class AdminFarmPageVO {
     private PageInfo<Farm> pageInfo;
-    List<AdminFarmVo> adminFarmVOList;
+    List<AdminFarmVO> adminFarmVOList;
 
     public PageInfo<Farm> getPageInfo() {
         return pageInfo;
@@ -17,11 +17,11 @@ public class AdminFarmPageVO {
         this.pageInfo = pageInfo;
     }
 
-    public List<AdminFarmVo> getAdminFarmVOList() {
+    public List<AdminFarmVO> getAdminFarmVOList() {
         return adminFarmVOList;
     }
 
-    public void setAdminFarmVOList(List<AdminFarmVo> adminFarmVOList) {
+    public void setAdminFarmVOList(List<AdminFarmVO> adminFarmVOList) {
         this.adminFarmVOList = adminFarmVOList;
     }
 

@@ -1,15 +1,16 @@
 <!-- TODO 管理员主页临时界面 -->
 <!DOCTYPE html>
-<html lang='cn' xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>管理员主页临时界面</title>
+    <title></title>
     <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"/>
     <meta content="" name="description"/>
     <meta content="" name="author"/>
     <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
+
     <link th:href="@{/gfstatic/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/gfstatic/css/bootstrap-responsive.min.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/gfstatic/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
@@ -18,44 +19,36 @@
     <link th:href="@{/gfstatic/css/style.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/gfstatic/css/default.css}" rel="stylesheet" type="text/css" id="style_color"/>
     <link th:href="@{/gfstatic/css/uniform.default.css}" rel="stylesheet" type="text/css"/>
+
     <link rel="shortcut icon" th:href="@{/gfstatic/image/favicon.ico}"/>
 </head>
-<body style="background-color: #3d3d3d !important;" class="page-header-fixed page-footer-fixed page-sidebar-fixed">
+
+<body style="background-color: #5FB878 !important;" class="page-header-fixed page-footer-fixed page-sidebar-fixed">
 
     <div class="header navbar navbar-inverse navbar-fixed-top">
         <!-- 顶部菜单栏 -->
         <div class="navbar-inner">
             <div class="container-fluid">
                 <!-- 商城LOGO -->
-                <a class="brand" href="/admin/toIndex.html" title="回到首页" style="margin-left: 10px;">
+                <a class="brand" href="javascript:void(0);" title="回到首页" style="margin-left: 10px;">
                     <!--<img src="media/image/logo.png" class="" alt="logo"/>-->
                     <i class="fa fa-cubes"></i>
-                    <b>商城后台管理系统</b>
+                    <b>绿色农场后台管理系统</b>
                 </a>
                 <!-- END LOGO -->
 
-                <!-- 注销登录 -->
                 <ul class="nav pull-right">
                     <!-- BEGIN USER LOGIN DROPDOWN -->
-                    <li class="dropdown user ">
+                    <li class="dropdown user">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-
                             <i class="fa fa-user-circle"></i>
-
                             <span th:if="${session.admin}!=null" th:text="${session.admin.adminUsername}"></span>
-
                             <i class="fa fa-caret-down"></i>
-
                         </a>
                         <ul class="dropdown-menu ">
-                            <!--
-                                <li class="divider"></li>
-                            -->
-                            <li><a href="javaScript:void(0)" id="gf_logout"><i class="fa fa-key"></i>注销登录</a></li>
-
+                            <li><a href="javaScript:void(0);" id="gf_logout"><i class="fa fa-key"></i>注销登录</a></li>
                         </ul>
                     </li>
-
                 </ul>
                 <!-- END TOP NAVIGATION MENU -->
             </div>
@@ -75,129 +68,115 @@
                     </div>
                     <!-- 显示或隐藏树形菜单 END -->
                 </li>
-               <!-- 搜索框-->
                 <li>
                     <form class="sidebar-search">
                         <div class="input-box">
-                            <a href="javascript:;" class="remove"></a>
+                            <a href="javascript:void(0);" class="remove"></a>
                             <input type="text" placeholder="搜索..."/>
-                            <input type="button" class="submit" value=" "/>
+                            <input type="button" class="submit" value=""/>
                         </div>
                     </form>
                 </li>
 
-                <li class="start active " id="user">
-                    <a href="javascript:changePage('user');">
-                        <i class="fa fa-user-circle"></i>
-                        <span class="title">用户管理</span>
-                        <span class="arrow "></span>
-                        <span class="selected"></span>
-                    </a>
-                    <ul class="sub-menu">
-                        <li id="business">
-                            <a href="javascript:changePage('business');">
-                                <i class="fa fa-list"></i>
-                                商家管理
-                            </a>
-                        </li>
-                        <li id="member">
-                            <a href="javascript:changePage('member');">
-                                <i class="fa fa-list"></i>
-                                会员管理
-                            </a>
-                        </li>
-                    </ul>
-                </li>
 
-                <li class="" id="privilege">
-                    <a href="javascript:changePage('privilege');">
+                <li class="" id="index">
+                    <a href="javascript:void(0);">
                         <i class="fa fa-shopping-bag"></i>
-                        <span class="title">权限管理</span>
-                        <span class="arrow "></span>
+                        <span class="title">欢迎</span>
+                        <span class="arrow"></span>
                         <span class="selected"></span>
                     </a>
                     <ul class="sub-menu">
-                        <li id="business-check">
-                            <a href="javascript:changePage('business-check');">
+                        <li id="welcome">
+                            <a href="javascript:changePage('welcome');">
                                 <i class="fa fa-list"></i>
-                                商家审核
-                            </a>
-                        </li>
-                        <li id="member-check">
-                            <a href="javascript:changePage('member-check');">
-                                <i class="fa fa-list"></i>
-                                会员审核
+                                概况
                             </a>
                         </li>
                     </ul>
                 </li>
 
 
-                <li class="" id="farm">
-                    <a href="javascript:changePage('farm');">
+                <li class="" id="business">
+                    <a href="javascript:void(0);">
                         <i class="fa fa-shopping-bag"></i>
-                        <span class="title">农场管理</span>
-                        <span class="arrow "></span>
+                        <span class="title">商家管理</span>
+                        <span class="arrow"></span>
                         <span class="selected"></span>
                     </a>
                     <ul class="sub-menu">
-                        <li id="checked-farm">
-                            <a href="javascript:changePage('checked-farm');">
+                        <li id="business-all">
+                            <a href="javascript:changePage('business-all');">
                                 <i class="fa fa-list"></i>
-                                已审核农场
+                                当前所有商家
                             </a>
                         </li>
-                        <li id="upping-farm">
-                            <a href="javascript:changePage('upping-farm');">
+                        <li id="business-review">
+                            <a href="javascript:changePage('business-review');">
                                 <i class="fa fa-list"></i>
-                                已上架农场
-                            </a>
-                        </li>
-                        <li id="downing-farm">
-                            <a href="javascript:changePage('downing-farm');">
-                                <i class="fa fa-list"></i>
-                                已下架农场
-                            </a>
-                        </li>
-                        <li id="farm-check">
-                            <a href="javascript:changePage('farm-check');">
-                                <i class="fa fa-list"></i>
-                                农场审核
+                                待审核商家
                             </a>
                         </li>
                     </ul>
                 </li>
 
                 <li class="" id="product">
-                    <a href="javascript:changePage('product');">
+                    <a href="javascript:void(0);">
                         <i class="fa fa-shopping-bag"></i>
-                        <span class="title">商品管理</span>
-                        <span class="arrow "></span>
+                        <span class="title">农产品管理</span>
+                        <span class="arrow"></span>
                         <span class="selected"></span>
                     </a>
                     <ul class="sub-menu">
-                        <li id="upping-product">
-                            <a href="javascript:changePage('upping-product');">
+                        <li id="product-up">
+                            <a href="javascript:changePage('product-up');">
                                 <i class="fa fa-list"></i>
-                                已上架商品
+                                当前上架农产品
                             </a>
                         </li>
-                        <li id="downing-product">
-                            <a href="javascript:changePage('downing-product');">
+                        <li id="product-down">
+                            <a href="javascript:changePage('product-down');">
                                 <i class="fa fa-list"></i>
-                                已下架商品
+                                当前下架农产品
                             </a>
                         </li>
-                        <li id="product-check">
-                            <a href="javascript:changePage('product-check');">
+                        <li id="product-review">
+                            <a href="javascript:changePage('product-review');">
                                 <i class="fa fa-list"></i>
-                                商品审核
+                                待审核农产品
                             </a>
                         </li>
-
                     </ul>
                 </li>
 
+                <li class="" id="farm">
+                    <a href="javascript:void(0);">
+                        <i class="fa fa-shopping-bag"></i>
+                        <span class="title">农场管理</span>
+                        <span class="arrow"></span>
+                        <span class="selected"></span>
+                    </a>
+                    <ul class="sub-menu">
+                        <li id="farm-up">
+                            <a href="javascript:changePage('farm-up');">
+                                <i class="fa fa-list"></i>
+                                当前发布的农场信息
+                            </a>
+                        </li>
+                        <li id="farm-down-admin">
+                            <a href="javascript:changePage('farm-down-admin');">
+                                <i class="fa fa-list"></i>
+                                当前撤回的农场信息
+                            </a>
+                        </li>
+                        <li id="farm-review">
+                            <a href="javascript:changePage('farm-review');">
+                                <i class="fa fa-list"></i>
+                                待审核农场信息
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
             </ul>
             <!-- END SIDEBAR MENU -->
@@ -206,53 +185,13 @@
     <div id="content" class="page-content">
         <iframe id="mainFrame" frameborder="0" src=""></iframe>
     </div>
-   <!-- <h4>商家管理</h4>
-    <ul>
-        <li>
-            <a th:href="@{/greenfarm/admin/management/business/loadAll}">已有商家</a>
-        </li>
-        <li>
-            <a th:href="@{/greenfarm/admin/management/business/review}">待审核商家</a>
-        </li>
-    </ul>
-    <hr/>
-    <h4>商品管理</h4>
-    <ul>
-        <li>
-            <a th:href="@{/greenfarm/admin/management/product}">已上架商品</a>
-        </li>
-        <li>
-            <a th:href="@{/greenfarm/admin/management/product/down}">已下架商品</a>
-        </li>
-        <li>
-            <a th:href="@{/greenfarm/admin/management/product/review}">商品审核</a>
-        </li>
-    </ul>
-    <h4>农场管理</h4>
-    <ul>
-        <li>
-            <a th:href="@{/greenfarm/admin/management/farm}">已审核农场</a>
-        </li>
-        <li>
-            <a th:href="@{/greenfarm/admin/management/farm/up}">已上架农场</a>
-        </li>
-        <li>
-            <a th:href="@{/greenfarm/admin/management/farm/down}">已下架农场</a>
-        </li>
-        <li>
-            <a th:href="@{/greenfarm/admin/management/farm/review}">农场审核</a>
-        </li>
-    </ul>-->
 
     <div class="footer">
         <div class="footer-inner" style="width: 100%;text-align: center;">
-            2017 &copy; Jesse
+            2019 &copy; GreenFarm
             <div class="footer-tools">
-
 				<span class="go-top" title="回到顶部">
-
-				<i class="fa fa-chevron-up"></i>
-
+                    <i class="fa fa-chevron-up"></i>
 				</span>
             </div>
         </div>

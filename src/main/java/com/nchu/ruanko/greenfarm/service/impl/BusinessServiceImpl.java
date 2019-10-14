@@ -14,7 +14,6 @@ import com.nchu.ruanko.greenfarm.pojo.vo.AdminBusinessLegalPageVO;
 import com.nchu.ruanko.greenfarm.pojo.vo.AdminBusinessReviewDetailVO;
 import com.nchu.ruanko.greenfarm.pojo.vo.AdminBusinessReviewPageVO;
 import com.nchu.ruanko.greenfarm.service.BusinessService;
-import com.nchu.ruanko.greenfarm.service.MemberService;
 import com.nchu.ruanko.greenfarm.util.string.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

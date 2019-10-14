@@ -35,45 +35,28 @@ public class AdminProductController {
      */
     @ApiOperation(value = "adminReviewProductPage", notes = "跳转至“管理员商品审核”的页面")
     @GetMapping(value = "/greenfarm/admin/management/product/review")
-    public ModelAndView adminReviewProductPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "10") int pageSize) {
+    public ModelAndView adminReviewProductPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "3") int pageSize) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("management/admin/review-product");
+        modelAndView.setViewName("management/admin/product-review");
         modelAndView.addObject("vo", productService.adminListProductReview(pageNum, pageSize, PAGE_NAVIGATION_SIZE));
         return modelAndView;
     }
 
-    /**
-     * 管理员同意商品上架申请
-     *
-     * @param productReviewUid uid
-     * @return JSON
-     */
-    @ApiOperation(value = "adminReviewProductAgreeOperation", notes = "管理员同意商品上架申请")
-    @GetMapping(value = "/greenfarm/admin/management/product/review/agree/{uid}/operation")
-    @ResponseBody
-    public String adminReviewProductAgreeOperation(@PathVariable(name = "uid") String productReviewUid) {
-        JSONObject json = new JSONObject();
-        productService.adminAgreeProductReview(productReviewUid);
-        json.put("flag", true);
-        return json.toString();
-    }
-
 
     /**
-     * 管理员驳回商品上架申请
+     * 跳转至“管理员查看当前所有下架商品（客户主动下架/管理员下架）信息”页面
      *
-     * @param productReviewUid uid
-     * @return JSON
+     * @return ModelAndView
      */
-    @ApiOperation(value = "adminReviewProductDisagreeOperation", notes = "管理员驳回商品上架申请")
-    @PostMapping(value = "/greenfarm/admin/management/product/review/disagree/{uid}/operation")
-    @ResponseBody
-    public String adminReviewProductDisagreeOperation(@RequestParam(name = "reason") String reason ,@PathVariable(name = "uid") String productReviewUid) {
-        JSONObject json = new JSONObject();
-        productService.adminDisagreeProductReview(reason, productReviewUid);
-        json.put("flag", true);
-        return json.toString();
+    @ApiOperation(value = "adminProductDownPage", notes = "跳转至“管理员查看当前所有下架商品（客户主动下架/管理员下架）信息”页面")
+    @GetMapping(value = "/greenfarm/admin/management/product/down")
+    public ModelAndView adminProductDownPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "3") int pageSize) {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("management/admin/product-down");
+        modelAndView.addObject("vo", productService.adminListDownProducts(pageNum, pageSize, PageConstant.PAGE_NAVIGATION_SIZE));
+        return modelAndView;
     }
+
 
     /**
      * 跳转至“管理员查看所有成功上架的商品”的界面
@@ -81,10 +64,10 @@ public class AdminProductController {
      * @return ModelAndView
      */
     @ApiOperation(value = "adminProductPage", notes = "跳转至“管理员查看所有成功上架的商品”的界面")
-    @GetMapping(value = "/greenfarm/admin/management/product")
-    public ModelAndView adminProductPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "10") int pageSize) {
+    @GetMapping(value = "/greenfarm/admin/management/product/up")
+    public ModelAndView adminProductPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "3") int pageSize) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("management/admin/product-checked");
+        modelAndView.setViewName("management/admin/product-up");
         modelAndView.addObject("vo", productService.adminListProducts(pageNum, pageSize, PageConstant.PAGE_NAVIGATION_SIZE));
         return modelAndView;
     }
@@ -183,17 +166,36 @@ public class AdminProductController {
     }
 
     /**
-     * 跳转至“管理员查看当前所有下架商品（客户主动下架/管理员下架）信息”页面
+     * 管理员同意商品上架申请
      *
-     * @return ModelAndView
+     * @param productReviewUid uid
+     * @return JSON
      */
-    @ApiOperation(value = "adminProductDownPage", notes = "跳转至“管理员查看当前所有下架商品（客户主动下架/管理员下架）信息”页面")
-    @GetMapping(value = "/greenfarm/admin/management/product/down")
-    public ModelAndView adminProductDownPage(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "10") int pageSize) {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("management/admin/product-down");
-        modelAndView.addObject("vo", productService.adminListDownProducts(pageNum, pageSize, PageConstant.PAGE_NAVIGATION_SIZE));
-        return modelAndView;
+    @ApiOperation(value = "adminReviewProductAgreeOperation", notes = "管理员同意商品上架申请")
+    @GetMapping(value = "/greenfarm/admin/management/product/review/agree/{uid}/operation")
+    @ResponseBody
+    public String adminReviewProductAgreeOperation(@PathVariable(name = "uid") String productReviewUid) {
+        JSONObject json = new JSONObject();
+        productService.adminAgreeProductReview(productReviewUid);
+        json.put("flag", true);
+        return json.toString();
+    }
+
+
+    /**
+     * 管理员驳回商品上架申请
+     *
+     * @param productReviewUid uid
+     * @return JSON
+     */
+    @ApiOperation(value = "adminReviewProductDisagreeOperation", notes = "管理员驳回商品上架申请")
+    @PostMapping(value = "/greenfarm/admin/management/product/review/disagree/{uid}/operation")
+    @ResponseBody
+    public String adminReviewProductDisagreeOperation(@RequestParam(name = "reason") String reason ,@PathVariable(name = "uid") String productReviewUid) {
+        JSONObject json = new JSONObject();
+        productService.adminDisagreeProductReview(reason, productReviewUid);
+        json.put("flag", true);
+        return json.toString();
     }
 
 

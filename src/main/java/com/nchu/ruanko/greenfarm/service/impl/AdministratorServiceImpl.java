@@ -4,7 +4,6 @@ import com.nchu.ruanko.greenfarm.dao.AdministratorDAO;
 import com.nchu.ruanko.greenfarm.pojo.entity.Administrator;
 import com.nchu.ruanko.greenfarm.service.AdministratorService;
 import com.nchu.ruanko.greenfarm.util.string.StringUtils;
-import org.hibernate.validator.internal.util.StringHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

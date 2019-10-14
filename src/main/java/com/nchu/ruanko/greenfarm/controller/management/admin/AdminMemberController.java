@@ -1,6 +1,7 @@
 package com.nchu.ruanko.greenfarm.controller.management.admin;
 
 import com.alibaba.fastjson.JSONObject;
+import com.nchu.ruanko.greenfarm.constant.PageConstant;
 import com.nchu.ruanko.greenfarm.service.MemberService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,8 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 @Api(tags = "management.admin.AdminMemberController", description = "")
 @Controller
 public class AdminMemberController {
+
     @Autowired
     private MemberService memberService;
+
     private static final int PAGE_NAVIGATION_SIZE = 10;
 
     /**
@@ -29,10 +32,11 @@ public class AdminMemberController {
     @GetMapping(value="/greenfarm/admin/management/member/loadAll")
     public ModelAndView loadAllLegalBusiness(@RequestParam(name = "page", defaultValue = "1") int pageNum, @RequestParam(name = "size", defaultValue = "10") int pageSize){
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("vo", memberService.listAllLegalMemberWithPage(pageNum, pageSize, PAGE_NAVIGATION_SIZE));
+        modelAndView.addObject("vo", memberService.listAllLegalMemberWithPage(pageNum, pageSize, PageConstant.PAGE_NAVIGATION_SIZE));
         modelAndView.setViewName("management/admin/member-list");
         return modelAndView;
     }
+
     /**
      * 加载所有的不合法的会员
      * @param pageNum
@@ -45,7 +49,7 @@ public class AdminMemberController {
         System.out.println("加载所有不合法会员");
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("vo", memberService.listAllIllegalMemberWithPage(pageNum, pageSize, PAGE_NAVIGATION_SIZE));
-        modelAndView.setViewName("management/admin/illegal-member-list");
+        modelAndView.setViewName("member-illegal-list");
         return modelAndView;
     }
 
