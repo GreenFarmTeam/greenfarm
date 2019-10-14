@@ -3,6 +3,7 @@ package com.nchu.ruanko.greenfarm.dao;
 import com.nchu.ruanko.greenfarm.pojo.entity.Order;
 import org.apache.ibatis.annotations.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Mapper
@@ -39,4 +40,31 @@ public interface OrderDAO {
      */
     @Insert("insert into gf_tb_order(ord_uid,ord_sum,ord_user_uid) values(#{uuid},#{productPrice},#{userID})")
     void createCartOrder(@Param("uuid") String uuid,@Param("productPrice") Float productPrice,@Param("userID") String userID);
+
+    @Update("update gf_tb_order " +
+            "set ord_state = #{state} " +
+            "where ord_uid=#{orderUid} and ord_user_uid=#{userUid}")
+    void updateOrderStateByUserIdAndOrderId(@Param("orderUid") String orderUid,@Param("userUid") String userUid,@Param("state") int unPayState);
+
+    @Update("update gf_tb_order " +
+            "set ord_rname = #{name}," +
+            "ord_phone = #{phone}, " +
+            "ord_raddr = #{address} " +
+            "where ord_uid=#{orderUid} and ord_user_uid=#{userUid}")
+    void updateOrderAddressInfoByUserIdAndOrderId(@Param("orderUid")String orderUid,@Param("userUid") String userUid,@Param("name") String name,@Param("phone") String phone,@Param("address") String address);
+
+    @Update("update gf_tb_order " +
+            "set ord_ctime = #{date} " +
+            "where ord_uid=#{orderUid} and ord_user_uid=#{userUid}")
+    void updateOrderCreateTimeByUserIdAndOrderId(@Param("orderUid")String orderUid,@Param("userUid") String userUid,@Param("date") Date date);
+
+    @Update("update gf_tb_order " +
+            "set ord_sum = #{totalPrice} " +
+            "where ord_uid=#{orderUid} and ord_user_uid=#{userUid}")
+    void updateOrderTotalPriceByUserIdAndOrderId(@Param("orderUid")String orderUid,@Param("userUid") String userUid,@Param("totalPrice") Float totalPrice);
+
+    @ResultMap(value = "orderMapper1")
+    @Select("select * from gf_tb_order " +
+            "where ord_user_uid=#{userUid}")
+    List<Order> listAllOrdersByUserid(@Param("userUid")String userUid);
 }

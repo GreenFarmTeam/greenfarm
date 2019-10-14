@@ -47,7 +47,7 @@
 
                         <dd th:if="${session.user != null}"><a th:href="@{/user/management/index}"><i class="fa fa-user-circle"></i> 个人中心</a></dd>
 
-                        <dd th:if="${session.user != null}"><a href=""><i class="fa fa-list"></i> 我的订单</a></dd>
+                        <dd th:if="${session.user != null}"><a th:href="@{/member/management/order/index}"><i class="fa fa-list"></i> 我的订单</a></dd>
 
                         <dd th:if="${session.user != null}"><a th:href="@{/member/management/toCart.html}"><i class="fa fa-shopping-cart"></i> 购物车</a></dd>
 

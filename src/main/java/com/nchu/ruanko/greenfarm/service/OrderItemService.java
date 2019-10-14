@@ -11,4 +11,6 @@ public interface OrderItemService {
     boolean deleteProductFromUserCart(String userUid, String productId);
 
     boolean alterProductNumFromUserCart(String userUid, String productId,int ProductNum);
+
+    List<OrderItemVo> loadOrderItemsByOrderId(String orderId);
 }

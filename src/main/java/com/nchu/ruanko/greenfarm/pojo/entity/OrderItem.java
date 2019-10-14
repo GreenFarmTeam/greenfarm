@@ -4,7 +4,7 @@ public class OrderItem {
 
     private String itemUid;
     private String itemPrice;
-    private String itemCount;
+    private Integer itemCount;
     private Float itemSum;
     private Order order;
     private Product product;
@@ -25,11 +25,11 @@ public class OrderItem {
         this.itemPrice = itemPrice;
     }
 
-    public String getItemCount() {
+    public Integer getItemCount() {
         return itemCount;
     }
 
-    public void setItemCount(String itemCount) {
+    public void setItemCount(Integer itemCount) {
         this.itemCount = itemCount;
     }
 

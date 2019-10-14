@@ -22,12 +22,11 @@ var businessShopDescriptionRegex = /^[0-9a-zA-Z\u4E00-\u9FA5\u3002\uff1f\uff01\u
 // 收货地址姓名正则 数字、字母 汉字2-255位
 var addressNameRegex = /^[0-9a-zA-Z\u4E00-\u9FA5]{2,255}$/;
 
-
 // 收货详细地址正则 数字、字母 汉字2-255位(含标点)
-var addressRegex = /^[0-9a-zA-Z\u4E00-\u9FA5\u3002\uff1f\uff01\uff0c\u3001\uff1b\uff1a\u201c\u201d\u2018\u2019\uff08\uff09\u300a\u300b\u3008\u3009\u3010\u3011\u300e\u300f\u300c\u300d\ufe43\ufe44\u3014\u3015\u2026\u2014\uff5e\ufe4f\uffe5]{0,125}$/;
+var addressRegex = /^[0-9a-zA-Z\u3002\uff1b\uff0c\uff1a\u201c\u201d\uff08\uff09\u3001\uff1f\u300a\u300b\u4e00-\u9fa5]{2,255}$/;
 
 //收货地址电话  手机号码11位
-var addressPhone = /^1[3456789]\d{9}$/
+var addressPhoneRegex = /^1[3456789]\d{9}$/
 
 // 商品名称正则    数字、字母 汉字2-25位
 var productNameRegex = /^[0-9a-zA-Z\u4E00-\u9FA5]{2,25}$/;

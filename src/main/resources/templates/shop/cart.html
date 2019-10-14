@@ -7,9 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <title>SkyMall | 商城</title>
     <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
-    <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
-    <script type="text/javascript" th:src="@{/gfstatic/js/common/map.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/regex.js}"></script>
     <link rel="stylesheet" th:href="@{/gfstatic/layui/css/layui.css}"/>
     <link th:href="@{/gfstatic/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/gfstatic/css/common.css}" rel="stylesheet" type="text/css"/>
@@ -49,7 +48,7 @@
         </div>
         <div class="layui-row" id="order_form">
             <div class="layui-col-md5 layui-col-sm5 layui-col-xs12 layui-col-md-offset7">
-                <form class="layui-form" action="../order/submit.do">
+                <form class="layui-form" method="post">
                     <div class="layui-form-item">
                         <label class="layui-form-label">收货人：</label>
                         <div class="layui-input-block">
@@ -88,8 +87,8 @@
                     <div class="layui-form-item">
                         <div class="layui-input-block" style="text-align: right;">
                             <span id="total" class="price1"></span>&emsp;
-                            <button class="layui-btn layui-btn-lg layui-btn-radius layui-btn-danger"
-                                    id="gf_sure" lay-filter="formDemo">提交订单
+                            <button class="layui-btn layui-btn-lg layui-btn-radius layui-btn-danger" type="button"
+                                    onclick="submit_btn(this)" id="gf_sure">提交订单
                             </button>
                         </div>
                     </div>

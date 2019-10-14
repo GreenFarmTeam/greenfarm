@@ -34,8 +34,13 @@ public class GreenfarmApplicationTests {
     private MemberService memberService;
     @Autowired
     private BusinessService businessService;
+    @Autowired
+    private OrderItemService orderItemService;
+    @Autowired
+    private AddressDAO addressDAO;
 
-
+    @Autowired
+    private OrderService orderService;
     @Autowired
     private ProductServiceImpl productService;
 
@@ -45,6 +50,7 @@ public class GreenfarmApplicationTests {
     @Test
     public void contextLoads() {
 
+        System.out.println(orderItemService.loadOrderItemsByOrderId("987068106ec94a9d9272ff432d3dbca4"));
 
        /* System.out.println(farmDAO.listAllNoCheckedFarm());*/
     }

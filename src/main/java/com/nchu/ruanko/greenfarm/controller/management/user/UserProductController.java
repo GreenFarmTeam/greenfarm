@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.nchu.ruanko.greenfarm.constant.PageConstant;
 import com.nchu.ruanko.greenfarm.pojo.entity.Business;
 import com.nchu.ruanko.greenfarm.service.ProductService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.websocket.server.PathParam;
-
+@Api(tags = "management.user.UserProductController", description = "“会员/产品中心”的控制器")
 @Controller
 public class UserProductController {
     @Autowired
@@ -78,16 +79,7 @@ public class UserProductController {
         modelAndView.setViewName("");
         return modelAndView;
     }
-    /**
-     * 跳转到购物车界面
-     * @return
-     */
-    @ApiOperation(value = "memberManagementLoadProductsDetailInfo", notes = "跳转到购物车界面")
-    @GetMapping("/member/management/toCart.html")
-    public String toCart(){
 
-        return "shop/cart";
-    }
 
 
 }

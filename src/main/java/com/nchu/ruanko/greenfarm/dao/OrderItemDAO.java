@@ -64,4 +64,10 @@ public interface OrderItemDAO {
             " gf_tb_order    " +
             " where gf_tb_order.ord_user_uid=#{uid} and gf_tb_order.ord_state=0 )")
     void updateOrderItemProductSumPriceByUserUidAndProductId(@Param("uid")String userUid,@Param("productId") String productId, @Param("itemSumPrice") Float itemSumPrice);
+
+    @ResultMap(value="orderItemMapper1")
+    @Select("select * from " +
+            "gf_tb_order_item " +
+            "where item_order_uid=#{orderId}")
+    List<OrderItem> loadOrderItemsByOrderId(String orderId);
 }
