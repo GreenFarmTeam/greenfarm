@@ -1,67 +1,191 @@
-<!-- TODO 商家中心临时页面 -->
+<!-- TODO 商家主页临时界面 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>商家中心临时页面</title>
+
     <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
-    <link th:href="@{/gfstatic/css/mygrxx.css}" rel="stylesheet" type="text/css"/>
-</head>
-<body>
-<div class="container-fluid">
-    <div class="row-fluid">
-        <div class="you fl" style="margin: 50px 100px;">
-            <h2>商家中心</h2>
-            <div class="gxin">
-                <div class="tx" style="margin: 30px 0;">
-                    <div href="#" th:if="${session.business}!=null" >
-                        <p>会员号：<span th:text="${session.user.userUsername}"></span></p>
-                        <p>昵称：<span th:text="${session.user.userNickname}"></span></p>
-                        <p>店铺名称：<span th:text="${session.business.businessShopName}"></span></p>
-                        <p>店铺描述：<span th:text="${session.business.businessShopDescription}"></span></p>
-                        <p>经营范围：<span th:if="${scopes.size()}!=0" th:each="sp:${scopes}" th:text="${sp.productType.typeName}"></span></p>
-                    </div>
-                </div>
-                <div class="xx">
-                    <div class="half">
-                        <h3 class="clearfix"><strong class="fl">商品管理</strong></h3>
-                        <div>
-                            <a class="fl" th:href="@{/business/management/product}">我的上架商品</a>
-                        </div>
-                        <div>
-                            <a class="fl" th:href="@{/business/management/product/down}">我的下架商品</a>
-                        </div>
-                        <div>
-                            <a class="fl" th:href="@{/business/management/product/add}">申请上架商品</a>
-                        </div>
-                        <div>
-                            <a class="fl" th:href="@{/business/management/product/review}">商品审核记录</a>
-                        </div>
-                    </div>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/map.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/layui/jquery-3.2.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/layui/layui.js}"></script>
 
-                    <div class="half">
-                        <h3 class="clearfix"><strong class="fl">农场管理</strong></h3>
-                        <div>
-                            <a class="fl" href="javascript:void(0);" id="gf_farm_up">我发布的农场租赁信息</a>
-                        </div>
-                        <div>
-                            <a class="fl" href="javascript:void(0);" id="gf_farm_down">我下线的农场租赁信息</a>
-                        </div>
-                        <div>
-                            <a class="fl" href="javascript:void(0);" id="gf_farm_submit">申请发布农场租赁信息</a>
-                        </div>
-                        <div>
-                            <a class="fl" href="javascript:void(0);" id="gf_farm_review">农场租赁信息审核记录</a>
-                        </div>
-                    </div>
+    <link th:href="@{/gfstatic/css/bootstrap-responsive.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/gfstatic/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/gfstatic/css/style-responsive.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/gfstatic/css/style-metro.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/gfstatic/css/style.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/gfstatic/css/default.css}" rel="stylesheet" type="text/css" id="style_color"/>
+    <link th:href="@{/gfstatic/css/uniform.default.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/gfstatic/image/favicon.ico}" rel="shortcut icon"/>
+    <link th:href="@{/gfstatic/templateone/res/layui/css/layui.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/gfstatic/css/common.css}" rel="stylesheet" type="text/css"/>
+</head>
+
+<body>
+<!--包含 头部模块-->
+<div th:replace="shop/common::head"></div>
+
+<div class="page-container">
+    <!--左侧树形菜单-->
+    <div class="page-sidebar nav-collapse collapse" style="height: 700px;">
+
+        <ul class="page-sidebar-menu">
+            <li>
+                <!-- 显示或隐藏树形菜单 -->
+                <div class="sidebar-toggler hidden-phone" style="text-align: center;">
+                    <i class="fa fa-2x fa-bars"></i>
                 </div>
-            </div>
-        </div>
+                <!-- 显示或隐藏树形菜单 END -->
+            </li>
+            <li>
+                <form class="sidebar-search">
+                    <div class="input-box">
+                        <a href="javascript:void(0);" class="remove"></a>
+                        <input type="text" placeholder="搜索..."/>
+                        <input type="button" class="submit" value=""/>
+                    </div>
+                </form>
+            </li>
+
+
+            <li class="" id="index">
+                <a href="javascript:void(0);">
+                    <i class="fa fa-shopping-bag"></i>
+                    <span class="title">欢迎</span>
+                    <span class="arrow"></span>
+                    <span class="selected"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li id="welcome">
+                        <a href="javascript:changePage('welcome');">
+                            <i class="fa fa-list"></i>
+                            概况
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+
+            <li class="" id="business">
+                <a href="javascript:void(0);">
+                    <i class="fa fa-shopping-bag"></i>
+                    <span class="title">商家管理</span>
+                    <span class="arrow"></span>
+                    <span class="selected"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li id="business-all">
+                        <a href="javascript:changePage('business-all');">
+                            <i class="fa fa-list"></i>
+                            当前商家信息
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="" id="product">
+                <a href="javascript:void(0);">
+                    <i class="fa fa-shopping-bag"></i>
+                    <span class="title">商品管理</span>
+                    <span class="arrow"></span>
+                    <span class="selected"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li id="gf_product_up">
+                        <a href="javascript:changePage('gf_product_up');">
+                            <i class="fa fa-list"></i>
+                            我的上架商品
+                        </a>
+                    </li>
+                    <li id="gf_product_down">
+                        <a href="javascript:changePage('gf_product_down');">
+                            <i class="fa fa-list"></i>
+                            我的下架商品
+                        </a>
+                    </li>
+                    <li id="apply_product_up">
+                        <a href="javascript:changePage('apply_product_up');">
+                            <i class="fa fa-list"></i>
+                            申请上架商品
+                        </a>
+                    </li>
+                    <li id="gf_product_review">
+                        <a href="javascript:changePage('gf_product_review');">
+                            <i class="fa fa-list"></i>
+                            商品审核记录
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li class="" id="farm">
+                <a href="javascript:void(0);">
+                    <i class="fa fa-shopping-bag"></i>
+                    <span class="title">农场管理</span>
+                    <span class="arrow"></span>
+                    <span class="selected"></span>
+                </a>
+                <ul class="sub-menu">
+                    <li id="gf_farm_up">
+                        <a href="javascript:changePage('gf_farm_up');">
+                            <i class="fa fa-list"></i>
+                            我发布的农场租赁信息
+                        </a>
+                    </li>
+                    <li id="gf_farm_down">
+                        <a href="javascript:changePage('gf_farm_down');">
+                            <i class="fa fa-list"></i>
+                            我下线的农场租赁信息
+                        </a>
+                    </li>
+                    <li id="gf_farm_submit">
+                        <a href="javascript:changePage('gf_farm_submit');">
+                            <i class="fa fa-list"></i>
+                            申请发布农场租赁信息
+                        </a>
+                    </li>
+                    <li id="gf_farm_review">
+                        <a href="javascript:changePage('gf_farm_review');">
+                            <i class="fa fa-list"></i>
+                            农场租赁信息审核记录
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+
+        <!-- END SIDEBAR MENU -->
     </div>
 </div>
-    <input type="hidden" th:value="${session.business.businessUid}" id="gf_business_uid"/>
-    <script type="text/javascript" th:src="@{/gfstatic/js/management/business/index.js}"></script>
+
+
+<div id="content" class="page-content" style="height: 700px; overflow-y: hidden;">
+    <iframe id="mainFrame" frameborder="0" src="">
+    </iframe>
+</div>
+
+<script th:src="@{/gfstatic/js/vue/jquery-1.10.1.min.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/jquery-migrate-1.2.1.min.js}" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui-1.10.1.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script th:src="@{/gfstatic/js/vue/jquery-ui-1.10.1.custom.min.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/bootstrap.min.js}" type="text/javascript"></script>
+<!--[if lt IE 9]>-->
+<script th:src="@{/gfstatic/js/vue/excanvas.min.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/respond.min.js}"></script>
+<!--<![endif]-->
+<script th:src="@{/gfstatic/js/vue/jquery.slimscroll.min.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/jquery.blockui.min.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/jquery.cookie.min.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/jquery.uniform.min.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/app.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/index.js}" type="text/javascript"></script>
+
+<script type="text/javascript" th:src="@{/gfstatic/js/common/business/logout.js}"></script>
+<script type="text/javascript" th:src="@{/gfstatic/js/management/business/index.js}"></script>
+
 </body>
 </html>

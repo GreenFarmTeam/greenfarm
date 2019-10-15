@@ -87,7 +87,7 @@
                                 申请成为商家
                             </a></li>
                         <li id="business-index">
-                            <a th:if="${session.user.userIsBusiness}==1" href="javascript:changePage('business-index');">
+                            <a th:if="${session.user.userIsBusiness}==1" th:href="@{/business/management/index}">
                                 <i class="fa fa-list"></i>
                                 商家中心
                             </a></li>

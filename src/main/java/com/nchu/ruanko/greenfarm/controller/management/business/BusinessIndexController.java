@@ -51,5 +51,10 @@ public class BusinessIndexController {
         return modelAndView;
     }
 
-
+    @GetMapping(value = "/greenfarm/business/management/welcome")
+    public ModelAndView adminManagementWelcomePage() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("management/business/welcome");
+        return modelAndView;
+    }
 }
