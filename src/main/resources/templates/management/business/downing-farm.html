@@ -8,64 +8,93 @@
     <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/map.js}"></script>
     <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=f48fcde49f6822707df87e6e395b4d08"></script>
+    <link th:href="@{/gfstatic/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/style.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/style-metro.css}" rel="stylesheet" type="text/css" />
 </head>
 <body>
-<table border="1">
-    <tr>
-        <td>农场编号</td>
-        <td>农场名称</td>
-        <td>租赁价格</td>
-        <td>租赁价格单位</td>
-        <td>所属商家</td>
-        <td>土地类型</td>
-        <td>农场位置</td>
-        <td>审核时间</td>
-        <td>操作</td>
-    </tr>
-    <tr th:if="${vo.getBusinessFarmVOList().size()}==0">
-        <td colspan="6">暂无下架农场的数据</td>
-    </tr>
-    <tr th:if="${vo.getBusinessFarmVOList().size()}!=0" th:each="pd:${vo.getBusinessFarmVOList()}">
-        <td th:text="${pd.getFarm().getFarmUid()}"></td>
-        <td th:text="${pd.getFarm().getFarmName()}"></td>
-        <td th:if="${pd.getFarm().getFarmPrice()}!=null" th:text="${pd.getFarm().getFarmPrice()}"></td>
-        <td th:if="${pd.getFarm().getFarmUnit()}!=null" th:text="${pd.getFarm().getFarmUnit()}"></td>
-        <td th:if="${pd.getFarm().getBusiness().getBusinessShopName()}!=null" th:text="${pd.getFarm().getBusiness().getBusinessShopName()}"></td>
-        <td th:if="${pd.getFarm().getType().getFarmTypeName()}!=null" th:text="${pd.getFarm().getType().getFarmTypeName()}"></td>
-        <td><a href="javascript:void(0);" name="gf_location" th:attr="data-lng=${pd.getFarm().getFarmLongitude()},data-lat=${pd.getFarm().getFarmLatitude()}">查看地图</a></td>
-        <td th:if="${pd.getReview().getFarmReviewReviewTime()}!=null" th:text="${pd.getReview().getFarmReviewReviewTime()}"></td>
-        <!--<td th:if="${pd.mainImage}!=null">
-            <a th:href="@{${pd.mainImage.productImagePath}}" target="_blank">
-                <img th:src="@{${pd.mainImage.productImagePath}}" width="100px" height="100px"/>
-            </a>
-        </td>-->
-        <td>
-            <a href="javascript:void(0)" th:value="${pd.getFarm().getFarmUid()}" name="gf_detail">详情</a>
-            <a href="javascript:void(0)" th:value="${pd.getFarm().getFarmUid()}" name="gf_up">恢复上架</a>
-        </td>
-    </tr>
-</table>
-<hr/>
-<div th:if="${vo.getBusinessFarmVOList().size()}!=0">
-    <a th:if="${vo.pageInfo.isFirstPage}==true" disabled="disabled">首页</a>
-    <a th:if="${vo.pageInfo.isFirstPage}==false" th:href="@{/greenfarm/admin/management/farm/down(page=1)}">首页</a>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <h3 class="page-title"><i class="fa fa-shopping-bag"></i>农场管理</h3>
+        <ul class="breadcrumb">
+            <li>
+                <a href="#"><i class="fa fa-home"></i>农场管理</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="#">农场审核</a>
+            </li>
+        </ul>
+    </div>
+    <div class="row-fluid">
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-reorder"></i>
+                    农场列表
+                </div>
+            </div>
+            <div class="portlet-body">
+                <table id="userTable" class="table table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>农场编号</th>
+                        <th>农场名称</th>
+                        <th>租赁价格</th>
+                        <th>租赁价格单位</th>
+                        <th>所属商家</th>
+                        <th>土地类型</th>
+                        <th>农场位置</th>
+                        <th>审核时间</th>
+                        <th>操作</th>
+                    </tr>
 
-    <a th:if="${vo.pageInfo.hasPreviousPage}==false" disabled="disabled">上一页</a>
-    <a th:if="${vo.pageInfo.hasPreviousPage}==true" th:href="@{/greenfarm/admin/management/farm/down(page=${vo.pageInfo.pageNum}-1)}">上一页</a>
+                    <tr th:if="${vo.getBusinessFarmVOList().size()}!=0" th:each="pd:${vo.getBusinessFarmVOList()}">
+                        <td th:text="${pd.getFarm().getFarmUid()}"></td>
+                        <td th:text="${pd.getFarm().getFarmName()}"></td>
+                        <td th:if="${pd.getFarm().getFarmPrice()}!=null" th:text="${pd.getFarm().getFarmPrice()}"></td>
+                        <td th:if="${pd.getFarm().getFarmUnit()}!=null" th:text="${pd.getFarm().getFarmUnit()}"></td>
+                        <td th:if="${pd.getFarm().getBusiness().getBusinessShopName()}!=null" th:text="${pd.getFarm().getBusiness().getBusinessShopName()}"></td>
+                        <td th:if="${pd.getFarm().getType().getFarmTypeName()}!=null" th:text="${pd.getFarm().getType().getFarmTypeName()}"></td>
+                        <td><a href="javascript:void(0);" name="gf_location" th:attr="data-lng=${pd.getFarm().getFarmLongitude()},data-lat=${pd.getFarm().getFarmLatitude()}">查看地图</a></td>
+                        <td th:if="${pd.getReview().getFarmReviewReviewTime()}!=null" th:text="${pd.getReview().getFarmReviewReviewTime()}"></td>
+                        <!--<td th:if="${pd.mainImage}!=null">
+                            <a th:href="@{${pd.mainImage.productImagePath}}" target="_blank">
+                                <img th:src="@{${pd.mainImage.productImagePath}}" width="100px" height="100px"/>
+                            </a>
+                        </td>-->
+                        <td>
+                            <a href="javascript:void(0)" th:value="${pd.getFarm().getFarmUid()}" name="gf_detail" class="btn mini green"><i class="fa fa-edit"></i>详情</a>
+                            <a href="javascript:void(0)" th:value="${pd.getFarm().getFarmUid()}" name="gf_up" class="btn mini red"><i class="fa fa-trash">恢复上架</i></a>
+                        </td>
+                    </tr>
+                </table>
+                <hr/>
+                <div th:if="${vo.getBusinessFarmVOList().size()}!=0">
+                    <a th:if="${vo.pageInfo.isFirstPage}==true" disabled="disabled">首页</a>
+                    <a th:if="${vo.pageInfo.isFirstPage}==false" th:href="@{/greenfarm/admin/management/farm/down(page=1)}">首页</a>
 
-    <!--<a th:if="${pg}!=${vo.pageInfo.pageNum}" th:each="pg:${vo.pageInfo.navigatepageNums}" th:href="@{/greenfarm/admin/management/business/review(page=${pg})}" th:text="${pg}"></a>-->
-    <!--<a th:if="${pg}==${vo.pageInfo.pageNum}" th:each="pg:${vo.pageInfo.navigatepageNums}" th:text="${pg}" disabled="disabled"></a>-->
+                    <a th:if="${vo.pageInfo.hasPreviousPage}==false" disabled="disabled">上一页</a>
+                    <a th:if="${vo.pageInfo.hasPreviousPage}==true" th:href="@{/greenfarm/admin/management/farm/down(page=${vo.pageInfo.pageNum}-1)}">上一页</a>
 
-    <a th:each="pg:${vo.pageInfo.navigatepageNums}" th:href="@{/greenfarm/admin/management/farm/down(page=${pg})}" th:text="${pg}"></a>
+                    <!--<a th:if="${pg}!=${vo.pageInfo.pageNum}" th:each="pg:${vo.pageInfo.navigatepageNums}" th:href="@{/greenfarm/admin/management/business/review(page=${pg})}" th:text="${pg}"></a>-->
+                    <!--<a th:if="${pg}==${vo.pageInfo.pageNum}" th:each="pg:${vo.pageInfo.navigatepageNums}" th:text="${pg}" disabled="disabled"></a>-->
+
+                    <a th:each="pg:${vo.pageInfo.navigatepageNums}" th:href="@{/greenfarm/admin/management/farm/down(page=${pg})}" th:text="${pg}"></a>
 
 
-    <a th:if="${vo.pageInfo.hasNextPage}==false" disabled="disabled">下一页</a>
-    <a th:if="${vo.pageInfo.hasNextPage}==true" th:href="@{/greenfarm/admin/management/farm/down(page=${vo.pageInfo.pageNum}+1)}">下一页</a>
+                    <a th:if="${vo.pageInfo.hasNextPage}==false" disabled="disabled">下一页</a>
+                    <a th:if="${vo.pageInfo.hasNextPage}==true" th:href="@{/greenfarm/admin/management/farm/down(page=${vo.pageInfo.pageNum}+1)}">下一页</a>
 
-    <a th:if="${vo.pageInfo.isLastPage}==true" disabled="disabled">末页</a>
-    <a th:if="${vo.pageInfo.isLastPage}==false" th:href="@{/greenfarm/admin/management/farm/down(page=${vo.pageInfo.pages})}">末页</a>
+                    <a th:if="${vo.pageInfo.isLastPage}==true" disabled="disabled">末页</a>
+                    <a th:if="${vo.pageInfo.isLastPage}==false" th:href="@{/greenfarm/admin/management/farm/down(page=${vo.pageInfo.pages})}">末页</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<script type="text/javascript" th:src="@{/gfstatic/js/management/business/downing-farm.js}"></script>
-<script type="text/javascript" th:src="@{/gfstatic/js/management/business/farm-map.js}"></script>
+                <script type="text/javascript" th:src="@{/gfstatic/js/management/business/downing-farm.js}"></script>
+                <script type="text/javascript" th:src="@{/gfstatic/js/management/business/farm-map.js}"></script>
 </body>
 </html>

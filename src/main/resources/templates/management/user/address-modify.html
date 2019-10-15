@@ -8,36 +8,92 @@
     <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/regex.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
+
+    <link th:href="@{/gfstatic/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/bootstrap-responsive.min.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/style-metro.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/style.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/style-responsive.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/default.css}" rel="stylesheet" type="text/css" id="style_color" />
+    <link th:href="@{/gfstatic/css/uniform.default.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/pagination.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/templateone/res/layui/css/layui.css}" rel="stylesheet" type="text/css"/>
+    <link rel="shortcut icon" th:href="@{/gfstatic/image/favicon.ico}" />
 </head>
 <body>
-    <form>
-        <label for="gf_name">收货人姓名</label>
-        <input type="text" id="gf_name" th:value="${address.addressName}"/>
-        <hr/>
-        <label for="gf_province">省</label>
-        <select id="gf_province">
-            <option value="default" selected="selected">请选择</option>
-            <option th:if="${provinceList.size()}!=0" th:each="pv:${provinceList}" th:value="${pv.provinceId}" th:text="${pv.provinceName}"></option>
-        </select>
-        <br/>
-        <br/>
-        <label for="gf_city">市</label>
-        <select id="gf_city" disabled="disabled">
-            <option value="default">请选择</option>
-        </select>
-        <br/>
-        <br/>
-        <label for="gf_district">区/县</label>
-        <select id="gf_district" disabled="disabled">
-            <option value="default">请选择</option>
-        </select>
-        <hr/>
-        <label for="gf_desc">详细地址</label>
-        <input type="text" id="gf_desc" th:value="${address.addressDetail}"/>
-        <hr/>
-        <input type="button" id="gf_sure" value="确定"/>
-    </form>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <ul class="breadcrumb">
+                <li>
+                    <a href="javascript:void(0);"><i class="fa fa-home"></i>地址管理</a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <a href="javascript:void(0);">修改地址</a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+            </ul>
+        </div>
+        <div class="row-fluid">
+            <div class="portlet box blue">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-reorder"></i>
+                        修改地址
+                    </div>
+                </div>
+                <div class="portlet-body">
+                    <form class="form-horizontal">
+                        <div class="control-group">
+                            <label class="control-label">收货人姓名：</label>
+                            <div class="controls">
+                                <input id="gf_name" type="text" class="m-wrap media" th:value="${address.addressName}"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">省：</label>
+                            <div class="controls">
+                                <select id="gf_province">
+                                    <option value="default" selected="selected">请选择</option>
+                                    <option th:if="${provinceList.size()}!=0" th:each="pv:${provinceList}" th:value="${pv.provinceId}" th:text="${pv.provinceName}"></option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">市：</label>
+                            <div class="controls">
+                                <select id="gf_city" disabled="disabled">
+                                    <option value="default">请选择</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">区/县：</label>
+                            <div class="controls">
+                                <select id="gf_district" disabled="disabled">
+                                    <option value="default">请选择</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">详细地址：</label>
+                            <div class="controls layui-input-block">
+                                <input id="gf_desc" type="text" class="m-wrap media"  th:value="${address.addressDetail}"/>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <div class="controls">
+                                <input type="button" id="gf_sure" value="确定" class="layui-btn layui-btn-normal layui-btn-ms" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <input type="hidden" id="gf_address_uid" th:value="${address.addressUid}"/>
-    <script type="text/javascript" th:src="@{/gfstatic/js/management/user/modify-address.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/management/user/address.js}"></script>
 </body>
 </html>

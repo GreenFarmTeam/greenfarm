@@ -36,6 +36,17 @@ public class UserCartController {
     @Autowired
     private AddressService addressService;
 
+    /**
+     * 跳转到购物车界面
+     * @return
+     */
+    @ApiOperation(value = "memberManagementLoadProductsDetailInfo", notes = "跳转到购物车界面")
+    @GetMapping("/member/management/toCart.html")
+    public String toCart(){
+
+        return "shop/cart";
+    }
+
     @ApiOperation(value = "addProductToCart", notes = "增加商品到购物车中")
     @GetMapping(value = "/user/management/cart/add/product/{productId}")
     @ResponseBody
@@ -44,7 +55,7 @@ public class UserCartController {
         HttpSession session = request.getSession();
         User user = (User)session.getAttribute("user");
 
-        System.out.println("productId"+productId);
+
 
 
         if(orderService.addProductToCart(productId,user.getUserUid())){
@@ -65,7 +76,6 @@ public class UserCartController {
         List<Address> addressList = addressService.listAddressesByUserUID(user.getUserUid());
         jsonObject.put("data",orderItemList);
         jsonObject.put("addressData",addressList);
-        System.out.println("addressData"+addressList);
         jsonObject.put("flag",1);
         return jsonObject.toString();
     }

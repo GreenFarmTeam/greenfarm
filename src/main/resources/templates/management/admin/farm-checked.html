@@ -12,7 +12,7 @@
 <body>
     <table border="1">
         <tr>
-            <td>农场编号</td>
+            <td>编号</td>
             <td>农场名称</td>
             <td>租赁价格</td>
             <td>租赁价格单位</td>
@@ -22,10 +22,10 @@
             <td>操作</td>
         </tr>
         <tr th:if="${vo.getAdminFarmVOList().size()}==0">
-            <td colspan="5">暂无已经审核的农场数据</td>
+            <td colspan="8">暂无已经审核的农场数据</td>
         </tr>
-        <tr th:if="${vo.getAdminFarmVOList().size()}!=0" th:each="pd:${vo.getAdminFarmVOList()}">
-            <td th:text="${pd.getFarm().getFarmUid()}"></td>
+        <tr th:if="${vo.getAdminFarmVOList().size()}!=0" th:each="pd,stat:${vo.getAdminFarmVOList()}">
+            <td th:text="${stat.count}"></td>
             <td th:text="${pd.getFarm().getFarmName()}"></td>
             <td th:if="${pd.getFarm().getFarmPrice()}!=null" th:text="${pd.getFarm().getFarmPrice()}"></td>
             <td th:if="${pd.getFarm().getFarmUnit()}!=null" th:text="${pd.getFarm().getFarmUnit()}"></td>
@@ -40,8 +40,8 @@
                     <img th:src="@{${pd.mainImage.productImagePath}}" width="100px" height="100px"/>
                 </a>
             </td>-->
-            <td>
-                <a href="javascript:void(0)" th:value="${pd.getFarm().getFarmUid()}" name="gf_detail">详情</a>
+            <td style="text-align: center">
+                <button href="javascript:void(0);" name="gf_detail" th:value="${pd.getFarm().getFarmUid()}" class="layui-btn layui-btn-primary layui-btn-xs">详情</button>
             </td>
         </tr>
     </table>
@@ -65,7 +65,7 @@
         <a th:if="${vo.pageInfo.isLastPage}==true" disabled="disabled">末页</a>
         <a th:if="${vo.pageInfo.isLastPage}==false" th:href="@{/greenfarm/admin/management/farm(page=${vo.pageInfo.pages})}">末页</a>
     </div>
-    <script type="text/javascript" th:src="@{/gfstatic/js/management/admin/farm-checked.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/management/admin/farm.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/management/business/farm-map.js}"></script>
 </body>
 </html>

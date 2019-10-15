@@ -47,7 +47,7 @@ public class UserApplyBusinessController {
     public ModelAndView userApplyBusinessPage() {
         ModelAndView modelAndView = new ModelAndView();
         List<ProductType> productTypeList = productTypeService.listAllProductTypes();
-        modelAndView.setViewName("management/user/become-business");
+        modelAndView.setViewName("management/user/business-become");
         modelAndView.addObject("productTypeList", productTypeList);
         return modelAndView;
     }

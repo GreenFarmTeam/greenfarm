@@ -54,4 +54,6 @@ public interface ProductService {
     MemberProductVo loadProductByproductID(String productId);
 
     MemberProductPageVo loadAllNotHotProductsPage(int pageNum, int pageSize, int navigationSize);
+
+    Product memberGetProductByProductId(String productId);
 }

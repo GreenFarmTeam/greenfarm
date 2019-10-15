@@ -7,46 +7,61 @@
     <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
+    <link th:href="@{/gfstatic/css/mygrxx.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-    <table th:if="${session.business}!=null" border="1">
-        <tr>
-            <td>会员号</td>
-            <td th:text="${session.user.userUsername}"></td>
-        </tr>
-        <tr>
-            <td>昵称</td>
-            <td th:text="${session.user.userNickname}"></td>
-        </tr>
-        <tr>
-            <td>店铺名称</td>
-            <td th:text="${session.business.businessShopName}"></td>
-        </tr>
-        <tr>
-            <td>店铺描述</td>
-            <td th:text="${session.business.businessShopDescription}"></td>
-        </tr>
-        <tr>
-            <td>经营范围</td>
-            <td>
-                <span th:if="${scopes.size()}!=0" th:each="sp:${scopes}" th:text="${sp.productType.typeName}"></span>
-            </td>
-        </tr>
-    </table>
-    <hr/>
-    <h4>商品管理</h4>
-    <a th:href="@{/business/management/product}">我的上架商品</a>
-    <a th:href="@{/business/management/product/down}">我的下架商品</a>
-    <a th:href="@{/business/management/product/add}">申请上架商品</a>
-    <a th:href="@{/business/management/product/review}">商品审核记录</a>
-    <hr/>
-    <h4>农场管理</h4>
-    <a href="javascript:void(0);" id="gf_farm_up">我发布的农场租赁信息</a>
-    <a href="javascript:void(0);" id="gf_farm_down">我下线的农场租赁信息</a>
-    <a href="javascript:void(0);" id="gf_farm_submit">申请发布农场租赁信息</a>
-    <a href="javascript:void(0);" id="gf_farm_review">农场租赁信息审核记录</a>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="you fl" style="margin: 50px 100px;">
+            <h2>商家中心</h2>
+            <div class="gxin">
+                <div class="tx" style="margin: 30px 0;">
+                    <div href="#" th:if="${session.business}!=null" >
+                        <p>会员号：<span th:text="${session.user.userUsername}"></span></p>
+                        <p>昵称：<span th:text="${session.user.userNickname}"></span></p>
+                        <p>店铺名称：<span th:text="${session.business.businessShopName}"></span></p>
+                        <p>店铺描述：<span th:text="${session.business.businessShopDescription}"></span></p>
+                        <p>经营范围：<span th:if="${scopes.size()}!=0" th:each="sp:${scopes}" th:text="${sp.productType.typeName}"></span></p>
+                    </div>
+                </div>
+                <div class="xx">
+                    <div class="half">
+                        <h3 class="clearfix"><strong class="fl">商品管理</strong></h3>
+                        <div>
+                            <a class="fl" th:href="@{/business/management/product}">我的上架商品</a>
+                        </div>
+                        <div>
+                            <a class="fl" th:href="@{/business/management/product/down}">我的下架商品</a>
+                        </div>
+                        <div>
+                            <a class="fl" th:href="@{/business/management/product/add}">申请上架商品</a>
+                        </div>
+                        <div>
+                            <a class="fl" th:href="@{/business/management/product/review}">商品审核记录</a>
+                        </div>
+                    </div>
+
+                    <div class="half">
+                        <h3 class="clearfix"><strong class="fl">农场管理</strong></h3>
+                        <div>
+                            <a class="fl" href="javascript:void(0);" id="gf_farm_up">我发布的农场租赁信息</a>
+                        </div>
+                        <div>
+                            <a class="fl" href="javascript:void(0);" id="gf_farm_down">我下线的农场租赁信息</a>
+                        </div>
+                        <div>
+                            <a class="fl" href="javascript:void(0);" id="gf_farm_submit">申请发布农场租赁信息</a>
+                        </div>
+                        <div>
+                            <a class="fl" href="javascript:void(0);" id="gf_farm_review">农场租赁信息审核记录</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
     <input type="hidden" th:value="${session.business.businessUid}" id="gf_business_uid"/>
-    <hr/>
     <script type="text/javascript" th:src="@{/gfstatic/js/management/business/index.js}"></script>
 </body>
 </html>

@@ -171,114 +171,50 @@ function choose(btn) {
 /**
  * 提交订单
  */
-$("#gf_sure").on('click', function () {
+function submit_btn (btn) {
+    layer.msg("我进来了!")
     var formData = new FormData();
     var name = $("input[name='name']").val();
     var phone = $("input[name='phone']").val();
     var addr = $("input[name='addr']").val();
     var detailAddr = $("input[name='detail-addr']").val();
-    var detailAddr = $("input[name='detail-addr']").val();
-    if (farmPriceRegex.test(price) === false || farmYearRegex.test(year) === false || farmAreaRegex.test(area) === false || farmDescriptionRegex.test(description) === false) {
-        layer.alert('存在信息格式错误！', {skin:'layui-layer-lan', closeBtn: 0});
-    } else {
-        if (parseInt(year) > 255 || parseInt(area) > 65535) {
-            layer.alert('年限不允许超过255 且 面积不允许超过 65535！', {skin:'layui-layer-lan', closeBtn: 0});
-        } else {
-            if (lng === "" || lat === "") {
-                layer.alert('请在地图上标注农场的位置！', {skin:'layui-layer-lan', closeBtn: 0});
-            } else {
-                var flagMain = true;
-                var flagOther = true;
+    var totalPrice = total;
 
-                if (mainImage.length !== 0) {
-                    var suffixMain = mainImage[0].name.substring(mainImage[0].name.lastIndexOf("."));
-                    if (suffixMain !== ".jpg" && suffixMain !== ".jpeg" && suffixMain !== ".gif" && suffixMain !== ".png" && suffixMain !== ".JPG" && suffixMain !== ".JPEG" && suffixMain !== ".GIF" && suffixMain !== ".PNG") {
-                        layer.alert('农场主图片文件格式不符！', {skin:'layui-layer-lan', closeBtn: 0});
-                        flagMain = false;
-                    } else {
-                        if (mainImage[0].size >= 2 * 1024 * 1024) {
-                            layer.alert('农场主图片大小不能超过2MB！', {skin:'layui-layer-lan', closeBtn: 0});
-                            flagMain = false;
-                        } else {
-                            flagMain = true;
-                        }
-                    }
-                }
-
-                if (otherImages.length !== 0) {
-                    if (otherImages.length > 5) {
-                        layer.alert('农场其他图片的数量不能超过5张！', {skin:'layui-layer-lan', closeBtn: 0});
-                        flagOther = false;
-                    } else {
-                        var sum = 0;
-                        var i;
-                        for (i = 0; i < otherImages.length; i++) {
-                            sum += otherImages[i].size;
-                            if (otherImages[i].size >= 2 * 1024 * 1024) {
-                                break;
-                            }
-                            var suffixOther = otherImages[i].name.substring(otherImages[i].name.lastIndexOf("."));
-                            if (suffixOther !== ".jpg" && suffixOther !== ".jpeg" && suffixOther !== ".gif" && suffixOther !== ".png" && suffixOther !== ".JPG" && suffixOther !== ".JPEG" && suffixOther !== ".GIF" && suffixOther !== ".PNG") {
-                                break;
-                            }
-                        }
-                        if (i !== otherImages.length) {
-                            layer.alert('农场其他图片存在文件格式不符 或 单个图片大小超过2MB！', {skin:'layui-layer-lan', closeBtn: 0});
-                            flagOther = false;
-                        } else {
-                            if (sum >= 10 * 1024 * 1024) {
-                                layer.alert('农场其他图片大小不能超过10MB！', {skin:'layui-layer-lan', closeBtn: 0});
-                                flagOther = false;
-                            } else {
-                                flagOther = true;
-                            }
-                        }
-                    }
-                }
-
-                if (flagMain === true && flagOther === true) {
-                    layer.confirm('确定要发布该农场信息？', {btn:['是','否'], skin:'layui-layer-lan', closeBtn:0}, function () {
-                        formData.append("type", type);
-                        formData.append("price", price);
-                        formData.append("year", year);
-                        formData.append("area", area);
-                        formData.append("unit", unit);
-                        formData.append("lng", lng);
-                        formData.append("lat", lat);
-                        if ($.trim(description) !== "") {
-                            formData.append("description", description);
-                        }
-                        if (mainImage.length !== 0) {
-                            formData.append("mainImage", mainImage[0]);
-                        }
-                        if (otherImages.length !== 0) {
-                            for (var i = 0; i < otherImages.length; i++) {
-                                formData.append("otherImages", otherImages[i]);
-                            }
-                        }
-                        $.ajax({
-                            type : "POST",
-                            url : "/business/management/farm/add/operation",
-                            dataType : "json",
-                            data : formData,
-                            contentType : false,
-                            processData : false,
-                            cache : false,
-                            success : function (jsonData) {
-                                if (jsonData.flag === true) {
-                                    layer.confirm('操作成功，请等待审核！', {btn:['是'], skin:'layui-layer-lan', closeBtn:0}, function () {
-                                        $(location).attr("href", getPathPrefix() + "business/management/index");
-                                    });
-                                }
-                            }
-                        });
-
-                    }, function () {
-                        // null operation
-                    });
-                }
-            }
-        }
+    if (addressNameRegex.test(name) === false ) {
+        layer.alert('收货人存在信息格式错误(汉字2-255)！', {skin:'layui-layer-lan', closeBtn: 0});
     }
+    else if(addressPhoneRegex.test(phone) == false ) {
+        layer.alert('联系电话存在信息格式错误(11位)！', {skin:'layui-layer-lan', closeBtn: 0});
+    }
+    else if(!(detailAddr.length>2 && detailAddr.length<125)) {
+        layer.alert('详细地址存在信息格式错误(汉字2-255)！', {skin:'layui-layer-lan', closeBtn: 0});
+    } else {
+        layer.confirm('确定提交订单？', {btn: ['是', '否'], skin: 'layui-layer-lan', closeBtn: 0}, function () {
+            formData.append("name", name);
+            formData.append("phone", phone);
+            formData.append("addr", addr);
+            formData.append("detailAddr", detailAddr);
+            formData.append("totalPrice", totalPrice);
+            $.ajax({
+                type: "post",
+                url: "/member/management/order/add/operation",
+                dataType: "json",
+                data: formData,
+                contentType: false,
+                processData: false,
+                cache: false,
+                success: function (jsonData) {
+                    if (jsonData.flag === 1) {
+                        layer.msg("订单提交成功！")
+                        $(location).attr("href", getPathPrefix() + "member/management/toCart.html");
+                    }else{
+                        layer.msg(jsonData.result)
+                    }
+                }
+            });
 
-});
+        }, function () {
+            // null operation
+        });
+    }
+};

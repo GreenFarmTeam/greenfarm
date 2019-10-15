@@ -34,7 +34,7 @@ public class UserAddressController {
     @GetMapping(value = "/user/management/address/add")
     public ModelAndView userAddAddressPage() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("management/user/add-address");
+        modelAndView.setViewName("management/user/address-add");
         modelAndView.addObject("provinceList", addressService.listAllProvinces());
         return modelAndView;
     }
@@ -121,7 +121,7 @@ public class UserAddressController {
     @GetMapping(value = "/user/management/address/modify/{addressUid}")
     public ModelAndView userModifyAddressPage(@PathVariable(name = "addressUid") String addressUid) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("management/user/modify-address");
+        modelAndView.setViewName("management/user/address-modify");
         modelAndView.addObject("provinceList", addressService.listAllProvinces());
         modelAndView.addObject("address", addressService.getAddressByAddressUID(addressUid));
         return modelAndView;

@@ -10,6 +10,7 @@
     <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/map.js}"></script>
+
     <link th:href="@{/gfstatic/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
     <link th:href="@{/gfstatic/css/bootstrap-responsive.min.css}" rel="stylesheet" type="text/css" />
     <link th:href="@{/gfstatic/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
@@ -19,6 +20,7 @@
     <link th:href="@{/gfstatic/css/default.css}" rel="stylesheet" type="text/css" id="style_color" />
     <link th:href="@{/gfstatic/css/uniform.default.css}" rel="stylesheet" type="text/css" />
     <link th:href="@{/gfstatic/css/pagination.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/templateone/res/layui/css/layui.css}" rel="stylesheet" type="text/css"/>
     <link rel="shortcut icon" th:href="@{/gfstatic/image/favicon.ico}" />
 </head>
 <body>
@@ -64,9 +66,9 @@
                             <td th:text="${pd.getMember().getUserRealname()}"></td>
                             <td th:if="${pd.getMember().getUserIsBusiness()}==1">是</td>
                             <td th:if="${pd.getMember().getUserIsBusiness()}==0">否</td>
-                            <td>
-                                <button style="margin-right:20px;" name="detail" th:value="${pd.member.userUid}" class="btn mini green" ><i class="fa fa-edit"></i>详情</button>
-                                <button class="btn mini red" name="delete" th:value="${pd.member.userUid}"><i class="fa fa-trash"></i> 删除</button>
+                            <td style="text-align: center">
+                                <button href="javascript:void(0);" name="detail" th:value="${pd.member.userUid}" class="layui-btn layui-btn-primary layui-btn-xs">详情</button>
+                                <button href="javascript:void(0);" name="delete" th:value="${pd.member.userUid}" class="layui-btn layui-btn-primary layui-btn-xs">删除</button>
                             </td>
                         </tr>
                     </table>
@@ -107,6 +109,6 @@
     <script th:src="@{/gfstatic/js/vue/jquery.uniform.min.js}" type="text/javascript"></script>
     <script th:src="@{/gfstatic/js/vue/app.js}" type="text/javascript"></script>
     <script th:src="@{/gfstatic/js/vue/jquery.pagination.js}" type="text/javascript"></script>
-    <script th:src="@{/gfstatic/js/management/admin/member-list.js}" th:inline="javascript"  type="text/javascript"></script>
+    <script th:src="@{/gfstatic/js/management/admin/member.js}" th:inline="javascript"  type="text/javascript"></script>
 </body>
 </html>

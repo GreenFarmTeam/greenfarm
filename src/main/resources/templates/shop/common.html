@@ -5,9 +5,7 @@
     <title>Title</title>
 </head>
 <body>
-<!--
-    这里包含了每个页面的公共模块
--->
+<!--这里包含了每个页面的公共模块-->
 <!--头部 导航条模块-->
     <div class="layui-header header" th:fragment="head">
         <script>
@@ -47,7 +45,7 @@
 
                         <dd th:if="${session.user != null}"><a th:href="@{/user/management/index}"><i class="fa fa-user-circle"></i> 个人中心</a></dd>
 
-                        <dd th:if="${session.user != null}"><a href=""><i class="fa fa-list"></i> 我的订单</a></dd>
+                        <dd th:if="${session.user != null}"><a th:href="@{/member/management/order/index}"><i class="fa fa-list"></i> 我的订单</a></dd>
 
                         <dd th:if="${session.user != null}"><a th:href="@{/member/management/toCart.html}"><i class="fa fa-shopping-cart"></i> 购物车</a></dd>
 
@@ -65,10 +63,16 @@
     <div class="footer footer-index" th:fragment="foot">
         <hr style="color: #c2c2c2;" />
         <!-- 底部固定区域 -->
-        © jesse 2017
+        © jesse 2019
         <a th:href="@{/user/password/login}">后台管理系统</a>
     </div>
-    <script type="text/javascript" th:src="@{/gfstatic/js/common/user/logout.js}"></script>
 
+    <!--底部模块2-->
+    <div class="footer2" th:fragment="foot-management">
+        © jesse 2019
+        <a th:href="@{/user/password/login}">后台管理系统</a>
+    </div>
+
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/user/logout.js}"></script>
 </body>
 </html>

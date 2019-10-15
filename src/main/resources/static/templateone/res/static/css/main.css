@@ -1,9 +1,7 @@
-/*
-*@Name: 母婴商城
-*@Author: xuzhiwen
-*@Copyright:layui.com
-*/
-
+input:-webkit-autofill {
+    background-color: transparent !important;
+    -webkit-box-shadow: 0 0 0 50px white inset;
+}
 
 body{font-family: "Microsoft YaHei", "SimSun", '\5b8b\4f53', sans-serif;  -moz-user-select:none;
       -webkit-user-select: none;       
@@ -25,8 +23,6 @@ i{font-style: normal;}
 .sn-quick-menu div.login a{color: #ff5500;}
 .sn-quick-menu div.sp-cart span{margin-left:4px; color: #ff5500; font-weight: bold;}
 /*end-site-nav*/
-
-
 
 /*header*/
 .header{height: 100px; line-height: 100px;}
@@ -116,11 +112,6 @@ i{font-style: normal;}
 .content-nav-base .main-nav .inner-cont2 a{padding:0; margin-right: 75px;}
 
 
-
-
-
-
-
 /*commodity*/
 .commodity-content .commod-cont-wrap{background: #f8f8f8; padding: 50px 0 90px 0;}
 .commodity-content .commod-cont .left-nav{width: 200px; line-height: 38px; background: #fff; float: left; margin-right: 58px;}
@@ -201,11 +192,6 @@ i{font-style: normal;}
 
 
 
-
-
-
-
-
 /*information*/
 .information-content .info-list-box{padding:63px 0 84px 0; background: #f8f8f8;}
 .information-content .info-list .item-box{width: 1250px;}
@@ -251,13 +237,6 @@ i{font-style: normal;}
 /*end-buytoday*/
 
 
-
-
-
-
-
-
-
 /*about*/
 .about-content .banner-box .banner{height: 750px; width: 100%; background: url(../img/us_banner.jpg) no-repeat; background-size: cover;}
 .about-content .brief-content{padding:198px 0 280px 0;}
@@ -278,8 +257,6 @@ i{font-style: normal;}
 
 
 
-
-
 /*login*/
 .login-content .login-bg{width: 100%; background: url(../img/load_bg.jpg) no-repeat; background-size: cover;}
 .login-content .login-bg .login-cont{ height: 772px; position: relative;}
@@ -288,16 +265,11 @@ i{font-style: normal;}
 .login-content .login-bg .login-cont .layui-input-inline input{height:50px;}
 .login-content .login-bg .login-cont .iphone{margin-bottom: 10px;}
 .login-content .login-bg .login-cont .iphone .layui-input{padding-left: 40px;}
-.login-content .login-bg .login-cont .veri-code .layui-btn{width: 102px; background: #eeeeee; text-align: center; color: #333; height: 36px; line-height: 36px; display: inline-block; border:none; cursor: pointer; position: absolute; top: 1px; right: 1px; font-size: 12px; padding:0 14px;}
+.login-content .login-bg .login-cont .veri-code .layui-btn{height: 48px; width: 120px; background: #eeeeee; text-align: center; color: #333; line-height: 36px; display: inline-block; border:none; cursor: pointer; position: absolute; top: 1px; right: 1px; font-size: 12px; padding:0; }
 .login-content .login-bg .login-cont .login-btn .layui-input-block{margin-left: 0; }
 .login-content .login-bg .login-cont .login-btn .layui-input-block button{width: 100%; font-size: 18px;}
 .layadmin-link{color:#029789!important}.layadmin-link:hover{opacity:.8}
 /*end-login*/
-
-
-
-
-
 
 
 /*shopcart-content*/

@@ -256,6 +256,13 @@ h1, h2, h3 {
     font-weight: 300;
 }
 
+.footer2 {
+    line-height: 30px;
+    text-align: center;
+    color: #666;
+    font-weight: 300;
+}
+
 body .layui-layout-admin .footer-demo {
     height: 50px;
     padding: 5px 0;

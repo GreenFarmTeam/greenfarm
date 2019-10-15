@@ -7,7 +7,7 @@ $("button[name='detail']").on('click', function () {
 });
 
 /**
- * 返回之前的页面
+ * 返回商家列表页面
  */
 $(function(){
     $("#back").click(function(){

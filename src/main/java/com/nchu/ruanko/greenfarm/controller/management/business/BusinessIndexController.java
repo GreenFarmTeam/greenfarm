@@ -38,4 +38,18 @@ public class BusinessIndexController {
         return modelAndView;
     }
 
+    /**
+     *
+     * @return
+     */
+    @ApiOperation(value = "businessManageIndexPage", notes = "跳转至“商家中心”的个人资料主页")
+    @GetMapping(value = "/business/management/info")
+    public ModelAndView businessInfoIndexPage(){
+        ModelAndView modelAndView = new ModelAndView();
+
+        modelAndView.setViewName("management/business/basic-info");
+        return modelAndView;
+    }
+
+
 }

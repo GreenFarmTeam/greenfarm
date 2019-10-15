@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>SkyMall | 商城</title>
+    <link rel="stylesheet" th:href="@{/gfstatic/layui/css/layui.css}"/>
+    <link th:href="@{/gfstatic/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/gfstatic/css/common.css}" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
+    <script th:src="@{/gfstatic/layui/layui.js}"></script>
+    <style>
+        #list {
+
+        }
+        .detail{
+            width: 80% !important;
+            min-height: 300px !important;
+            overflow: auto !important;
+            border-radius: 10px !important;
+            border: 3px solid #c2c2c2 !important;
+        }
+    </style>
+</head>
+<body class="site-home">
+<!--头部模块-->
+<div th:replace="shop/common::head"></div>
+<div class="layui-container" id="content">
+    <!--订单列表-->
+    <div class="layui-row">
+        <div class="layui-col-md12"><h1 class="site-h1"><i class="fa fa-gift" style="color: #FF5722;"></i>
+            &nbsp;我的订单</h1></div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-row" style="overflow: auto;">
+            <div class="layui-col-md12" style="overflow: auto;">
+                <table class="layui-table" lay-skin="nob" style="min-width: 1140px;">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>订单时间</th>
+                        <th>收货人</th>
+                        <th>电话</th>
+                        <th>地址</th>
+                        <th>总价</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="list">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+    <script>
+        //            <![CDATA[
+        $(function () {
+            loadOrder();
+        });
+
+        // 加载我的订单列表
+        function loadOrder() {
+            $.ajax({
+                type:"get",
+                url:"/member/management/order/load/all/operation",
+                dataType:"json",
+                success : function (jsonData) {
+                    if (jsonData.flag == 1) {
+                        var tbody = $("#list");
+                        if(jsonData.data.length<=0){
+                            layer.msg("您暂无订单，赶快去购物吧！")
+                        }else
+                            appendToPage(jsonData.data, tbody);
+
+
+                    } else {
+                        layer.msg("加载订单请求失败！")
+                    }
+                }
+            })
+        }
+        // 将数据渲染进页面
+        function appendToPage(items, tbody) {
+            var count=1;
+            $(items).each(function (index, item) {
+                console.log(item)
+                var tr = $("<tr></tr>");
+                tr.append($("<td>" + (count++) + "</td>"));
+                tr.append($("<td width='200'>" + item.orderCtime + "</td>"));
+                tr.append($("<td width='80'>" + item.orderRname + "</td>"));
+                tr.append($("<td width='100'>" + item.orderRphone + "</td>"));
+                tr.append($("<td width='100'><a onclick='getDetailAddress(this)' value='"+item.orderRaddress+"' href='javascript:void(0);'>" + item.orderRaddress.substring(0,item.orderRaddress.indexOf("|")) + "</a></td>"));
+                tr.append($("<td width='80'>" + item.orderSum + "</td>"));
+                var state = item.orderState;
+                var status;//1:未付款 2:等待发货 3:等待收货 4:订单完成
+                switch (state) {
+                    case 1:
+                        status = "<span class='layui-badge layui-bg-orange'>未付款</span>";
+                        break;
+                    case 2:
+                        status = "<span class='layui-badge layui-bg-green'>等待发货</span>";
+                        break;
+                    case 3:
+                        status = "<span class='layui-badge layui-bg-blue'>等待收货</span>";
+                        break;
+                    case 4:
+                        status = "<span class='layui-badge layui-bg-gray'>订单完成</span>";
+                        break;
+                    default:
+                        status = "<span class='layui-badge layui-bg-black'>未知状态</span>";
+                        break;
+                }
+
+                tr.append($("<td width='100'>" + status + "</td>"));
+
+                var operter = $("<td ><button onclick='getDetail( this)' value='"+item.orderUid+"' class='layui-btn layui-btn-radius layui-btn-primary'>查看详情</button></td>");
+                if (state == 3) {
+                    operter.append($("<button onclick='recieve(this)' value='"+item.orderUid+"'  class='layui-btn layui-btn-radius layui-btn-danger'>确认收货</button>"));
+                }
+                if (state == 1) {
+                    operter.append($("<button onclick='pay(this)'  value='"+item.orderUid+"' class='layui-btn layui-btn-radius layui-btn-green'>付款</button>"));
+                }
+                tr.append(operter);
+                tbody.append(tr);
+
+            });
+        }
+        function getDetailAddress(btn){
+            var address = btn.value.substring(btn.value.indexOf("|")+1);
+            layer.confirm('详细地址：'+address, {btn:['确定'], skin:'layui-layer-lan', closeBtn:0});
+        }
+
+
+        // 获取订单详情
+        function getDetail(btn) {
+            var orderId = btn.value;
+            $.ajax({
+                type:"GET",
+                url:"/member/management/orderItem/load/" + orderId,
+                dataType:"json",
+                success : function (jsonData) {
+                    if (jsonData.flag === 1) {
+                        var div = $("<div></div>");
+                        var table = $("<table class='layui-table' style='overflow: auto;min-width: 650px' lay-skin='line' ></table>");
+                        var tbody = $("<tbody></tbody>");
+                        $(jsonData.data).each(function (index, item) {
+                            var tr = $("<tr style='max-height: 200px;'></tr>");
+                            tr.append($("<td ><img class='img_responsive' src='" + item.productImage.productImagePath + "'/></td>"));
+                            tr.append($("<td style='text-align: left;width: 200px;'><a style='color: #01AAED;text-decoration: underline;' href='/member/shop/product/load/detail/operation?id="+item.orderItem.product.productUid+"'>" + item.orderItem.product.productName + "</a></td>"));
+                            tr.append($("<td>单价：" + item.orderItem.product.productPrice + "</td>"));
+                            tr.append($("<td>数量：" + item.orderItem.itemCount + "</td>"));
+                            tr.append($("<td>总价：￥" + item.orderItem.itemSum + "</td>"));
+                            tbody.append(tr);
+                        });
+                        table.append(tbody);
+                        div.append(table);
+                        layer.open({
+                            type: 1,
+                            title: false,
+                            closeBtn: 0,
+                            shadeClose: true,
+                            skin: 'detail',
+                            content: div.html()
+                        });
+
+
+                    } else {
+                        layer.msg("加载订单明细请求失败！")
+                    }
+                }
+            })
+        }
+
+        //付款
+        function pay(btn) {
+            var id = btn.value;
+
+            $.ajax({
+                type:"get",
+                url:"/member/management/order/pay/" + id,
+                dataType:"json",
+                success : function (jsonData) {
+                    if (jsonData.flag == 1) {
+                        var content = "<!DOCTYPE html>\n" +
+                            "<html>\n" +
+                            "<head>\n" +
+                            "    <meta charset=\"UTF-8\">\n" +
+                            "    <title>支付</title>\n" +
+                            "</head>\n" +
+                            "<body>"+jsonData.responseHtml+"</body>\n" +
+                            "</html>"
+
+
+                        layer.closeAll();
+                        layer.open({
+                            type: 1,
+                            skin: 'layui-layer-rim',
+                            area: ['800px', '600px'],
+                            shadeClose: true,
+                            content : jsonData.responseHtml
+                        });
+                       /* layer.alert("开始支付")
+                        $(location).attr("href", getPathPrefix() + "member/management/toPay.html/"+jsonData.responseHtml);*/
+
+                    } else {
+                        layer.msg("付款请求失败！")
+                    }
+                }
+            })
+
+        }
+
+        //确认收货
+        function recieve(btn) {
+            var id = btn.value;
+            layer.confirm('您确认已经收到货了吗？', {
+                btn: ['确定','取消'] //按钮
+            }, function(){
+                $.get("/order/receive.do?orderId=" + id, function (data) {
+                    if (data.state == 0) {
+                        window.setTimeout(function () {
+                            window.location.reload();
+                        },500);
+                    } else {
+                        layer.msg(data.message);
+                    }
+                });
+            });
+
+        }
+
+        //            ]]>
+    </script>
+</div>
+<!--底部-->
+<div th:replace="shop/common::foot"></div>
+</body>
+</html>>

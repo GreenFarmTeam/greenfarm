@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>商城首页</title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <meta name="renderer" content="webkit"/>
@@ -12,17 +12,15 @@
     <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/map.js}"></script>
-    <link rel="stylesheet" th:href="@{/gfstatic/layui/css/layui.css}"/>
-    <!--一套绝佳的图标字体库和CSS框架-->
+    <link th:href="@{/gfstatic/templateone/res/layui/css/layui.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/gfstatic/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
     <!-- 公共样式初始化-->
     <link th:href="@{/gfstatic/css/common.css}" rel="stylesheet" type="text/css"/>
-    <!-- 轻量级UI渲染框架-->
     <script th:src="@{/gfstatic/layui/jquery-3.2.1.min.js}"></script>
     <script th:src="@{/gfstatic/layui/layui.js}"></script>
 </head>
 <body class="site-home">
-<!--包含 头部模块-->
+    <!--包含 头部模块-->
     <div th:replace="shop/common::head"></div>
     <!--页面主体内容-->
     <div class="layui-container" id="content">
@@ -47,7 +45,7 @@
         </div>
 
     </div>
-<!--底部-->
+    <!--底部-->
     <div th:replace="shop/common::foot"></div>
     <script type="text/javascript" th:src="@{/gfstatic/js/management/shop/index.js}"></script>
 </body>
