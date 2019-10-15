@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link th:href="@{/gfstatic/css/mygrxx.css}" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="you fl">
+            <h2>个人信息</h2>
+            <div class="gxin">
+                <div class="tx">
+                    <a href="#">
+                        <div th:if="${session.user.userPhoto}!=null">
+                            <img th:src="@{/gfstatic/image/userPhoto.jpg}"/>
+                        </div>
+                        <div th:if="${session.user.userPhoto}==null">
+                            <img th:src="@{/gfstatic/image/userPhoto.jpg}"/>
+                        </div>
+                        <p id="avatar">修改头像</p>
+                    </a>
+                </div>
+                <div class="xx">
+
+                    <h3 class="clearfix"><strong class="fl">基础资料</strong></h3>
+                    <div  th:if="${session.user}!=null" >
+                        <span class="fl">昵称：<span th:text="${session.user.userNickname}"></span></span>
+                        <a class="fr" th:href="@{/user/management/nickname}">修改昵称</a>
+                    </div>
+                    <div  th:if="${session.user}!=null" >
+                        <span class="fl">会员号：<span th:text="${session.user.userUsername}"></span></span>
+                    </div>
+                    <div>
+                        <span class="fl">修改密码:</span>
+                        <a class="fr" th:href="@{/user/management/password}">修改密码</a>
+                    </div>
+
+                    <h3>高级设置</h3>
+                    <div>
+                        <span class="fl">实名认证:
+                            <span th:if="${session.user.userIdcard}==null">未完成</span>
+                            <span th:if="${session.user.userIdcard}!=null">已完成</span>
+                        </span>
+                        <a class="fr" th:href="@{/user/management/certification}">实名认证</a>
+                    </div>
+                    <div>
+                        <span class="fl">绑定手机号:
+                            <span th:if="${session.user.userPhone}==null" style="color: #FF0000; ">未绑定</span>
+                            <span th:if="${session.user.userPhone}!=null" style="color: #FF0000; ">已绑定</span>
+                        </span>
+                        <a class="fr" th:href="@{/user/management/phone}">绑定手机号</a>
+                    </div>
+                    <div>
+                        <span class="fl">绑定邮箱:
+                            <span th:if="${session.user.userMail}==null" style="color: #FF0000; ">未绑定</span>
+                            <span th:if="${session.user.userMail}!=null" style="color: #FF0000; ">已绑定</span>
+                        </span>
+                        <a class="fr" th:href="@{/user/management/mail}">绑定邮箱</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

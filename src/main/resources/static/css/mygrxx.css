@@ -1,0 +1,145 @@
+
+/*css预设*/
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+
+/*将所有HTML元素的默认边距清0*/
+
+html,
+body {
+	font-size: 15px;
+	font-family: "微软雅黑", "arial";
+	color: #262626;
+	background: #FFF;
+}
+
+
+/*对HTML元素中的字体、颜色、背景色进行初始设置*/
+
+ul li,
+ol li {
+	list-style: none;
+}
+
+
+/*将列表标签的默认样式清除*/
+
+a {
+	text-decoration: none;
+	outline: none;
+	color: #262626;
+	blr: expression(this.onFocus=this.blur());
+}
+
+/*清楚浮动*/
+
+.clearfix:after {
+	content: "";
+	display: block;
+	clear: both;
+	height: 0;
+	line-height: 0;
+	visibility: hidden;
+}
+
+.clearfix {
+	zoom: 1;
+}
+
+
+/*解决ie6的兼容性问题*/
+
+.fl {
+	float: left;
+}
+
+.fr {
+	float: right;
+}
+.you{
+	background: #fff;
+	width: 1000px;
+	padding: 50px;
+	margin: 20px 100px;
+	border: 1px solid #e4e4e4;
+}
+.you  h2{
+	font-size: 22px;
+	font-weight: normal;
+	padding-bottom: 20px;
+	border-bottom: 1px solid #E6E6E6;
+	margin-bottom: 20px;
+}
+
+/*个人信息*/
+.you .gxin{
+	display: flex;
+}
+.you .gxin div.tx{
+	flex: 1;
+	text-align: center;
+	margin-top: 10%;
+}
+.you .gxin div.tx a{
+	display: block;
+	width: 90px;
+	height: 90px;
+	border-radius: 45px;
+	border: 1px solid #e3e3e3;
+	padding: 1px;
+}
+.you .gxin div.tx a img{
+	height: 92px;
+	width: 92px;
+	border: none;
+}
+.you .gxin div.tx a p{
+	color: #A10000;
+	margin-top: 5px;
+}
+.you .gxin div.tx div{
+	text-align: left;
+}
+.you .gxin div.tx div p{
+	height: 30px;
+	line-height: 30px;
+}
+
+
+.you .gxin div.xx{
+	flex: 3;
+}
+.you .gxin div.xx .half{
+	float: left;
+	width: 40%;
+	margin: 0 5%;
+}
+.you .gxin div.xx h3{
+	font-size: 16px;
+	padding: 25px 0 15px;
+	border-bottom: 1px solid #E6E6E6;
+}
+.you .gxin div.xx h3.clearfix{
+	padding: 0 0 15px;
+}
+.you .gxin div.xx h3.clearfix a{
+	font-weight: normal;
+	font-size: 12px;
+}
+.you .gxin div.xx div{
+	border-bottom: 1px solid #e6e6e6;
+	height: 40px;
+	line-height: 40px;
+	color: #666;
+}
+.you .gxin div.xx  a{
+	color: #A10000;
+}
+/*bianji*/
+body{
+	position: relative;
+}
