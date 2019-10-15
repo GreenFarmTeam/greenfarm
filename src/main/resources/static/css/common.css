@@ -1569,7 +1569,7 @@ body {
 
 .product_image > img {
     max-width: 100%;
-    max-height: 200px;
+    height: 200px;
     border-radius: 3px;
 }
 
@@ -1608,7 +1608,7 @@ body {
 
 .img_responsive {
     display: block;
-    max-width: 100%;
+    width: 100%;
     height: auto;
 }
 .smaller{

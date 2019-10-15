@@ -40,7 +40,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
         // 上传的文件路径映射
         // TODO 根据实际电脑上去更改
-        registry.addResourceHandler("/file/upload/**").addResourceLocations("file:C:/Users/Lenovo/Desktop/校内实训/绿色农场项目/src/main/resources/static/uploadFile/");
+        registry.addResourceHandler("/file/upload/**").addResourceLocations("file:E:\\校内实习\\第一轮\\file\\");
     }
 
     /**

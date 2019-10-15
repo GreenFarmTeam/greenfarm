@@ -7,5 +7,7 @@ public interface FileConstant {
 
     // 上传的文件虚拟路径
     String FILE_UPLOAD_VIRTUAL_PATH_PREFIX = "/file/upload/";
+    /**商品主图片的默认路径**/
+    String DEFAULT_MAIN_IMAGE_PATH = "/file/upload/default-img.jpg";
 
 }

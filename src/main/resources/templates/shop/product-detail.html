@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>SkyMall | 商城</title>
+    <link rel="stylesheet" th:href="@{/gfstatic/layui/css/layui.css}"/>
+    <link th:href="@{/gfstatic/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/gfstatic/css/common.css}" rel="stylesheet" type="text/css"/>
+    <script th:src="@{/gfstatic/layui/jquery-3.2.1.min.js}"></script>
+    <script th:src="@{/gfstatic/layui/layui.js}"></script>
+    <style>
+        .desc>p{
+            font-size: 20px;
+            font-weight: 300;
+        }
+        .product_img{
+            background-color: #FFFFFF;
+            border-radius: 3px;
+            border: 1px solid #e1e1e1;
+            width: 400px;
+            height: 360px;
+        }
+        .product_info>p{
+            margin: 20px 0;
+            text-align: right;
+        }
+        .product_info>.title{
+            font-weight: bold;
+            text-align: left;
+        }
+        .size1{
+            font-size: 30px;
+        }
+        .product_info>.price{
+            font-weight: 500;
+            color: #1e1e1e;
+        }
+        .size2{
+            font-size: 24px;
+        }
+        .product_info>p>.price1{
+            font-weight: bold;
+            color: #FF5722;
+        }
+        .size3{
+            font-size: 30px;
+        }
+    </style>
+</head>
+<body class="site-home">
+<!--头部模块-->
+    <div th:replace="shop/common::head"></div>
+    <div class="layui-container" id="content">
+        <!--商品详情-->
+        <div class="layui-row" style="margin-top: 10px;">
+            <div class="layui-row" id="product">
+                <div class="layui-col-xs12 layui-col-sm6 layui-col-md6">
+                    <img class="product_img img_responsive" th:src="${product.getMainImage().getProductImagePath()}" />
+                </div>
+                <div class="layui-col-xs12 layui-col-sm6 layui-col-md6">
+                    <div class="product_info">
+                        <input type="hidden" id="productId" th:value="${product.product.productUid}"/>
+                        <p th:text="${product.product.productName}" class="title size1"></p>
+                        <hr class="layui-bg-red" />
+                        <p class="price size2">商城价：<span class="price1 size3" th:text="${product.product.productPrice}"></span></p>
+                        <hr class="layui-bg-red" />
+                        <p class="price size2">市场价：<span class="" th:text="${product.product.productPrice}+20"></span></p>
+                        <hr class="layui-bg-red" />
+                        <p ><button onclick="addCart()" class="layui-btn layui-btn-lg layui-btn-radius layui-btn-danger">加入购物车</button></p>
+                        <p ><button onclick="purchaseProduct()" class="layui-btn layui-btn-lg layui-btn-radius layui-btn-danger">立即购买</button></p>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row" style="margin-top: 50px;text-align: center;">
+                <fieldset class="layui-elem-field">
+                    <legend style="font-weight: 700"><i class="fa fa-heart" style="color: #FF5722;"></i>商品描述<i class="fa fa-heart" style="color: #FF5722;"></i></legend>
+                    <div class="layui-field-box desc">
+                        <p th:text="${product.product.getProductDescription()}"></p>
+                        <hr class="layui-bg-green" />
+                        <div th:if="${product.getOtherImages().size()}!=0" th:each="img:${product.getOtherImages()}">
+                            <img th:src="${img.productImagePath}" class="img_responsive"/>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" th:src="@{/gfstatic/js/management/shop/product-detail.js}"> </script>
+<!--底部-->
+<div th:replace="shop/common::foot"></div>
+</body>
+</html>

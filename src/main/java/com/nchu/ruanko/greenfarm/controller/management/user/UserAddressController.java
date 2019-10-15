@@ -67,6 +67,17 @@ public class UserAddressController {
         json.put("flag", true);
         return json.toString();
     }
+    @ApiOperation(value = "userAddAddressOperation", notes = "用户/会员查找收货地址根据收货地址ID")
+    @GetMapping(value = "/user/management/address/load/{addressId}")
+    @ResponseBody
+    public String userAddAddressOperation(@PathVariable("addressId") String addressId){
+        JSONObject jsonObject = new JSONObject();
+        Address address = addressService.getAddressByAddressUID(addressId);
+        jsonObject.put("address",address);
+        jsonObject.put("flag",1);
+        return jsonObject.toString();
+
+    }
 
     /**
      * 跳转至“用户/会员收货地址”页面

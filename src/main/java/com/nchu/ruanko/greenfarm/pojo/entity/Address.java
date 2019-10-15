@@ -11,6 +11,7 @@ public class Address {
     private String addressProvince;
     private String addressCity;
     private String addressDistrict;
+    private String addressPhone;
     private User user;
 
     public String getAddressUid() {
@@ -69,6 +70,14 @@ public class Address {
         this.user = user;
     }
 
+    public String getAddressPhone() {
+        return addressPhone;
+    }
+
+    public void setAddressPhone(String addressPhone) {
+        this.addressPhone = addressPhone;
+    }
+
     @Override
     public String toString() {
         return "Address{" +
@@ -78,8 +87,8 @@ public class Address {
                 ", addressProvince='" + addressProvince + '\'' +
                 ", addressCity='" + addressCity + '\'' +
                 ", addressDistrict='" + addressDistrict + '\'' +
+                ", addressPhone='" + addressPhone + '\'' +
                 ", user=" + user +
                 '}';
     }
-
 }

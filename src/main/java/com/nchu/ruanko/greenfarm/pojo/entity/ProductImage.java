@@ -1,12 +1,14 @@
 package com.nchu.ruanko.greenfarm.pojo.entity;
 
+import com.nchu.ruanko.greenfarm.constant.FileConstant;
+
 /**
  * 对应数据库表：gf_tb_product_image
  */
 public class ProductImage {
 
     private String productImageUid;
-    private String productImagePath;
+    private String productImagePath= FileConstant.DEFAULT_MAIN_IMAGE_PATH;
     private Integer productImageIsMainImage;
     private Product product;
 

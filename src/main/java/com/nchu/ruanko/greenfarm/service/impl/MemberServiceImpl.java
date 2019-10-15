@@ -9,6 +9,8 @@ import com.nchu.ruanko.greenfarm.pojo.entity.User;
 import com.nchu.ruanko.greenfarm.pojo.vo.AdminMemberPageVO;
 import com.nchu.ruanko.greenfarm.pojo.vo.AdminMemberVO;
 import com.nchu.ruanko.greenfarm.service.MemberService;
+import com.nchu.ruanko.greenfarm.util.string.StringUtils;
+import org.hibernate.validator.internal.util.StringHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
@@ -42,6 +44,7 @@ public class MemberServiceImpl implements MemberService {
             AdminMemberVO adminMemberVO = new AdminMemberVO();
             List<Address> addressList = addressDAO.listAddressesByUserUID(user.getUserUid());
             adminMemberVO.setAddressList(addressList);
+            user.setUserRealname(StringUtils.decodeBase64(user.getUserRealname()));
             adminMemberVO.setMember(user);
             adminMemberVOList.add(adminMemberVO);
         }
@@ -53,6 +56,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public User loadMemberDetailInfoByMemberID(String memberID) {
+
         return userDAO.getUserByUID(memberID);
     }
 
@@ -87,7 +91,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public boolean undoDeleteMemberByID(String memberID) {
-        System.out.println("撤销删除"+memberID);
+
         if(userDAO.updateUserDateByUserId(memberID,1)>=1)
             return true;
         else

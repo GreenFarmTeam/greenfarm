@@ -12,5 +12,9 @@ public interface ProductTypeService {
      */
     List<ProductType> listAllProductTypes();
 
-
+    /**
+     * 根据产品类型ID获取产品类型ID
+     * @return
+     */
+    ProductType loadProuctTypeById(String productId);
 }
