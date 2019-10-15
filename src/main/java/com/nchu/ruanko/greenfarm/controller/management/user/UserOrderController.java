@@ -52,12 +52,13 @@ public class UserOrderController {
         JSONObject jsonObject = new JSONObject();
         HttpSession  session = request.getSession();
         User user = (User) session.getAttribute("user");
-
-        if(orderService.userSubmitOrder(user.getUserUid(),name,phone,addr,detailAddr,totalPrice)){
+        String result = orderService.userSubmitOrder(user.getUserUid(),name,phone,addr,detailAddr,totalPrice);
+        if(result==null){
             jsonObject.put("flag",1);
 
         }else{
             jsonObject.put("flag",0);
+            jsonObject.put("result",result);
         }
         return jsonObject.toString();
     }
@@ -67,7 +68,7 @@ public class UserOrderController {
     @ResponseBody
     public String userLoadAllOrders(HttpServletRequest request){
         JSONObject jsonObject = new JSONObject();
-        System.out.println("我进来了");
+
         HttpSession session = request.getSession();
         User user= (User)session.getAttribute("user");
         List<Order> orderList = orderService.loadAllOrdersBy(user.getUserUid());
@@ -95,13 +96,25 @@ public class UserOrderController {
     @GetMapping(value = "/member/management/order/pay/{orderId}")
     @ResponseBody
     public String userPayOrder(@PathVariable(name = "orderId") String orderId, HttpServletRequest request) throws IOException {
-
+        System.out.println("orderId:"+orderId);
         JSONObject jsonObject = new JSONObject();
         HttpSession session = request.getSession();
         User user = (User)session.getAttribute("user");
-        if(orderService.payOrderByUserIdAndOrderId(user.getUserUid(),orderId)){
+        AlipayTradePagePayResponse payResponse = orderService.payOrderByUserIdAndOrderId(user.getUserUid(),orderId);
+        System.out.println(
+                payResponse.getBody()
+        );
+        if(payResponse!=null){
+            jsonObject.put("responseHtml",payResponse.getBody());
             jsonObject.put("flag",1);
         }
         return jsonObject.toString();
+    }
+    @GetMapping(value="member/management/toPay.html/{htmlContent}")
+    public ModelAndView toPayHtml(@PathVariable("htmlContent") String htmlContent){
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.setViewName("management/user/pay");
+        modelAndView.addObject("payHTML",htmlContent);
+        return modelAndView;
     }
 }

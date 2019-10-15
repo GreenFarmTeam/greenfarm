@@ -181,17 +181,39 @@
         //付款
         function pay(btn) {
             var id = btn.value;
-            $.get("/member/management/order/pay/" + id, function (data) {
-                if (data.state == 0) {
 
-                    layer.msg("付款成功！");
-                    window.setTimeout(function () {
-                        window.location.reload();
-                    },500);
-                } else {
-                    layer.msg(data.message);
+            $.ajax({
+                type:"get",
+                url:"/member/management/order/pay/" + id,
+                dataType:"json",
+                success : function (jsonData) {
+                    if (jsonData.flag == 1) {
+                        var content = "<!DOCTYPE html>\n" +
+                            "<html>\n" +
+                            "<head>\n" +
+                            "    <meta charset=\"UTF-8\">\n" +
+                            "    <title>支付</title>\n" +
+                            "</head>\n" +
+                            "<body>"+jsonData.responseHtml+"</body>\n" +
+                            "</html>"
+
+
+                        layer.closeAll();
+                        layer.open({
+                            type: 1,
+                            skin: 'layui-layer-rim',
+                            area: ['800px', '600px'],
+                            shadeClose: true,
+                            content : jsonData.responseHtml
+                        });
+                       /* layer.alert("开始支付")
+                        $(location).attr("href", getPathPrefix() + "member/management/toPay.html/"+jsonData.responseHtml);*/
+
+                    } else {
+                        layer.msg("付款请求失败！")
+                    }
                 }
-            });
+            })
 
         }
 

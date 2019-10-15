@@ -17,6 +17,7 @@ import com.nchu.ruanko.greenfarm.util.string.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -75,6 +76,7 @@ public class OrderServiceImpl implements OrderService {
      * 用户提交购物车订单
      * 逻辑：更新用户订单状态：购物车->等待付款
      *       更新订单的收货人、收货人联系电话、收货地址、收货地址详情、创建时间、订单总金额
+     *       订单中所有的商品应减少相应的分量
      * @param userUid
      * @param name
      * @param phone
@@ -83,13 +85,32 @@ public class OrderServiceImpl implements OrderService {
      * @return
      */
     @Override
-    public boolean userSubmitOrder(String userUid, String name, String phone, String addr, String detailAddr,String totalPrice) {
+    public String userSubmitOrder(String userUid, String name, String phone, String addr, String detailAddr,String totalPrice) {
         Order order = orderDAO.loadCartOrderDetailInfoByUserID(userUid);
         orderDAO.updateOrderStateByUserIdAndOrderId(order.getOrderUid(),userUid,unPayState);
         orderDAO.updateOrderAddressInfoByUserIdAndOrderId(order.getOrderUid(),userUid,name,phone,addr+"|"+detailAddr);
         orderDAO.updateOrderCreateTimeByUserIdAndOrderId(order.getOrderUid(),userUid,new Date(System.currentTimeMillis()));
         orderDAO.updateOrderTotalPriceByUserIdAndOrderId(order.getOrderUid(),userUid,Float.parseFloat(totalPrice));
-        return true;
+        List<OrderItem> orderItemList = orderItemDAO.loadOrderItemsByOrderId(order.getOrderUid());
+        for(OrderItem orderItem   : orderItemList){
+            Product product = productDAO.getProductByProductUID(orderItem.getProduct().getProductUid());
+
+            if(!(product.getProductStock()==null)){//为空的库存充足,不用考虑
+                Integer newStock = product.getProductStock()-orderItem.getItemCount();
+                if(newStock<0){
+                    return product.getProductName()+"已剩:"+product.getProductStock()+";库存不足！";
+                }
+            }
+
+        }
+        for(OrderItem orderItem   : orderItemList){
+            Product product = productDAO.getProductByProductUID(orderItem.getProduct().getProductUid());
+            if(!(product.getProductStock()==null)) {//为空的库存充足,不用考虑
+                Integer newStock = product.getProductStock() - orderItem.getItemCount();
+                productDAO.updateProductStockByProductUID(newStock >= 0 ? newStock : 0, product.getProductUid());
+            }
+            }
+        return null;
     }
 
     /**
@@ -110,12 +131,14 @@ public class OrderServiceImpl implements OrderService {
      * @return
      */
     @Override
-    public boolean payOrderByUserIdAndOrderId(String userUid, String orderId) {
+    public AlipayTradePagePayResponse payOrderByUserIdAndOrderId(String userUid, String orderId) {
         Order order =orderDAO.loadOneOrderByOrderID(orderId);
+
        List<OrderItem> orderItemList = orderItemDAO.loadOrderItemsByOrderId(order.getOrderUid());
         /* 生成订单号 */
         // 采取的策略是：“UUID”作为订单号
-        String orderSn = UUID.randomUUID().toString().replaceAll("-", "");
+
+
         /* 请求支付 */
         // 初始化 AlipayClient
         AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id, AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key, AlipayConfig.sign_type);
@@ -124,18 +147,31 @@ public class OrderServiceImpl implements OrderService {
         payRequest.setNotifyUrl(AlipayConfig.notify_url);
 
         // 订单金额
-        String totalAmount = String.valueOf(order.getOrderSum());
+        /*String totalAmount = String.valueOf(order.getOrderSum());*/
 
+        String totalAmount = "180.00";
         // 订单名称
         String subject = "农产品清单";
 
+       /* String orderSn = UUID.randomUUID().toString().replaceAll("-", "");*/
         // 订单描述，可空
-        String body = orderItemList.toString();
+        String body = "";
+        for(OrderItem orderItem : orderItemList){
+            body= body+orderItem.getProduct().getProductName()+" "+orderItem.getItemCount()+"  ￥"+orderItem.getItemPrice()+";";
+        }
 
-        payRequest.setBizContent("{\"out_trade_no\":\"" + orderSn + "\","
-                + "\"total_amount\":\"" + totalAmount + "\"," + "\"subject\":\"" + subject + "\","
+
+        DecimalFormat decimalFormat=new DecimalFormat(".00");
+        String orderTotalPrice = decimalFormat.format(order.getOrderSum());
+        payRequest.setBizContent("{\"out_trade_no\":\"" + order.getOrderUid() + "\","
+                + "\"total_amount\":\"" +orderTotalPrice + "\"," + "\"subject\":\"" + subject + "\","
                 + "\"body\":\"" + body + "\","
                 + "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");
+
+     /*   payRequest.setBizContent("{\"out_trade_no\":\"" + order.getOrderUid().replaceAll("-", "") + "\","
+                + "\"total_amount\":\"" + totalAmount + "\"," + "\"subject\":\"" + subject + "\","
+                + "\"body\":\"" + body + "\","
+                + "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");*/
         /* 响应 */
         AlipayTradePagePayResponse payResponse = null;
 
@@ -145,11 +181,13 @@ public class OrderServiceImpl implements OrderService {
             e.printStackTrace();
         }
         if (payResponse != null) {
-            orderDAO.updateOrderStateByUserIdAndOrderId(userUid,orderId,delivery_waitProductState);
-            return true;
+
+            orderDAO.updateOrderStateByUserIdAndOrderId(orderId,userUid,delivery_waitProductState);
+            orderDAO.updateOrderPayTimeByUserIdAndOrderId(orderId,userUid,new Date(System.currentTimeMillis()));
+            return payResponse;
 
         } else {
-            return false;
+            return null;
         }
     }
 }

@@ -27,7 +27,7 @@ public class AlipayConfig {
     /**
      * 页面跳转同步通知页面路径 需http://格式的完整路径，不能加?id=123这类自定义参数，必须外网可以正常访问
      */
-    public static String return_url = "http://localhost:8080/demo1/pay/tip/success";
+    public static String return_url = "http://localhost:8080/member/management/order/index";
 
     /**
      * 签名方式
@@ -47,7 +47,7 @@ public class AlipayConfig {
     /**
      * 日志存储位置
      */
-    private static final String LOG_PATH = "E:\\greenfarm\\alipaylog";
+    private static final String LOG_PATH = "C:/Users/Lenovo/Desktop/校内实训/绿色农场项目\\greenfarm\\alipaylog";
 
 
     /**

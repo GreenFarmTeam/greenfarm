@@ -69,5 +69,5 @@ public interface OrderItemDAO {
     @Select("select * from " +
             "gf_tb_order_item " +
             "where item_order_uid=#{orderId}")
-    List<OrderItem> loadOrderItemsByOrderId(String orderId);
+    List<OrderItem> loadOrderItemsByOrderId(@Param("orderId") String orderId);
 }

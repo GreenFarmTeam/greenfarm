@@ -30,7 +30,7 @@ public interface OrderDAO {
 
     @ResultMap(value = "orderMapper1")
     @Select(" select * from gf_tb_order " +
-            " where ord_user_uid=#{orderUid}")
+            " where ord_uid=#{orderUid}")
     Order loadOneOrderByOrderID(@Param("orderUid") String orderID);
     /**
      * 创建购物车订单
@@ -67,4 +67,9 @@ public interface OrderDAO {
     @Select("select * from gf_tb_order " +
             "where ord_user_uid=#{userUid}")
     List<Order> listAllOrdersByUserid(@Param("userUid")String userUid);
+
+    @Update("update gf_tb_order " +
+            "set ord_ptime = #{date} " +
+            "where ord_uid=#{orderId} and ord_user_uid=#{userUid}")
+    void updateOrderPayTimeByUserIdAndOrderId(@Param("orderId") String orderId,@Param("userUid") String userUid,@Param("date") Date date);
 }

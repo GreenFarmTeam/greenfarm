@@ -496,4 +496,15 @@ public class ProductServiceImpl implements ProductService {
         return memberProductPageVo;
     }
 
+    /**
+     * 会员得到产品详情，通过产品ID
+     * @param productId
+     * @return
+     */
+    @Override
+    public Product memberGetProductByProductId(String productId) {
+
+        return productDAO.getProductByProductUID(productId);
+    }
+
 }

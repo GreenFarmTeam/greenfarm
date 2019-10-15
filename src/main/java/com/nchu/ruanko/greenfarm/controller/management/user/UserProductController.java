@@ -2,26 +2,31 @@ package com.nchu.ruanko.greenfarm.controller.management.user;
 
 import com.alibaba.fastjson.JSONObject;
 import com.nchu.ruanko.greenfarm.constant.PageConstant;
+import com.nchu.ruanko.greenfarm.pojo.entity.Address;
 import com.nchu.ruanko.greenfarm.pojo.entity.Business;
+import com.nchu.ruanko.greenfarm.pojo.entity.Product;
+import com.nchu.ruanko.greenfarm.pojo.entity.User;
+import com.nchu.ruanko.greenfarm.service.AddressService;
 import com.nchu.ruanko.greenfarm.service.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.websocket.server.PathParam;
+import java.util.List;
+
 @Api(tags = "management.user.UserProductController", description = "“会员/产品中心”的控制器")
 @Controller
 public class UserProductController {
     @Autowired
     private ProductService productService;
+    @Autowired
+    private AddressService addressService;
     private static final int PAGE_NAVIGATION_SIZE = 10;
     /**
      * 会员加载热门的产品
@@ -80,6 +85,20 @@ public class UserProductController {
         return modelAndView;
     }
 
+    @ApiOperation(value = "memberPurchaseProducts", notes = "会员立即购买某个产品")
+    @GetMapping(value="/member/management/product/purchase/{productId}")
+    @ResponseBody
+    public String  memberPurchaseProducts(@PathVariable("productId") String productId,HttpServletRequest request){
+        JSONObject jsonObject = new JSONObject();
+        HttpSession session = request.getSession();
+        User user = (User)session.getAttribute("user");
+        Product product = productService.memberGetProductByProductId(productId);
+        List<Address> addressList = addressService.listAddressesByUserUID(user.getUserUid());
+        jsonObject.put("product",product);
+        jsonObject.put("addressList",addressList);
+        return jsonObject.toString();
+
+    }
 
 
 }

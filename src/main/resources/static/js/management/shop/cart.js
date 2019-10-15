@@ -207,6 +207,8 @@ function submit_btn (btn) {
                     if (jsonData.flag === 1) {
                         layer.msg("订单提交成功！")
                         $(location).attr("href", getPathPrefix() + "member/management/toCart.html");
+                    }else{
+                        layer.msg(jsonData.result)
                     }
                 }
             });

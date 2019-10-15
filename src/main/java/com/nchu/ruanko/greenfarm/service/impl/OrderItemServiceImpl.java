@@ -83,7 +83,6 @@ public class OrderItemServiceImpl implements OrderItemService {
         List<OrderItem> orderItemList = orderItemDAO.loadOrderItemsByOrderId(orderId);
         for(OrderItem orderItem : orderItemList){
             OrderItemVo orderItemVo =new OrderItemVo();
-            System.out.println(orderItem);
             ProductImage mainProductImage = productImageDAO.getProductMainImageByProductUID(orderItem.getProduct().getProductUid());
             if(mainProductImage==null){
                 orderItemVo.setProductImage(new ProductImage());
