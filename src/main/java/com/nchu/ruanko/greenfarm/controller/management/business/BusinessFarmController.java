@@ -47,7 +47,7 @@ public class BusinessFarmController {
     @GetMapping(value = "/business/management/farm/add")
     public ModelAndView businessManagementFarmAddPage() {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.setViewName("management/business/add-farm");
+        modelAndView.setViewName("management/business/farm-add");
         modelAndView.addObject("farmTypeList", farmService.listFarmTypes());
         return modelAndView;
     }
@@ -142,7 +142,7 @@ public class BusinessFarmController {
         ModelAndView modelAndView = new ModelAndView();
         HttpSession session = request.getSession();
         Business business = (Business) session.getAttribute("business");
-        modelAndView.setViewName("management/business/upping-farm");
+        modelAndView.setViewName("management/business/farm-upping");
         modelAndView.addObject("vo", farmService.businessListFarm(business.getBusinessUid(),pageNum, pageSize, PageConstant.PAGE_NAVIGATION_SIZE,11));
         return modelAndView;
     }
@@ -159,7 +159,7 @@ public class BusinessFarmController {
         ModelAndView modelAndView = new ModelAndView();
         HttpSession session = request.getSession();
         Business business = (Business) session.getAttribute("business");
-        modelAndView.setViewName("management/business/downing-farm");
+        modelAndView.setViewName("management/business/farm-down");
         modelAndView.addObject("vo", farmService.businessListFarm(business.getBusinessUid(),pageNum, pageSize, PageConstant.PAGE_NAVIGATION_SIZE,1));
         return modelAndView;
     }

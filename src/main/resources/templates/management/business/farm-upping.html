@@ -2,13 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>正在上架的农场</title>
+    <title>已发布的农场信息</title>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=f48fcde49f6822707df87e6e395b4d08"></script>
     <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/map.js}"></script>
-    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=f48fcde49f6822707df87e6e395b4d08"></script>
 
+    <link th:href="@{/gfstatic/templateone/res/layui/css/layui.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/gfstatic/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
     <link th:href="@{/gfstatic/css/bootstrap-responsive.min.css}" rel="stylesheet" type="text/css" />
     <link th:href="@{/gfstatic/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
@@ -18,20 +19,19 @@
     <link th:href="@{/gfstatic/css/default.css}" rel="stylesheet" type="text/css" id="style_color" />
     <link th:href="@{/gfstatic/css/uniform.default.css}" rel="stylesheet" type="text/css" />
     <link th:href="@{/gfstatic/css/pagination.css}" rel="stylesheet" type="text/css" />
-    <link th:href="@{/gfstatic/templateone/res/layui/css/layui.css}" rel="stylesheet" type="text/css"/>
     <link rel="shortcut icon" th:href="@{/gfstatic/image/favicon.ico}" />
 </head>
 <body>
 <div class="container-fluid">
     <div class="row-fluid">
-        <h3 class="page-title"><i class="fa fa-user-circle"></i>当前发布的农场信息</h3>
+        <br>
         <ul class="breadcrumb">
             <li>
                 <a href="javascript:void(0);"><i class="fa fa-home"></i>农场管理</a>
                 <i class="fa fa-angle-right"></i>
             </li>
             <li>
-                <a href="javascript:void(0);">所有上架农场</a>
+                <a href="javascript:void(0);">已发布的农场信息</a>
             </li>
         </ul>
     </div>
@@ -40,7 +40,7 @@
             <div class="portlet-title">
                 <div class="caption">
                     <i class="fa fa-reorder"></i>
-                    农场上架列表
+                    农场信息列表
                 </div>
             </div>
             <div class="portlet-body">
@@ -54,14 +54,11 @@
                         <th>所属商家</th>
                         <th>土地类型</th>
                         <th>农场位置</th>
-                        <th>发布时间</th>
+                        <th>审核时间</th>
                         <th>操作</th>
                     </tr>
-                    </thead>
-                    <tr th:if="${vo.getAdminFarmVOList().size()}==0">
-                        <td colspan="9">暂无正在上架的农场数据</td>
-                    </tr>
-                    <tr th:if="${vo.getAdminFarmVOList().size()}!=0" th:each="pd,stat:${vo.getAdminFarmVOList()}">
+
+                    <tr th:if="${vo.getBusinessFarmVOList().size()}!=0" th:each="pd, stat:${vo.getBusinessFarmVOList()}">
                         <td th:text="${stat.count}"></td>
                         <td th:text="${pd.getFarm().getFarmName()}"></td>
                         <td th:if="${pd.getFarm().getFarmPrice()}!=null" th:text="${pd.getFarm().getFarmPrice()}"></td>
@@ -71,24 +68,21 @@
                         <td><a href="javascript:void(0);" name="gf_location" th:attr="data-lng=${pd.getFarm().getFarmLongitude()},data-lat=${pd.getFarm().getFarmLatitude()}">查看地图</a></td>
                         <td th:if="${pd.getReview().getFarmReviewReviewTime()}!=null" th:text="${#dates.format(pd.getReview().getFarmReviewReviewTime(),'yyyy-MM-dd HH:mm:ss')}"></td>
                         <td style="text-align: center">
-                            <button href="javascript:void(0);" th:value="${pd.getFarm().getFarmUid()}" name="gf_detail" class="layui-btn layui-btn-primary layui-btn-xs">详情</button>
-                            <button href="javascript:void(0);" th:value="${pd.getFarm().getFarmUid()}" name="gf_down"   class="layui-btn layui-btn-primary layui-btn-xs">下架农场</button>
+                            <button href="javascript:void(0)" th:value="${pd.getFarm().getFarmUid()}" name="gf_detail" class="layui-btn layui-btn-primary layui-btn-xs">详情</button>
+                            <button href="javascript:void(0)" th:value="${pd.getFarm().getFarmUid()}" name="gf_down"   class="layui-btn layui-btn-primary layui-btn-xs">下架农场</button>
+
                         </td>
                     </tr>
                 </table>
-                <!-- 这里显示分页 -->
-                <div th:if="${vo.adminFarmVOList.size()}!=0" id="Pagination" class="pagination align_right" >
+
+                <div th:if="${vo.getBusinessFarmVOList().size()}!=0">
                     <a th:if="${vo.pageInfo.isFirstPage}==true" disabled="disabled">首页</a>
                     <a th:if="${vo.pageInfo.isFirstPage}==false" th:href="@{/greenfarm/admin/management/farm(page=1)}">首页</a>
 
                     <a th:if="${vo.pageInfo.hasPreviousPage}==false" disabled="disabled">上一页</a>
                     <a th:if="${vo.pageInfo.hasPreviousPage}==true" th:href="@{/greenfarm/admin/management/farm(page=${vo.pageInfo.pageNum}-1)}">上一页</a>
 
-                    <!--<a th:if="${pg}!=${vo.pageInfo.pageNum}" th:each="pg:${vo.pageInfo.navigatepageNums}" th:href="@{/greenfarm/admin/management/business/review(page=${pg})}" th:text="${pg}"></a>-->
-                    <!--<a th:if="${pg}==${vo.pageInfo.pageNum}" th:each="pg:${vo.pageInfo.navigatepageNums}" th:text="${pg}" disabled="disabled"></a>-->
-
                     <a th:each="pg:${vo.pageInfo.navigatepageNums}" th:href="@{/greenfarm/admin/management/farm(page=${pg})}" th:text="${pg}"></a>
-
 
                     <a th:if="${vo.pageInfo.hasNextPage}==false" disabled="disabled">下一页</a>
                     <a th:if="${vo.pageInfo.hasNextPage}==true" th:href="@{/greenfarm/admin/management/farm(page=${vo.pageInfo.pageNum}+1)}">下一页</a>
@@ -101,6 +95,8 @@
     </div>
 </div>
 
-<script type="text/javascript" th:src="@{/gfstatic/js/management/admin/farm.js}"></script>
+
+<script type="text/javascript" th:src="@{/gfstatic/js/common/logout.js}"></script>
+<script type="text/javascript" th:src="@{/gfstatic/js/management/business/farm.js}"></script>
 </body>
 </html>

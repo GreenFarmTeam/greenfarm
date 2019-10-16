@@ -1,13 +1,12 @@
-<!-- TODO 用户/会员修改收货地址临时页面 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>用户/会员修改收货地址临时页面</title>
+    <title>上架商品</title>
     <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
-    <script type="text/javascript" th:src="@{/gfstatic/js/common/regex.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/map.js}"></script>
 
     <link th:href="@{/gfstatic/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
     <link th:href="@{/gfstatic/css/bootstrap-responsive.min.css}" rel="stylesheet" type="text/css" />
@@ -27,11 +26,11 @@
             <br>
             <ul class="breadcrumb">
                 <li>
-                    <a href="javascript:void(0);"><i class="fa fa-home"></i>地址管理</a>
+                    <a href="javascript:void(0);"><i class="fa fa-home"></i>商品管理</a>
                     <i class="fa fa-angle-right"></i>
                 </li>
                 <li>
-                    <a href="javascript:void(0);">修改地址</a>
+                    <a href="javascript:void(0);">申请上架</a>
                     <i class="fa fa-angle-right"></i>
                 </li>
             </ul>
@@ -41,52 +40,66 @@
                 <div class="portlet-title">
                     <div class="caption">
                         <i class="fa fa-reorder"></i>
-                        修改地址
+                        添加地址
                     </div>
                 </div>
                 <div class="portlet-body">
                     <form class="form-horizontal">
                         <div class="control-group">
-                            <label class="control-label">收货人姓名：</label>
+                            <label class="control-label">名称：</label>
                             <div class="controls">
-                                <input id="gf_name" type="text" class="m-wrap media" th:value="${address.addressName}"/>
+                                <input id="gf_name" type="text" class="m-wrap media"/>
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label">省：</label>
+                            <label class="control-label">单价：</label>
                             <div class="controls">
-                                <select id="gf_province">
-                                    <option value="default" selected="selected">请选择</option>
-                                    <option th:if="${provinceList.size()}!=0" th:each="pv:${provinceList}" th:value="${pv.provinceId}" th:text="${pv.provinceName}"></option>
-                                </select>
+                                <input id="gf_price" type="text" class="m-wrap media"/>
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label">市：</label>
+                            <label class="control-label">单价单位：</label>
                             <div class="controls">
-                                <select id="gf_city" disabled="disabled">
+                                <input id="gf_unit" type="text" class="m-wrap media"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">商品描述：</label>
+                            <div class="controls">
+                                <input id="gf_desc" type="text" class="m-wrap media"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">商品分类：</label>
+                            <div class="controls">
+                                <select id="gf_type">
                                     <option value="default">请选择</option>
+                                    <option th:if="${typeList.size()}!=0" th:each="tp:${typeList}" th:value="${tp.productType.typeUid}" th:text="${tp.productType.typeName}"></option>
                                 </select>
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label">区/县：</label>
+                            <label class="control-label">商品主图片：</label>
                             <div class="controls">
-                                <select id="gf_district" disabled="disabled">
-                                    <option value="default">请选择</option>
-                                </select>
+                                <input id="gf_main_img" type="file" accept="image/jpeg,image/png,image/gif"/>
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label">详细地址：</label>
-                            <div class="controls layui-input-block">
-                                <input id="gf_desc" type="text" class="m-wrap media"  th:value="${address.addressDetail}"/>
+                            <label class="control-label">商品其他图片：</label>
+                            <div class="controls">
+                                <input id="gf_other_img" type="file" multiple="multiple" accept="image/jpeg,image/png,image/gif"/>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label"><input type="checkbox" id="gf_agree" class="m-wrap media"/></label>
+                            <div class="controls">
+                                承诺商品信息的正确性
                             </div>
                         </div>
 
                         <div class="control-group">
                             <div class="controls">
-                                <input type="button" id="gf_sure" value="确定" class="layui-btn layui-btn-normal layui-btn-ms" />
+                                <input type="button" id="gf_sure" value="确定" class="layui-btn layui-btn-normal layui-btn-ms" disabled="disabled"/>
                             </div>
                         </div>
                     </form>
@@ -94,7 +107,6 @@
             </div>
         </div>
     </div>
-    <input type="hidden" id="gf_address_uid" th:value="${address.addressUid}"/>
-    <script type="text/javascript" th:src="@{/gfstatic/js/management/user/address.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/management/business/product.js}"></script>
 </body>
 </html>

@@ -238,3 +238,34 @@ $("button[name='gf_detail']").on('click',function () {
         }
     })
 });
+
+$("a[name='gf_location']").on('click', function () {
+    var lngNow = "115.83083";
+    var latNow = "28.65158";
+    var lng = $(this).attr("data-lng");
+    var lat = $(this).attr("data-lat");
+    var content = "<!DOCTYPE html>" +
+        "<html>" +
+        "<head>" +
+        "<meta charset='UTF-8'>" +
+        "</head>" +
+        "<body>" +
+        "<div id='container' style='width: 600px; height: 450px'></div>" +
+        "<div id='panel'></div>" +
+        "<script type='text/javascript'>" +
+        "var map = new AMap.Map('container', {" +
+        "zoom : 14," +
+        "resizeEnable : false});" +
+        // "markPoint(map, " + lng + ", " + lat + ");" +
+        "printRoute(map, " + lngNow + ", " + latNow + ", " + lng + ", " + lat + ");" +
+        "</script>" +
+        "</body>" +
+        "</html>";
+    layer.open({
+        type: 1,
+        skin: 'layui-layer-rim',
+        area: ['600px', '450px'],
+        shadeClose: false,
+        content: content
+    });
+});

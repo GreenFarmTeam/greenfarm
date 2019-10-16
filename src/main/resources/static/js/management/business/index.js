@@ -30,6 +30,7 @@ function changePage(page) {
         $("#business").addClass("active").find("a").eq(0).append($('<span class="selected"></span>'));
         $("#business-all").addClass("active");
         $("#mainFrame").attr("src", "/business/management/info");
+
     } else if (page === 'gf_product_up') {
         $("#product").addClass("active").find("a").eq(0).append($('<span class="selected"></span>'));
         $("#gf_product_up").addClass("active");
@@ -46,6 +47,7 @@ function changePage(page) {
         $("#product").addClass("active").find("a").eq(0).append($('<span class="selected"></span>'));
         $("#gf_product_review").addClass("active");
         $("#mainFrame").attr("src", "/business/management/product/review");
+
     } else if (page === 'gf_farm_up') {
         $("#farm").addClass("active").find("a").eq(0).append($('<span class="selected"></span>'));
         $("#gf_farm_up").addClass("active");
@@ -68,4 +70,4 @@ function changePage(page) {
 
 }
 
-changePage("welcome");
+changePage("business-all");

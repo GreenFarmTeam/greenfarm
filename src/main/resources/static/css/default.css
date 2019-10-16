@@ -58,14 +58,13 @@ ul.page-sidebar-menu > li.active > a i {
 ul.page-sidebar-menu > li > ul.sub-menu > li:first-child > a {
   border-top: 0px !important;
 }
-ul.page-sidebar-menu > li > ul.sub-menu > li > a:hover {
+ul.page-sidebar-menu > li > ul.sub-menu > li > a:hover,
+ul.page-sidebar-menu > li > ul.sub-menu > li.active > a {
   color: #000000 !important;
   background: #C3C3C3;
 }
-ul.page-sidebar-menu > li > ul.sub-menu > li > a:hover {
-  background: #C3C3C3;
-}
 /* 3rd level sub menu */
+ul.page-sidebar-menu > li > ul.sub-menu li > ul.sub-menu > li.active > a,
 ul.page-sidebar-menu > li > ul.sub-menu li > ul.sub-menu > li > a:hover,
 ul.page-sidebar-menu > li > ul.sub-menu li.open > a {
   color: #373737 !important;

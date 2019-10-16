@@ -71,3 +71,50 @@ function markPoint(map, lng, lat) {
     });
     map.add(marker);
 }
+
+function initMap2(idContainer) {
+
+    var map = new AMap.Map(idContainer, {
+        resizeEnable : false,
+        zoom : 14
+    });
+
+    map.plugin('AMap.Geolocation', function () {
+        var geolocation = new AMap.Geolocation({
+            enableHighAccuracy : true,
+            timeout : 10000,
+            buttonOffset : new AMap.Pixel(10, 20),
+            zoomToAccuracy : true,
+            buttonPosition : 'RB'
+        });
+        geolocation.getCurrentPosition();
+        AMap.event.addListener(geolocation, 'complete', onComplete);
+        AMap.event.addListener(geolocation, 'error', onError);
+
+        function onComplete (data) {
+        }
+
+        function onError(data) {
+            // null operation
+        }
+    });
+
+    return map;
+
+}
+
+function printRoute(map, startLng, startLat, endLng, endLat) {
+    console.log(startLng);
+    console.log(startLat);
+    console.log(endLng);
+    console.log(endLat);
+    var driving = new AMap.Driving({
+        map: map
+    });
+    driving.search(new AMap.LngLat(startLng, startLat), new AMap.LngLat(endLng, endLat), function(status, result) {
+        if (status === "complete") {
+            console.log("OK");
+        }
+    });
+
+}
