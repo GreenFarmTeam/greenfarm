@@ -1,6 +1,9 @@
 package com.nchu.ruanko.greenfarm.service.impl;
 
+import com.nchu.ruanko.greenfarm.dao.FarmTypeDAO;
 import com.nchu.ruanko.greenfarm.dao.ProductTypeDAO;
+import com.nchu.ruanko.greenfarm.pojo.entity.Farm;
+import com.nchu.ruanko.greenfarm.pojo.entity.FarmType;
 import com.nchu.ruanko.greenfarm.pojo.entity.ProductType;
 import com.nchu.ruanko.greenfarm.service.ProductTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +15,7 @@ public class ProductTypeServiceImpl implements ProductTypeService {
 
     @Autowired
     private ProductTypeDAO productTypeDAO;
+
 
     @Override
     public List<ProductType> listAllProductTypes() {
@@ -26,5 +30,6 @@ public class ProductTypeServiceImpl implements ProductTypeService {
     public ProductType loadProuctTypeById(String productId) {
         return productTypeDAO.getProductTypeByUID(productId);
     }
+
 
 }

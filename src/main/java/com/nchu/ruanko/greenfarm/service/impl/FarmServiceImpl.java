@@ -17,12 +17,16 @@ import java.util.List;
 
 @Service
 public class FarmServiceImpl implements FarmService {
+    /**农场的四个状态**/
     private static final int UP_state = 11;
     private static final int UNCHECKED_state = 00;
     private static final int ADMIN_DOWN_state = 10;
     private static final int BUSINESS_DOWN_state = 01;
     private static final int FAIL_CHECK_state = 3;
-
+    /**预定农场记录定单的状态**/
+    private static final int UN_Pay_State = 0;
+    private static final int WAIT_State = 1;
+    private static final int FINISHED_State = 2;
 
     @Autowired
     private BusinessScopeDAO businessScopeDAO;
@@ -38,6 +42,9 @@ public class FarmServiceImpl implements FarmService {
 
     @Autowired
     private FarmReviewDAO farmReviewDAO;
+
+    @Autowired
+    private OrderFarmDAO orderFarmDAO;
 
 
     @Override
@@ -194,6 +201,7 @@ public class FarmServiceImpl implements FarmService {
         return vo;
     }
 
+
     /**
      * 加载农场详情
      * @param farmUid
@@ -280,8 +288,74 @@ public class FarmServiceImpl implements FarmService {
         farmReviewDAO.updateFarmReviewResultAndFarmReviewReasonByFarmReviewUID(0, reason, farmReviewUid);
         farmDAO.updateFarmState(FAIL_CHECK_state,farmUid);
     }
+    /**
+     * 根据农场类别加载农场
+     * @param classificationId
+     * @param pageNum
+     * @param pageSize
+     * @param pageNavigationSize
+     * @return
+     */
+    @Override
+    public MemberFarmPageVo loadAllFarmsByClassificationID(String classificationId, int pageNum, int pageSize, int pageNavigationSize) {
+        MemberFarmPageVo memberFarmPageVo = new MemberFarmPageVo();
+        List<MemberFarmVo> memberFarmVoList = new ArrayList<>();
+        List<Farm> farmList = farmDAO.selectAllFarmsByClassificationId(classificationId);
 
+        PageHelper.startPage(pageNum, pageSize);
+        PageInfo<Farm> pageInfo = new PageInfo<>(farmList, pageNavigationSize);
+        for(Farm farm : farmList){
+            MemberFarmVo memberFarmVo = new MemberFarmVo();
+            System.out.println(farm.getFarmUid());
+            memberFarmVo.setReview(farmReviewDAO.getFarmReviewByFarmUID(farm.getFarmUid()));
+            memberFarmVo.setFarm(farm);
 
+            memberFarmVo.setOtherImages(farmImageDAO.listFarmOtherImagesByFarmUID(farm.getFarmUid()));
+            FarmImage mainfarmImage = farmImageDAO.getFarmMainImageByFarmUID(farm.getFarmUid());
+            if(mainfarmImage==null){
+                memberFarmVo.setMainImage(new FarmImage());
+            }else
+                memberFarmVo.setMainImage(mainfarmImage);
+
+            memberFarmVoList.add(memberFarmVo);
+        }
+        memberFarmPageVo.setPageInfo(pageInfo);
+        memberFarmPageVo.setMemberFarmVOList(memberFarmVoList);
+        return memberFarmPageVo;
+    }
+
+    @Override
+    public MemberFarmVo loadFarmByfarmID(String farmID) {
+        MemberFarmVo vo = new MemberFarmVo();
+        vo.setFarm(farmDAO.getFarmByFarmUID(farmID));
+        FarmImage mainFarmImage = farmImageDAO.getFarmMainImageByFarmUID(farmID);
+        if(mainFarmImage==null){
+            vo.setMainImage(new FarmImage());
+        }else
+            vo.setMainImage(mainFarmImage);
+        vo.setOtherImages(farmImageDAO.listFarmOtherImagesByFarmUID(farmID));
+        vo.setReview(farmReviewDAO.getFarmReviewByFarmUID(farmID));
+        return vo;
+
+    }
+
+    /**
+     * 提交预约农场的信息
+     * @param userUid
+     * @param name
+     * @param phone
+     * @param orderDate
+     * @param requireInfo
+     * @return
+     */
+    @Override
+    public boolean submitOrderFarm(String userUid,String farmId, String name, String phone, String orderDate, String requireInfo) {
+        if(orderFarmDAO.insertOrderFarmInfo(StringUtils.createUUID(),userUid,farmId,name,phone,orderDate,requireInfo,UN_Pay_State)>=1){
+            return true;
+        }else
+
+            return false;
+    }
 
 
 }

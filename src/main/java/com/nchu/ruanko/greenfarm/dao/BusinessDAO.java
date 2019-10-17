@@ -117,4 +117,13 @@ public interface BusinessDAO {
             " SET bus_shop_name=#{businessShopName},bus_shop_desc=#{businessShopDescription}" +
             " WHERE bus_uid=#{uid}")
     void adminUpdateBusinessByBusinessUID(@Param("uid") String businessUID,@Param("businessShopName")String shopName, @Param("businessShopDescription")String businessDescription);
+
+    @ResultMap(value = "businessMapper1")
+    @Select("select * from " +
+            "gf_tb_business " +
+            "where bus_uid in( " +
+            "select farm_business_uid from " +
+            "gf_tb_farm " +
+            "where farm_uid = #{farmId})")
+    Business getBusinessByFarmUID(@Param("farmId") String farmId);
 }

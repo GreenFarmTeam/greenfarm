@@ -1,12 +1,14 @@
 package com.nchu.ruanko.greenfarm.pojo.entity;
 
+import com.nchu.ruanko.greenfarm.constant.FileConstant;
+
 /**
  * 对应数据库的表：gf_tb_farm_image
  */
 public class FarmImage {
 
     private String farmImageUid;
-    private String farmImagePath;
+    private String farmImagePath= FileConstant.DEFAULT_MAIN_IMAGE_PATH;
     private Integer farmImageIsMainImage;
     private Farm farm;
 

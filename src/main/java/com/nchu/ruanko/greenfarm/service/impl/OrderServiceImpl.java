@@ -5,19 +5,20 @@ import com.alipay.api.AlipayClient;
 import com.alipay.api.DefaultAlipayClient;
 import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.alipay.api.response.AlipayTradePagePayResponse;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.nchu.ruanko.greenfarm.config.AlipayConfig;
-import com.nchu.ruanko.greenfarm.dao.OrderDAO;
-import com.nchu.ruanko.greenfarm.dao.OrderItemDAO;
-import com.nchu.ruanko.greenfarm.dao.ProductDAO;
-import com.nchu.ruanko.greenfarm.pojo.entity.Order;
-import com.nchu.ruanko.greenfarm.pojo.entity.OrderItem;
-import com.nchu.ruanko.greenfarm.pojo.entity.Product;
+import com.nchu.ruanko.greenfarm.dao.*;
+import com.nchu.ruanko.greenfarm.pojo.entity.*;
+import com.nchu.ruanko.greenfarm.pojo.vo.BusinessOrderPageVo;
+import com.nchu.ruanko.greenfarm.pojo.vo.BusinessOrderVo;
 import com.nchu.ruanko.greenfarm.service.OrderService;
 import com.nchu.ruanko.greenfarm.util.string.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -31,6 +32,10 @@ public class OrderServiceImpl implements OrderService {
     private OrderItemDAO orderItemDAO;
     @Autowired
     private ProductDAO productDAO;
+    @Autowired
+    private OrderFarmDAO orderFarmDAO;
+    @Autowired
+    private FarmDAO farmDAO;
     private static final int cartState = 0;
     private static final int unPayState = 1;
     private static final int delivery_waitProductState = 2;
@@ -189,5 +194,143 @@ public class OrderServiceImpl implements OrderService {
         } else {
             return null;
         }
+    }
+
+    /**
+     * 用户直接购买商品，更新订单表除了支付时间已外的其他字段
+     * 更新订单明细表：更新订单明细表全部,更新产品库存
+     * @param userUid
+     * @param name
+     * @param phone
+     * @param addr
+     * @param detailAddr
+     * @param totalPrice
+     * @return
+     */
+    @Override
+    public String userPurchaseProduct(String userUid,String prdtId, String name, String phone, String addr, String detailAddr, String totalPrice,String prdNum) {
+         String orderId = StringUtils.createUUID();
+        System.out.println("userUid:"+userUid);
+        System.out.println("prdtId:"+prdtId);
+        System.out.println("name:"+name);
+        System.out.println("phone:"+phone);
+        System.out.println("addr:"+addr);
+        System.out.println("detailAddr:"+detailAddr);
+        System.out.println("totalPrice:"+totalPrice);
+        System.out.println("prdNum:"+prdNum);
+         if(orderDAO.createOrder(orderId,new Date(System.currentTimeMillis()),name,phone,addr,totalPrice,unPayState,userUid)>=1){
+            Product product = productDAO.getProductByProductUID(prdtId);
+            if(orderItemDAO.createOrderItems(StringUtils.createUUID(),orderId,prdtId,product.getProductPrice(),totalPrice,Integer.parseInt(prdNum))>=1){
+
+                /**更新库存**/
+                Integer newStock = product.getProductStock()-Integer.parseInt(prdNum);
+                if(newStock<0){
+                    return product.getProductName()+"已剩:"+product.getProductStock()+";库存不足！";
+                }else{
+                    productDAO.updateProductStockByProductUID(newStock >= 0 ? newStock : 0, product.getProductUid());
+                }
+            }
+        }else{
+            return "数据库更新失败";
+        }
+
+        return null;
+    }
+
+    /**
+     * 会员确认收货
+     * @param orderId
+     * @return
+     */
+    @Override
+    public boolean confirmReceiveProducts(String orderId,String userId) {
+        orderDAO.updateOrderStateByUserIdAndOrderId(orderId,userId,ReceiveState);
+        return true;
+    }
+    /**
+     *商家安排发货
+     */
+    @Override
+    public boolean arrangeSendProducts(String orderId,String userId) {
+        orderDAO.updateOrderStateByUserIdAndOrderId(orderId,userId,waitReceiveState);
+        return true;
+    }
+
+    @Override
+    public AlipayTradePagePayResponse payFarmOrderByUserIdAndOrderId(String userUid, String orderFarmId) {
+        OrderFarm orderFarm = orderFarmDAO.selectOneOrderFarmInfoById(orderFarmId);
+
+        /* 请求支付 */
+        // 初始化 AlipayClient
+        AlipayClient alipayClient = new DefaultAlipayClient(AlipayConfig.gatewayUrl, AlipayConfig.app_id, AlipayConfig.merchant_private_key, "json", AlipayConfig.charset, AlipayConfig.alipay_public_key, AlipayConfig.sign_type);
+        AlipayTradePagePayRequest payRequest = new AlipayTradePagePayRequest();
+        payRequest.setReturnUrl(AlipayConfig.return_url);
+        payRequest.setNotifyUrl(AlipayConfig.notify_url);
+
+        // 订单金额
+        /*String totalAmount = String.valueOf(order.getOrderSum());*/
+        // 订单名称
+        String subject = "农场预约清单";
+
+        /* String orderSn = UUID.randomUUID().toString().replaceAll("-", "");*/
+        // 订单描述，可空
+        String body = ""+orderFarm.getOrderFarmFarm().getFarmName()+" 预约查看，费用：￥"+orderFarm.getOrderFarmFarm().getFarmPrice();
+
+        DecimalFormat decimalFormat=new DecimalFormat(".00");
+        String orderTotalPrice = decimalFormat.format(orderFarm.getOrderFarmFarm().getFarmPrice());
+        payRequest.setBizContent("{\"out_trade_no\":\"" + orderFarm.getOrderFarmUid() + "\","
+                + "\"total_amount\":\"" +orderTotalPrice + "\"," + "\"subject\":\"" + subject + "\","
+                + "\"body\":\"" + body + "\","
+                + "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");
+
+     /*   payRequest.setBizContent("{\"out_trade_no\":\"" + order.getOrderUid().replaceAll("-", "") + "\","
+                + "\"total_amount\":\"" + totalAmount + "\"," + "\"subject\":\"" + subject + "\","
+                + "\"body\":\"" + body + "\","
+                + "\"product_code\":\"FAST_INSTANT_TRADE_PAY\"}");*/
+        /* 响应 */
+        AlipayTradePagePayResponse payResponse = null;
+
+        try {
+            payResponse = alipayClient.pageExecute(payRequest);
+        } catch (AlipayApiException e) {
+            e.printStackTrace();
+        }
+        if (payResponse != null) {
+            orderFarmDAO.updateOrderFarmStateByOrderFarmId(orderFarmId,1);/**1代表已支付状态**/
+            return payResponse;
+
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public boolean confirmOrderFarms(String orderFarmId) {
+        orderFarmDAO.updateOrderFarmStateByOrderFarmId(orderFarmId,2);
+        return true;
+    }
+
+
+    /**
+     * 加载商家所有的订单。即加载每个包含该商家的产品的用户订单。并且只加载属于该商家的订单子项
+     * @param userUid
+     * @return
+     */
+    @Override
+    public BusinessOrderPageVo loadAllOrdersOfBusiness(String userUid, int pageNum, int pageSize, int pageNavigationSize) {
+
+        List<Order> orderList = orderDAO.listAllBusinessOrdersByUserid(userUid);
+        BusinessOrderPageVo businessOrderPageVo = new BusinessOrderPageVo();
+        PageHelper.startPage(pageNum, pageSize);
+        PageInfo<Order> pageInfo = new PageInfo<>(orderList, pageNavigationSize);
+        List<BusinessOrderVo> businessOrderVoList = new ArrayList<>();
+        for(Order order : orderList){
+            BusinessOrderVo businessOrderVo = new BusinessOrderVo();
+            businessOrderVo.setOrder(order);
+            businessOrderVoList.add(businessOrderVo);
+        }
+        businessOrderPageVo.setBusinessOrderVoList(businessOrderVoList);
+        businessOrderPageVo.setPageInfo(pageInfo);
+        return businessOrderPageVo;
     }
 }

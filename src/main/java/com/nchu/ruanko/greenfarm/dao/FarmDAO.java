@@ -2,6 +2,7 @@ package com.nchu.ruanko.greenfarm.dao;
 
 import com.nchu.ruanko.greenfarm.pojo.entity.Farm;
 import org.apache.ibatis.annotations.*;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.Date;
 import java.util.List;
@@ -141,4 +142,18 @@ public interface FarmDAO {
             "where gf_tb_farm.farm_state=1 and gf_tb_business.bus_uid=gf_tb_farm.farm_business_uid and gf_tb_business.bus_uid=#{uid} "
     )
     List<Farm> listAllBusinessDownFarmByBusinessUid(@Param("uid")String businessUid);
+
+    @ResultMap(value = "farmMapper1")
+    @Select(" select * from gf_tb_farm " +
+            " where farm_type_uid=#{classificationId}")
+    List<Farm> selectAllFarmsByClassificationId(@Param("classificationId") String classificationId);
+
+    @ResultMap(value="farmMapper1")
+    @Select("select * from gf_tb_farm " +
+            "where farm_uid in( " +
+            " select order_farm_farm " +
+            " from gf_tb_order_farm " +
+            " where order_farm_uid = #{orderFarmUid} " +
+            ")")
+    Farm getFarmByOrderFarmUid(@Param("orderFarmUid") String orderFarmUid);
 }

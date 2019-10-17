@@ -3,10 +3,7 @@ package com.nchu.ruanko.greenfarm.service;
 import com.nchu.ruanko.greenfarm.pojo.entity.Farm;
 import com.nchu.ruanko.greenfarm.pojo.entity.FarmImage;
 import com.nchu.ruanko.greenfarm.pojo.entity.FarmType;
-import com.nchu.ruanko.greenfarm.pojo.vo.AdminFarmPageVO;
-import com.nchu.ruanko.greenfarm.pojo.vo.AdminFarmVO;
-import com.nchu.ruanko.greenfarm.pojo.vo.BusinessFarmPageVO;
-import com.nchu.ruanko.greenfarm.pojo.vo.BusinessFarmReviewPageVO;
+import com.nchu.ruanko.greenfarm.pojo.vo.*;
 
 import java.util.List;
 
@@ -37,4 +34,11 @@ public interface FarmService {
     void adminDisagreeFarmReview(String reason, String farmReviewUid);
 
     BusinessFarmPageVO businessListFarm(String businessUid, int pageNum, int pageSize, int pageNavigationSize, int i);
+
+
+    MemberFarmPageVo loadAllFarmsByClassificationID(String classificationId, int pageNum, int pageSize, int pageNavigationSize);
+
+    MemberFarmVo loadFarmByfarmID(String farmID);
+
+    boolean submitOrderFarm(String userUid,String farmId, String name, String phone, String orderDate, String requireInfo);
 }

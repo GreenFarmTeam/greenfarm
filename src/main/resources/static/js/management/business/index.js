@@ -62,9 +62,16 @@ function changePage(page) {
         $("#farm").addClass("active").find("a").eq(0).append($('<span class="selected"></span>'));
         $("#gf_farm_review").addClass("active");
         $("#mainFrame").attr("src", "/business/management/farm/review");
-    }else {
-
+    }else if (page === 'order_product') {
+        $("#order").addClass("active").find("a").eq(0).append($('<span class="selected"></span>'));
+        $("#order_product").addClass("active");
+        $("#mainFrame").attr("src", "/business/management/order/loadAll");
+    }else if (page === 'order_farm') {
+        $("#order").addClass("active").find("a").eq(0).append($('<span class="selected"></span>'));
+        $("#order_farm").addClass("active");
+        $("#mainFrame").attr("src", "/business/management/farm/order/loadAll");
     }
+
 
 }
 

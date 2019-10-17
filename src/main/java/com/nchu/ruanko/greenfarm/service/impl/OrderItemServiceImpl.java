@@ -1,5 +1,6 @@
 package com.nchu.ruanko.greenfarm.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.nchu.ruanko.greenfarm.dao.OrderItemDAO;
 import com.nchu.ruanko.greenfarm.dao.ProductDAO;
 import com.nchu.ruanko.greenfarm.dao.ProductImageDAO;
@@ -81,6 +82,7 @@ public class OrderItemServiceImpl implements OrderItemService {
     public List<OrderItemVo> loadOrderItemsByOrderId(String orderId) {
         List<OrderItemVo> orderItemVoList = new ArrayList<>();
         List<OrderItem> orderItemList = orderItemDAO.loadOrderItemsByOrderId(orderId);
+
         for(OrderItem orderItem : orderItemList){
             OrderItemVo orderItemVo =new OrderItemVo();
             ProductImage mainProductImage = productImageDAO.getProductMainImageByProductUID(orderItem.getProduct().getProductUid());

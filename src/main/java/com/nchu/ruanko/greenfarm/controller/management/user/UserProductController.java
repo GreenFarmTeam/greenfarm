@@ -7,6 +7,7 @@ import com.nchu.ruanko.greenfarm.pojo.entity.Business;
 import com.nchu.ruanko.greenfarm.pojo.entity.Product;
 import com.nchu.ruanko.greenfarm.pojo.entity.User;
 import com.nchu.ruanko.greenfarm.service.AddressService;
+import com.nchu.ruanko.greenfarm.service.OrderService;
 import com.nchu.ruanko.greenfarm.service.ProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,6 +28,8 @@ public class UserProductController {
     private ProductService productService;
     @Autowired
     private AddressService addressService;
+    @Autowired
+    private OrderService orderService;
     private static final int PAGE_NAVIGATION_SIZE = 10;
     /**
      * 会员加载热门的产品
@@ -98,6 +101,23 @@ public class UserProductController {
         jsonObject.put("addressList",addressList);
         return jsonObject.toString();
 
+    }
+    @ApiOperation(value = "userSubmitOrder", notes = "会员立即购买产品功能")
+    @PostMapping(value="/member/management/product/purchase/operation")
+    @ResponseBody
+    public String userSubmitOrder(@RequestParam("prtUid")String prtUid,@RequestParam("prtNumber")String prtNumber,@RequestParam("name")String name, @RequestParam("phone")String phone, @RequestParam("addr")String addr, @RequestParam("detailAddr")String detailAddr,@RequestParam("totalPrice")String totalPrice, HttpServletRequest request){
+        JSONObject jsonObject = new JSONObject();
+        HttpSession  session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        String result = orderService.userPurchaseProduct(user.getUserUid(),prtUid,name,phone,addr,detailAddr,totalPrice,prtNumber);
+        if(result==null){
+            jsonObject.put("flag",1);
+
+        }else{
+            jsonObject.put("flag",0);
+            jsonObject.put("result",result);
+        }
+        return jsonObject.toString();
     }
 
 

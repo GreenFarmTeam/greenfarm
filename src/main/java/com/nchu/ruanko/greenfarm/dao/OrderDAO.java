@@ -72,4 +72,22 @@ public interface OrderDAO {
             "set ord_ptime = #{date} " +
             "where ord_uid=#{orderId} and ord_user_uid=#{userUid}")
     void updateOrderPayTimeByUserIdAndOrderId(@Param("orderId") String orderId,@Param("userUid") String userUid,@Param("date") Date date);
+
+
+    @Insert(" insert into gf_tb_order(ord_uid,ord_ctime,ord_rname,ord_raddr,ord_phone,ord_state,ord_sum,ord_user_uid)" +
+            " values(#{orderId},#{ord_ctime},#{ord_rname},#{ord_raddr},#{ord_phone},#{ord_state},#{ord_sum},#{ord_user_uid})")
+    int createOrder(@Param("orderId")String uuid,@Param("ord_ctime") Date date,@Param("ord_rname") String name,@Param("ord_phone") String phone,@Param("ord_raddr") String addr,@Param("ord_sum") String totalPrice, @Param("ord_state")int unPayState,@Param("ord_user_uid") String userUid);
+
+    @ResultMap(value = "orderMapper1")
+    @Select("select * from gf_tb_order " +
+            "where ord_uid in(" +
+            " select item_order_uid " +
+            " from   gf_tb_order_item " +
+            " where item_product_uid in( " +
+            " select prdt_uid " +
+            " from gf_tb_product,gf_tb_business " +
+            " where prdt_business_uid = bus_uid and bus_user_uid = #{userUid}" +
+            ")" +
+            ")")
+    List<Order> listAllBusinessOrdersByUserid(@Param("userUid") String userUid);
 }

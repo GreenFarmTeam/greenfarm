@@ -18,6 +18,11 @@ public interface OrderItemDAO {
     @Select("select * from gf_tb_order_item")
     List<OrderItem> listAllOrderItems();
 
+    @ResultMap(value="orderItemMapper1")
+    @Select("select * from gf_tb_order_item " +
+            "where item_uid= #{OrderItemId}")
+    OrderItem getOrderItemById(@Param("orderItemId")String OrderItemId);
+
     @Insert("insert into gf_tb_order_item" +
             " values(#{uuid},#{productPrice},1,#{sumPrice},#{orderUID},#{productUid})")
     void insertCartOrderItem(@Param("uuid") String uuid,@Param("productPrice") Float productPrice,@Param("sumPrice") Float sumPrice,@Param("orderUID") String orderUID,@Param("productUid") String productUid);
@@ -70,4 +75,7 @@ public interface OrderItemDAO {
             "gf_tb_order_item " +
             "where item_order_uid=#{orderId}")
     List<OrderItem> loadOrderItemsByOrderId(@Param("orderId") String orderId);
+
+    @Insert("insert into gf_tb_order_item values(#{orderItemId},#{prdPrice},#{prdNum},#{totalPrice},#{orderId},#{prdtId})")
+    int createOrderItems(@Param("orderItemId")String orderItemUid,@Param("orderId") String orderId,@Param("prdtId") String prdtId,@Param("prdPrice") Float prdPrice,@Param("totalPrice") String totalPrice,@Param("prdNum") int parseInt);
 }

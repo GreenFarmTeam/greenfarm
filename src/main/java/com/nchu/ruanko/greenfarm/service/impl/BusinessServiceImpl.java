@@ -169,6 +169,16 @@ public class BusinessServiceImpl implements BusinessService {
 
     }
 
+    /**
+     * 加载商家的详细信息
+     * @param farmId
+     * @return
+     */
+    @Override
+    public Business getBusinessDetailByFarmUID(String farmId) {
+        return businessDAO.getBusinessByFarmUID(farmId);
+    }
+
     @Override
     public AdminBusinessLegalPageVO listAllLegalBusinessWithPage(int pageNum, int pageSize, int pageNavigationSize) {
         AdminBusinessLegalPageVO vo = new AdminBusinessLegalPageVO();

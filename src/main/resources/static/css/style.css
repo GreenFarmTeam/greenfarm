@@ -539,7 +539,6 @@ ul.page-sidebar-menu > li.active > a .selected {
   display: block;
   width: 8px;
   height: 25px;
-  background-image: url("../image/sidebar-menu-arrow.png");
   float: right;
   position: absolute;
   right:0px;
@@ -1308,12 +1307,12 @@ Portlets
 }
 
 .portlet-title .tools > a.expand {
-  background-image:url(../image/portlet-expand-icon.png);
+
   width: 14px;
 }
 
 .portlet-title .tools > a.collapse {
-  background-image:url(../image/portlet-collapse-icon.png);
+
   width: 14px;
 }
 
@@ -1504,27 +1503,27 @@ Box portlet
 
 .portlet.box .portlet-title .tools > a.remove, 
 .portlet.solid .portlet-title .tools > a.remove {
-  background-image:url(../image/portlet-remove-icon-white.png);
+
 }
 
 .portlet.box .portlet-title .tools > a.config,
 .portlet.solid .portlet-title .tools > a.config {
-  background-image:url(../image/portlet-config-icon-white.png);
+
 }
 
 .portlet.box .portlet-title .tools > a.reload,
 .portlet.solid .portlet-title .tools > a.reload {
-  background-image:url(../image/portlet-reload-icon-white.png);
+
 }
 
 .portlet.box .portlet-title .tools > a.expand,
 .portlet.solid .portlet-title .tools > a.expand {
-  background-image:url(../image/portlet-expand-icon-white.png);
+
 }
 
 .portlet.box .portlet-title .tools > a.collapse,
 .portlet.solid .portlet-title .tools > a.collapse {
-  background-image:url(../image/portlet-collapse-icon-white.png);
+
 }
 
 /* portlet buttons */
