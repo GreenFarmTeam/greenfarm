@@ -443,6 +443,40 @@
             });
         }
 
+        /**
+         * 农场评价
+         * @param btn
+         */
+        function farmReview(btn){
+            var id = btn.value;
+
+
+        }
+
+        /**
+         * 商品评价
+         * @param btn
+         */
+        function productReview(btn){
+            var id = btn.value;
+            layer.confirm('您确认已经看过农场了吗？', {
+                btn: ['确定','取消'] //按钮
+            }, function(){
+                $.ajax({
+                    type:"get",
+                    url:"/member/management/farm/order/confirm/" + id,
+                    dataType:"json",
+                    success : function (jsonData) {
+                        if(jsonData.flag==true){
+                            $(location).attr("href", getPathPrefix() + "member/management/order/index");
+                        }else{
+                            layer.msg("确认失败！")
+                        }
+                    }
+                })
+            });
+        }
+
         //            ]]>
     </script>
 </div>

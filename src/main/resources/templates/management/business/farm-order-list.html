@@ -13,6 +13,10 @@
     <link th:href="@{/gfstatic/css/default.css}" rel="stylesheet" type="text/css" id="style_color"/>
     <link th:href="@{/gfstatic/css/uniform.default.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/gfstatic/css/pagination.css}" rel="stylesheet" type="text/css"/>
+    <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
+    <script th:src="@{/gfstatic/layui/layui.js}"></script>
 
 </head>
 <body>
@@ -124,34 +128,32 @@
 
         var div = '#'+btn.id;
         var orderFarmUid = $(div).attr("value");
-
+        console.log(orderFarmUid)
         if(($(div).next().css("display")).trim()=="none") {
-            layer.alert("哈哈")
 
-
-            if ($(div).next().find("table").html()) {
-                return;
-            }
 
             if (!orderFarmUid) {
                 layer.alert("订单编号为空");
                 return;
             }
+
             $.ajax({
                 url: "/member/management/orderFarm/load/" + orderFarmUid,
                 type: "get",
                 dataType: "json",
                 success: function (jsonData) {
+
+                     console.log(jsonData)
                     if (jsonData.flag == 1) {
-                        for (var i = 0; i < jsonData.farm.length; i++) {
-                            var item = jsonData.farm[i];
-                            var tr = $("<tr></tr>");
-                            tr.append($("<td><img style='display: block;height: 50px;max-width: 100%;' src='" + item.mainImage.farmImagePath + "'/></td>"));
-                            tr.append($("<td ></td>").text(item.farm.farmName));
-                            tr.append($("<td></td>").text(item.farm.business.user.userNickname));
-                            tr.append($("<td></td>").text("￥" + item.business.user.userPhone));
-                            $(div).next().find("table").append(tr);
-                        }
+                        $(div).next().find("table").html("");
+
+                        var tr = $("<tr></tr>");
+                        tr.append($("<td><img style='display: block;height: 50px;max-width: 100%;' src='" +jsonData.farm.mainImage.farmImagePath + "'/></td>"));
+                        tr.append($("<td></td>").text("￥" + jsonData.farm.farm.farmPrice));
+                        tr.append($("<td ></td>").text(jsonData.farm.farm.farmName));
+                        tr.append($("<td></td>").text(jsonData.farm.farm.business.user.userNickname));
+                        tr.append($("<td></td>").text( jsonData.farm.farm.business.user.userPhone));
+                        $(div).next().find("table").append(tr);
                         $(div).next().css("display","block")
                     } else {
                         layer.msg("加载订单详情失败");
