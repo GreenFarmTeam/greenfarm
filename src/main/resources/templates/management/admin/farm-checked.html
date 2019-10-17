@@ -12,14 +12,14 @@
 <body>
     <table border="1">
         <tr>
-            <td>编号</td>
-            <td>农场名称</td>
-            <td>租赁价格</td>
-            <td>租赁价格单位</td>
-            <td>所属商家</td>
-            <td>土地类型</td>
-            <td>农场位置</td>
-            <td>操作</td>
+            <th>编号</th>
+            <th>农场名称</th>
+            <th>租赁价格</th>
+            <th>租赁价格单位</th>
+            <th>所属商家</th>
+            <th>土地类型</th>
+            <th>农场位置</th>
+            <th>操作</th>
         </tr>
         <tr th:if="${vo.getAdminFarmVOList().size()}==0">
             <td colspan="8">暂无已经审核的农场数据</td>
@@ -35,11 +35,6 @@
             <td th:if="${pd.getReview().getFarmReviewReviewTime()}!=null" th:text="${pd.getReview().getFarmReviewReviewTime()}"></td>
             <td th:if="${pd.getReview().getFarmReviewResult()}==0" th:text="审核未通过"></td>
             <td th:if="${pd.getReview().getFarmReviewResult()}==1" th:text="审核已通过"></td>
-            <!--<td th:if="${pd.mainImage}!=null">
-                <a th:href="@{${pd.mainImage.productImagePath}}" target="_blank">
-                    <img th:src="@{${pd.mainImage.productImagePath}}" width="100px" height="100px"/>
-                </a>
-            </td>-->
             <td style="text-align: center">
                 <button href="javascript:void(0);" name="gf_detail" th:value="${pd.getFarm().getFarmUid()}" class="layui-btn layui-btn-primary layui-btn-xs">详情</button>
             </td>
@@ -66,6 +61,5 @@
         <a th:if="${vo.pageInfo.isLastPage}==false" th:href="@{/greenfarm/admin/management/farm(page=${vo.pageInfo.pages})}">末页</a>
     </div>
     <script type="text/javascript" th:src="@{/gfstatic/js/management/admin/farm.js}"></script>
-    <script type="text/javascript" th:src="@{/gfstatic/js/management/business/farm-map.js}"></script>
 </body>
 </html>

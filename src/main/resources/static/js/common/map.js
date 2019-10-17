@@ -71,3 +71,78 @@ function markPoint(map, lng, lat) {
     });
     map.add(marker);
 }
+
+
+// function initMap2(idContainer) {
+//
+//     var map = new AMap.Map(idContainer, {
+//         resizeEnable : false,
+//         zoom : 14
+//     });
+//
+//     AMap.plugin('AMap.Geolocation', function() {
+//         var geolocation = new AMap.Geolocation({
+//             enableHighAccuracy: true,
+//             // 设置定位超时时间，默认：无穷大
+//             timeout: 10000,
+//             buttonPosition:'RB',
+//             buttonOffset: new AMap.Pixel(10, 20),
+//             zoomToAccuracy: true
+//         });
+//         geolocation.getCurrentPosition();
+//         AMap.event.addListener(geolocation, 'complete', onComplete);
+//         AMap.event.addListener(geolocation, 'error', onError);
+//
+//         function onComplete (data) {
+//             $("#now-lng").val(data.position.lng);
+//             $("#now-lat").val(data.position.lat);
+//         }
+//
+//         function onError(data) {
+//             // null operation
+//         }
+//     });
+//
+//     return map;
+//
+// }
+
+function initMap2(containerId) {
+
+    var map = new AMap.Map(containerId, {
+        resizeEnable : true,
+        zoom : 14
+    });
+
+    AMap.plugin('AMap.Geolocation', function() {
+        var geolocation = new AMap.Geolocation({
+            enableHighAccuracy: true,
+            timeout: 10000,
+            buttonPosition:'RB',
+            buttonOffset: new AMap.Pixel(10, 20),
+            zoomToAccuracy: true
+
+        });
+        map.addControl(geolocation);
+        geolocation.getCurrentPosition(function(status,result){
+            if(status === 'complete'){
+                onComplete(result);
+            }else{
+                onError(result);
+            }
+        });
+    });
+
+    //解析定位结果
+    function onComplete(data) {
+        $("#now-lng").val(data.position.lng);
+        $("#now-lat").val(data.position.lat);
+    }
+    //解析定位错误信息
+    function onError(data) {
+
+    }
+
+    return map;
+
+}

@@ -1,3 +1,9 @@
+$(function(){
+    $("#back").click(function(){
+        history.back();
+    });
+});
+
 $("#gf_sure").on('click', function () {
     var realname = $("#gf_realname").val();
     var idcard = $("#gf_idcard").val();

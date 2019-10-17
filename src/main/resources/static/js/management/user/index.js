@@ -2,6 +2,8 @@ jQuery(document).ready(function () {
     App.init();
 });
 
+
+
 function changePage(page) {
     $(".page-sidebar-menu li").removeClass("active");
 

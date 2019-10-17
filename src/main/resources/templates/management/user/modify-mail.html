@@ -8,22 +8,75 @@
     <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/regex.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
+
+    <link th:href="@{/gfstatic/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/bootstrap-responsive.min.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/style-metro.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/style.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/style-responsive.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/default.css}" rel="stylesheet" type="text/css" id="style_color" />
+    <link th:href="@{/gfstatic/css/uniform.default.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/pagination.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/templateone/res/layui/css/layui.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body>
-    <span th:if="${session.user.userMail}==null" style="color: #FF0000; font-weight: bold;">未绑定邮箱</span>
-    <table th:if="${session.user.userMail}!=null" border="1">
-        <tr>
-            <td>当前绑定邮箱</td>
-            <td style="color: #FF0000; font-weight: bold;" th:text="${mail}"></td>
-        </tr>
-    </table>
-    <hr/>
-    <form>
-        <label for="gf_mail">新绑定邮箱</label>
-        <input type="text" id="gf_mail"/>
-        <br/>
-        <input type="button" id="gf_sure" value="确定"/>
-    </form>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <br>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="javascript:void(0);"><i class="fa fa-home"></i>个人信息</a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+                <li>
+                    <a href="javascript:void(0);">邮箱绑定</a>
+                    <i class="fa fa-angle-right"></i>
+                </li>
+            </ul>
+        </div>
+        <div class="row-fluid">
+            <div class="portlet box blue">
+                <div class="portlet-title">
+                    <div class="caption">
+                        <i class="fa fa-reorder"></i>
+                        邮箱绑定
+                    </div>
+                    <span th:if="${session.user.userMail}!=null">你已完成绑定邮箱！</span>
+                </div>
+                <div class="portlet-body">
+                    <form class="form-horizontal" th:if="${session.user.userMail}==null">
+                        <div class="control-group">
+                            <label class="control-label">邮箱：</label>
+                            <div class="controls">
+                                <input id="gf_mail" type="text" class="m-wrap media"/>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <div class="controls">
+                                <input type="button" id="gf_sure" value="确定" class="layui-btn layui-btn-normal layui-btn-ms" />
+                            </div>
+                        </div>
+                    </form>
+                    <form class="form-horizontal" th:if="${session.user.userMail}!=null">
+                        <div class="control-group">
+                            <label class="control-label">当前绑定的邮箱：</label>
+                            <div class="controls">
+                                <span th:text="${mail}"></span>
+                            </div>
+                        </div>
+
+                        <div class="control-group">
+                            <div class="controls">
+                                <input type="button" id="back" value="返回" class="layui-btn layui-btn-normal layui-btn-ms" />
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <input type="hidden" id="gf_uid" th:value="${session.user.userUid}"/>
     <script type="text/javascript" th:src="@{/gfstatic/js/management/user/modify-mail.js}"></script>
 </body>

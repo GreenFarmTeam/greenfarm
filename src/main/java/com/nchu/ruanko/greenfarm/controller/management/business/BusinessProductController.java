@@ -54,7 +54,7 @@ public class BusinessProductController {
         ModelAndView modelAndView = new ModelAndView();
         HttpSession session = request.getSession();
         Business business = (Business) session.getAttribute("business");
-        modelAndView.setViewName("management/business/add-product");
+        modelAndView.setViewName("management/business/product-add");
         modelAndView.addObject("typeList", businessService.listBusinessScopesByBusinessUID(business.getBusinessUid()));
         return modelAndView;
     }

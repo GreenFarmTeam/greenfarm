@@ -47,4 +47,4 @@ function changePage(page) {
     
 }
 
-changePage("welcome");
+changePage("business-all");

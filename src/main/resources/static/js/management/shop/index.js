@@ -86,14 +86,13 @@ function appendToPage(div, data) {
 
     $(data).each(function (index, item) {
 
-        var productDiv = $("<div class='layui-col-md3 layui-col-xs6'></div>");
-        var conetDiv = $("<div class='card layui-anim layui-anim-scale'></div>");
-        productDiv.append(conetDiv);
-        var imgdiv = $("<div class='product_image'><img src='"+ item.mainImage.productImagePath +"'></div>");
-        conetDiv.append(imgdiv);
-        var priceDiv = $("<div style='text-align: left;'>商城价：<span class='price1'>" + item.product.productPrice + "元/"+item.product.productUnit+"</span></div>");
-        conetDiv.append(priceDiv);
-        conetDiv.append($("<div class='product_title'><a href='/member/shop/product/load/detail/operation?id="+item.product.productUid+"'>" + item.product.productName + "</a></div>"));
-        div.append(productDiv);
+        var productDiv1 = $("<div class='layui-col-md3 layui-col-xs6 product_container'></div>");
+        var conetDiv = $("<a href='/member/shop/product/load/detail/operation?id="+item.product.productUid+"' style='display: block; '></a>");
+        productDiv1.append(conetDiv);
+        conetDiv.append($("<div class='image'><img src='"+ item.mainImage.productImagePath +"'></div>"));
+        conetDiv.append($("<div class='title'>" + item.product.productName + "</div>"));
+        conetDiv.append($("<div class='price'>" + item.product.productPrice + "元/"+item.product.productUnit+"</div>"));
+        div.append(productDiv1);
+
     });
 }

@@ -72,7 +72,7 @@ ul.page-sidebar-menu > li.active > a .selected {
   top:0px;
   width: 7px;
   height: 39px;
-  background-image: url("../../img/sidebar-menu-arrow-green.png");
+  /*background-image: url("../../img/sidebar-menu-arrow-green.png");*/
 }  
 ul.page-sidebar-menu > li.active i {
   color: #fff !important;

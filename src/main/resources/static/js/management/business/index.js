@@ -5,19 +5,19 @@ jQuery(document).ready(function () {
 
 
 // 判断该商家是否有“农场租赁”这项业务
-window.onload = function () {
-    $.ajax({
-        type : "GET",
-        url : "/business/management/farm/can",
-        dataType : "json",
-        data : {
-            "uid" : $("#gf_business_uid").val()
-        },
-        success : function (jsonData) {
-            flag = jsonData.flag;
-        }
-    });
-};
+// window.onload = function () {
+//     $.ajax({
+//         type : "GET",
+//         url : "/business/management/farm/can",
+//         dataType : "json",
+//         data : {
+//             "uid" : $("#gf_business_uid").val()
+//         },
+//         success : function (jsonData) {
+//             flag = jsonData.flag;
+//         }
+//     });
+// };
 
 function changePage(page) {
     $(".page-sidebar-menu li").removeClass("active");
@@ -30,6 +30,7 @@ function changePage(page) {
         $("#business").addClass("active").find("a").eq(0).append($('<span class="selected"></span>'));
         $("#business-all").addClass("active");
         $("#mainFrame").attr("src", "/business/management/info");
+
     } else if (page === 'gf_product_up') {
         $("#product").addClass("active").find("a").eq(0).append($('<span class="selected"></span>'));
         $("#gf_product_up").addClass("active");
@@ -46,6 +47,7 @@ function changePage(page) {
         $("#product").addClass("active").find("a").eq(0).append($('<span class="selected"></span>'));
         $("#gf_product_review").addClass("active");
         $("#mainFrame").attr("src", "/business/management/product/review");
+
     } else if (page === 'gf_farm_up') {
         $("#farm").addClass("active").find("a").eq(0).append($('<span class="selected"></span>'));
         $("#gf_farm_up").addClass("active");
@@ -75,4 +77,4 @@ function changePage(page) {
 
 }
 
-changePage("welcome");
+changePage("business-all");

@@ -1,31 +1,37 @@
-<!-- TODO 商家的商品审核记录的临时页面 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>商家的商品审核记录的临时页面</title>
+    <title>商家商品审核记录</title>
     <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/map.js}"></script>
+
+    <link th:href="@{/gfstatic/templateone/res/layui/css/layui.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/gfstatic/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/bootstrap-responsive.min.css}" rel="stylesheet" type="text/css" />
     <link th:href="@{/gfstatic/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
-    <link th:href="@{/gfstatic/css/style.css}" rel="stylesheet" type="text/css" />
     <link th:href="@{/gfstatic/css/style-metro.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/style.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/style-responsive.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/default.css}" rel="stylesheet" type="text/css" id="style_color" />
+    <link th:href="@{/gfstatic/css/uniform.default.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/pagination.css}" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" th:href="@{/gfstatic/image/favicon.ico}" />
 </head>
 <body>
-    <!-- TODO 清空未审核审核记录 -->
-    <a href="javaScript:void(0)" id="gf_clear_no_pass">清空审核不通过的记录</a>
-    <hr/>
+    <!--<a href="javaScript:void(0)" id="gf_clear_no_pass">清空审核不通过的记录</a>-->
     <div class="container-fluid">
         <div class="row-fluid">
-            <h3 class="page-title"><i class="fa fa-shopping-bag"></i>农场管理</h3>
+            <br>
             <ul class="breadcrumb">
                 <li>
-                    <a href="#"><i class="fa fa-home"></i>农场管理</a>
+                    <a href="javascript:void(0);"><i class="fa fa-home"></i>商品管理</a>
                     <i class="fa fa-angle-right"></i>
                 </li>
                 <li>
-                    <a href="#">农场审核</a>
+                    <a href="javascript:void(0);">商品审核记录</a>
                 </li>
             </ul>
         </div>
@@ -34,55 +40,44 @@
                 <div class="portlet-title">
                     <div class="caption">
                         <i class="fa fa-reorder"></i>
-                        农场列表
+                        审核记录列表
                     </div>
                 </div>
                 <div class="portlet-body">
                     <table id="userTable" class="table table-bordered table-striped">
                         <thead>
                         <tr>
+                            <th>编号</th>
                             <th>名称</th>
                             <th>单价</th>
                             <th>描述</th>
                             <th>类别</th>
-                            <th>主图片</th>
-                            <th>其他图片</th>
                             <th>提交时间</th>
                             <th>审核时间</th>
                             <th>审核结果</th>
-                            <th>审核未通过原因</th>
+                            <th>未通过原因</th>
                         </tr>
-<!--                        <tr th:if="${vo.businessProductReviewVOList.size()}==0">-->
-<!--                            <td colspan="11">暂无审核记录</td>-->
-<!--                        </tr>-->
-                        <tr th:if="${vo.businessProductReviewVOList.size()}!=0" th:each="rv:${vo.businessProductReviewVOList}">
+                        <tr th:if="${vo.businessProductReviewVOList.size()}==0">
+                            <td colspan="9">暂无待审核的农场数据</td>
+                        </tr>
+                        <tr th:if="${vo.businessProductReviewVOList.size()}!=0" th:each="rv,stat:${vo.businessProductReviewVOList}">
+                            <td th:text="${stat.count}"></td>
                             <td th:text="${rv.product.productName}"></td>
                             <td th:if="${rv.product.productUnit}!=null" th:text="${rv.product.productPrice} + '元/' + ${rv.product.productUnit}"></td>
                             <td th:if="${rv.product.productUnit}==null" th:text="${rv.product.productPrice} + '元'"></td>
                             <td th:if="${rv.product.productDescription}!=null" th:text="${rv.product.productDescription}"></td>
                             <td th:if="${rv.product.productDescription}==null">无描述</td>
                             <td th:text="${rv.product.productType.typeName}"></td>
-                            <td th:if="${rv.productMainImage}!=null">
-                                <a th:href="@{${rv.productMainImage.productImagePath}}" target="_blank">
-                                    <img th:src="${rv.productMainImage.productImagePath}" width="100px" height="100px"/>
-                                </a>
-                            </td>
-                            <td th:if="${rv.productMainImage}==null">无主图片</td>
-                            <td th:if="${rv.productOtherImageList.size()}!=0">
-                                <a th:each="img:${rv.productOtherImageList}" th:href="@{${img.productImagePath}}" target="_blank">
-                                    <img th:src="${img.productImagePath}" width="100px" height="100px"/>
-                                </a>
-                            </td>
-                            <td th:if="${rv.productOtherImageList.size()}==0">无其他图片</td>
+
                             <td th:text="${#dates.format(rv.productReview.productReviewSubmitTime,'yyyy-MM-dd HH:mm:ss')}"></td>
                             <td th:if="${rv.productReview.productReviewReviewTime}==null" colspan="3">审核中</td>
                             <td th:if="${rv.productReview.productReviewReviewTime}!=null" th:text="${#dates.format(rv.productReview.productReviewReviewTime,'yyyy-MM-dd HH:mm:ss')}"></td>
-                            <td th:if="${rv.productReview.productReviewReviewTime}!=null and ${rv.productReview.productReviewResult}==1" colspan="2">通过</td>
+                            <td th:if="${rv.productReview.productReviewReviewTime}!=null and ${rv.productReview.productReviewResult}==1" colspan="1">通过</td>
+                            <td th:if="${rv.productReview.productReviewReviewTime}!=null and ${rv.productReview.productReviewResult}==1" colspan="1"></td>
                             <td th:if="${rv.productReview.productReviewReviewTime}!=null and ${rv.productReview.productReviewResult}==0">未通过</td>
                             <td th:if="${rv.productReview.productReviewReviewTime}!=null and ${rv.productReview.productReviewResult}==0" th:text="${rv.productReview.productReviewReason}"></td>
                         </tr>
                     </table>
-                    <hr/>
                     <div th:if="${vo.businessProductReviewVOList.size()}!=0">
                         <a th:if="${vo.pageInfo.isFirstPage}==true" disabled="disabled">首页</a>
                         <a th:if="${vo.pageInfo.isFirstPage}==false" th:href="@{/business/management/product/review(page=1)}">首页</a>
@@ -90,11 +85,7 @@
                         <a th:if="${vo.pageInfo.hasPreviousPage}==false" disabled="disabled">上一页</a>
                         <a th:if="${vo.pageInfo.hasPreviousPage}==true" th:href="@{/business/management/product/review(page=${vo.pageInfo.pageNum}-1)}">上一页</a>
 
-                        <!--<a th:if="${pg}!=${vo.pageInfo.pageNum}" th:each="pg:${vo.pageInfo.navigatepageNums}" th:href="@{/greenfarm/admin/management/business/review(page=${pg})}" th:text="${pg}"></a>-->
-                        <!--<a th:if="${pg}==${vo.pageInfo.pageNum}" th:each="pg:${vo.pageInfo.navigatepageNums}" th:text="${pg}" disabled="disabled"></a>-->
-
                         <a th:each="pg:${vo.pageInfo.navigatepageNums}" th:href="@{/business/management/product/review(page=${pg})}" th:text="${pg}"></a>
-
 
                         <a th:if="${vo.pageInfo.hasNextPage}==false" disabled="disabled">下一页</a>
                         <a th:if="${vo.pageInfo.hasNextPage}==true" th:href="@{/business/management/product/review(page=${vo.pageInfo.pageNum}+1)}">下一页</a>
@@ -106,6 +97,7 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" th:src="@{/gfstatic/js/management/business/product-review.js}"></script>
+
+    <script type="text/javascript" th:src="@{/gfstatic/js/management/business/product.js}"></script>
 </body>
 </html>

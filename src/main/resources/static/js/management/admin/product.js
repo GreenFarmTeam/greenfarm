@@ -1,5 +1,4 @@
 
-
 $("button[name='gf_up']").on('click', function () {
     var productUid = $(this).attr("value");
     layer.confirm('确定恢复上架该商品？', {btn:['是','否'], skin:'layui-layer-lan', closeBtn:0}, function () {
@@ -139,7 +138,6 @@ $("#gf_reason_sure").on('click', function () {
         }
     }
 });
-
 
 $("button[name='gf_detail']").on('click', function () {
     var productUid = $(this).attr("value");

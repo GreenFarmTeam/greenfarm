@@ -1,28 +1,36 @@
-<!-- TODO 商家已审核通过的商品（我的商品）临时页面 -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>商家已审核通过的商品（我的商品）临时页面</title>
+    <title>商家已上架的商品</title>
     <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/map.js}"></script>
+
+    <link th:href="@{/gfstatic/templateone/res/layui/css/layui.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/gfstatic/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/bootstrap-responsive.min.css}" rel="stylesheet" type="text/css" />
     <link th:href="@{/gfstatic/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
-    <link th:href="@{/gfstatic/css/style.css}" rel="stylesheet" type="text/css" />
     <link th:href="@{/gfstatic/css/style-metro.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/style.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/style-responsive.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/default.css}" rel="stylesheet" type="text/css" id="style_color" />
+    <link th:href="@{/gfstatic/css/uniform.default.css}" rel="stylesheet" type="text/css" />
+    <link th:href="@{/gfstatic/css/pagination.css}" rel="stylesheet" type="text/css" />
+    <link rel="shortcut icon" th:href="@{/gfstatic/image/favicon.ico}" />
 </head>
 <body>
 <div class="container-fluid">
     <div class="row-fluid">
-        <h3 class="page-title"><i class="fa fa-shopping-bag"></i>商品管理</h3>
+        <br>
         <ul class="breadcrumb">
             <li>
-                <a href="#"><i class="fa fa-home"></i>商品管理</a>
+                <a href="javascript:void(0);"><i class="fa fa-home"></i>商品管理</a>
                 <i class="fa fa-angle-right"></i>
             </li>
             <li>
-                <a href="#">商品审核</a>
+                <a href="javascript:void(0);">已上架的商品</a>
             </li>
         </ul>
     </div>
@@ -38,36 +46,32 @@
                 <table id="userTable" class="table table-bordered table-striped">
                     <thead>
                     <tr>
+                        <th>编号</th>
                         <th>商品名称</th>
                         <th>商品单价</th>
-                        <th>商品主图片</th>
+                        <th>商品类型</th>
                         <th>商品库存</th>
-                        <th>操作</th>
+                        <th style="text-align: center">操作</th>
                     </tr>
                     <tr th:if="${vo.businessProductVOList.size()}==0">
-                        <td colspan="5">暂无成功上架商品数据</td>
+                        <td colspan="6">暂无成功上架商品数据</td>
                     </tr>
-                    <tr th:if="${vo.businessProductVOList.size()}!=0" th:each="pd:${vo.businessProductVOList}">
+                    <tr th:if="${vo.businessProductVOList.size()}!=0" th:each="pd,stat:${vo.businessProductVOList}">
+                        <td th:text="${stat.count}"></td>
                         <td th:text="${pd.product.productName}"></td>
                         <td th:if="${pd.product.productUnit}==null" th:text="${pd.product.productPrice+'元'}"></td>
                         <td th:if="${pd.product.productUnit}!=null" th:text="${pd.product.productPrice+'元/'+pd.product.productUnit}"></td>
-                        <td th:if="${pd.mainImage}==null">暂无商品主图片</td>
-                        <td th:if="${pd.mainImage}!=null">
-                            <a th:href="@{${pd.mainImage.productImagePath}}" target="_blank">
-                                <img th:src="@{${pd.mainImage.productImagePath}}" width="100px" height="100px"/>
-                            </a>
-                        </td>
-                        <td th:if="${pd.product.productStock}!=null and ${pd.product.productUnit}==null" th:text="${pd.product.productStock}"></td>
-                        <td th:if="${pd.product.productStock}!=null and ${pd.product.productUnit}!=null" th:text="${pd.product.productStock+pd.product.productUnit}"></td>
-                        <td th:if="${pd.product.productStock}==null">库存充足</td>
-                        <td>
-                            <a href="javascript:void(0);" name="gf_detail" th:value="${pd.product.productUid}" class="btn mini green"><i class="fa fa-edit"></i>详情</a>
-                            <a href="javascript:void(0);" name="gf_stock" th:value="${pd.product.productUid}" class="btn mini red"><i class="fa fa-trash"></i>修改库存</a>
-                            <a href="javascript:void(0);" name="gf_down" th:value="${pd.product.productUid}" class="btn mini red"><i class="fa fa-trash"></i>下架商品</a>
+                        <td th:if="${pd.product.productType}==null" th:text="无"></td>
+                        <td th:if="${pd.product.productType}!=null" th:text="${pd.product.productType.typeName}"></td>
+                        <td th:if="${pd.product.productStock}==null" th:text="0"></td>
+                        <td th:if="${pd.product.productStock}!=null" th:text="${pd.product.productStock}"></td>
+                        <td style="text-align: center">
+                            <button href="javascript:void(0);" name="gf_detail" th:value="${pd.product.productUid}" class="layui-btn layui-btn-primary layui-btn-xs">详情</button>
+                            <button href="javascript:void(0);" name="gf_stock" th:value="${pd.product.productUid}"  class="layui-btn layui-btn-primary layui-btn-xs">修改库存</button>
+                            <button href="javascript:void(0);" name="gf_down" th:value="${pd.product.productUid}"   class="layui-btn layui-btn-primary layui-btn-xs">下架商品</button>
                         </td>
                     </tr>
                 </table>
-                <hr/>
                 <div th:if="${vo.businessProductVOList.size()}!=0">
                     <a th:if="${vo.pageInfo.isFirstPage}==true" disabled="disabled">首页</a>
                     <a th:if="${vo.pageInfo.isFirstPage}==false" th:href="@{/business/management/product(page=1)}">首页</a>
@@ -75,11 +79,7 @@
                     <a th:if="${vo.pageInfo.hasPreviousPage}==false" disabled="disabled">上一页</a>
                     <a th:if="${vo.pageInfo.hasPreviousPage}==true" th:href="@{/business/management/product(page=${vo.pageInfo.pageNum}-1)}">上一页</a>
 
-                    <!--<a th:if="${pg}!=${vo.pageInfo.pageNum}" th:each="pg:${vo.pageInfo.navigatepageNums}" th:href="@{/greenfarm/admin/management/business/review(page=${pg})}" th:text="${pg}"></a>-->
-                    <!--<a th:if="${pg}==${vo.pageInfo.pageNum}" th:each="pg:${vo.pageInfo.navigatepageNums}" th:text="${pg}" disabled="disabled"></a>-->
-
                     <a th:each="pg:${vo.pageInfo.navigatepageNums}" th:href="@{/business/management/product(page=${pg})}" th:text="${pg}"></a>
-
 
                     <a th:if="${vo.pageInfo.hasNextPage}==false" disabled="disabled">下一页</a>
                     <a th:if="${vo.pageInfo.hasNextPage}==true" th:href="@{/business/management/product(page=${vo.pageInfo.pageNum}+1)}">下一页</a>
@@ -91,6 +91,8 @@
         </div>
     </div>
 </div>
-    <script type="text/javascript" th:src="@{/gfstatic/js/management/business/product-checked.js}"></script>
+
+
+<script type="text/javascript" th:src="@{/gfstatic/js/management/business/product.js}"></script>
 </body>
 </html>

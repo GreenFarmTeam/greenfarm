@@ -10,22 +10,18 @@
     <div class="layui-header header" th:fragment="head">
         <script>
            /* 加载弹层组件文档 layer*/
-            //        <![CDATA[
             var layer;
             layui.use(["layer","element"],function () {
                 layer = layui.layer;
             });
-            //JavaScript代码区域
-            //        ]]>
         </script>
         <div class="layui-main">
             <a class="logo" href="/index">
-                <img th:src="@{/gfstatic/image/logo.png}"/>
+                <!--<img th:src="@{/gfstatic/image/logo.png}"/>-->
+                <h2 style="display:inline; color:rgba(255,255,255,.7); line-height:45px;">绿色农场互联网商城</h2>
             </a>
+
             <!-- 头部区域（可配合layui已有的水平导航） -->
-            <!--<ul class="layui-nav layui-layout-left">-->
-            <!---->
-            <!--</ul>-->
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item" style="color:#393D49;">
                     <a href="javascript:;">商品分类</a>

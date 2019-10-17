@@ -51,6 +51,7 @@ function appendToPage(table, items) {
     });
     $("#total").html("总价：￥" + total);
 }
+
 //移除购物车
 function remove(btn, subTotal) {
     var productId = btn.value;
@@ -74,6 +75,7 @@ function remove(btn, subTotal) {
     })
 
 }
+
 /**增加产品数量**/
 function add(btn, productNum,productPrice) {
     var productId = btn.value;
@@ -145,6 +147,7 @@ function addressAppendToPage(table, items) {
         table.append(tr);
     });
 }
+
 function choose(btn) {
     var addressId = btn.value;
     $.ajax({

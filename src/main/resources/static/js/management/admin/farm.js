@@ -238,3 +238,35 @@ $("button[name='gf_detail']").on('click',function () {
         }
     })
 });
+
+$("a[name='gf_location']").on('click', function () {
+    var lng = $(this).attr("data-lng");
+    var lat = $(this).attr("data-lat");
+    var content = "<!DOCTYPE html>" +
+        "<html>" +
+        "<head>" +
+        "<meta charset='UTF-8'>" +
+        "</head>" +
+        "<body>" +
+        "<div id='container' style='width: 800px; height: 600px'></div>" +
+        "<script type='text/javascript'>" +
+        "var map = initMap2('container');" +
+        "map.setCenter(new AMap.LngLat(" + lng + ", " + lat + "));" +
+        "var localLng = $('#now-lng').val();" +
+        "var localLat = $('#now-lat').val();" +
+        "var driving = new AMap.Driving({" +
+        "map:map" +
+        "});" +
+        "driving.search(new AMap.LngLat(localLng, localLat), new AMap.LngLat(" + lng + ", " + lat + "), function(status, result) {});" +
+        "</script>" +
+        "</body>" +
+        "<ml>";
+    layer.open({
+        type: 1,
+        skin: 'layui-layer-rim',
+        area: ['800px', '600px'],
+        shadeClose: false,
+        content: content
+    });
+});
+
