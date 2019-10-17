@@ -99,7 +99,13 @@
                         <div class="control-group">
                             <label class="control-label">主图片：</label>
                             <div class="controls">
-                                <input id="gf_main_img" type="file" accept="image/jpeg,image/png,image/gif"/>
+                                <input id="gf_main_img" type="file" accept="image/jpeg,image/png,image/gif" οnchange="upLoad()"/>
+                            </div>
+                        </div>
+                        <div class="control-group" id="main_img_contain" style="display: none">
+                            <label class="control-label"></label>
+                            <div class="controls">
+                                <img id="main_img" src="" height="200" alt="Image preview...">
                             </div>
                         </div>
                         <div class="control-group">

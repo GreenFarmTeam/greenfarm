@@ -5,19 +5,19 @@ jQuery(document).ready(function () {
 
 
 // 判断该商家是否有“农场租赁”这项业务
-window.onload = function () {
-    $.ajax({
-        type : "GET",
-        url : "/business/management/farm/can",
-        dataType : "json",
-        data : {
-            "uid" : $("#gf_business_uid").val()
-        },
-        success : function (jsonData) {
-            flag = jsonData.flag;
-        }
-    });
-};
+// window.onload = function () {
+//     $.ajax({
+//         type : "GET",
+//         url : "/business/management/farm/can",
+//         dataType : "json",
+//         data : {
+//             "uid" : $("#gf_business_uid").val()
+//         },
+//         success : function (jsonData) {
+//             flag = jsonData.flag;
+//         }
+//     });
+// };
 
 function changePage(page) {
     $(".page-sidebar-menu li").removeClass("active");

@@ -112,14 +112,14 @@ ul.page-sidebar-menu > li.active > a .arrow.open:before {
   border-bottom: 1px solid #ebebeb !important;
 }
 .page-sidebar .sidebar-search .submit {
-  background-image: url(../image/search-icon.png);
+  /*background-image: url(../image/search-icon.png);*/
 }
 
 /***
 Sidebar toggler
 ***/
 .sidebar-toggler {
-  background-image: url(../image/sidebar-toggler.jpg);
+  /*background-image: url(../image/sidebar-toggler.jpg);*/
   background-color: #e1e1e1;
 }
 /* search box bg color on expanded */
@@ -145,7 +145,7 @@ Horizontal Menu(new in v1.2)
 }
 .header .hor-menu .search-form .btn {
   color: #373737;
-  background: #e1e1e1 url(../image/search-icon.png) no-repeat center;
+  /*background: #e1e1e1 url(../image/search-icon.png) no-repeat center;*/
 }
 .header .hor-menu .search-form form input {
   color: #d6d6d6;

@@ -539,7 +539,7 @@ ul.page-sidebar-menu > li.active > a .selected {
   display: block;
   width: 8px;
   height: 25px;
-  background-image: url("../image/sidebar-menu-arrow.png");
+  /*background-image: url("../image/sidebar-menu-arrow.png");*/
   float: right;
   position: absolute;
   right:0px;
@@ -685,7 +685,7 @@ ul.page-sidebar-menu > li > ul.sub-menu  li > ul.sub-menu > li > a > i {
   margin-top: 8px;
   width: 13px;
   height: 13px;
-  background-image: url(../image/search-icon.png);
+  /*background-image: url(../image/search-icon.png);*/
   background-repeat: no-repeat;
 }
  

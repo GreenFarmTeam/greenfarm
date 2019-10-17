@@ -182,8 +182,8 @@ $("button[name='gf_detail']").on('click',function () {
                     "                <div style='width: 40%; margin: 0 4%; float:left;'>";
 
                 var content2 = "";
-                var listname2 = ["农场编号：", "农场名称：", "租赁价格：", "价格单位：", "土地类型：", "农场面积(万/平方米)：", "农场状态："];
-                var listvalue2 = [jsonData.uid, jsonData.name, jsonData.price, jsonData.farm_unit, jsonData.farm_type_name, jsonData.farm_area, jsonData.farm_state];
+                var listname2 = ["农场编号：", "农场名称：", "租赁价格：", "价格单位：", "农场描述", "土地类型：", "农场面积(万/平方米)：", "农场状态："];
+                var listvalue2 = [jsonData.uid, jsonData.name, jsonData.price, jsonData.farm_unit, jsonData.description, jsonData.farm_type_name, jsonData.farm_area, jsonData.farm_state];
                 for(var i = 0; i < listname2.length; i++){
                     content2 += filltext1 + listname2[i] + filltext2 + listvalue2[i] + filltext3;
                 }
@@ -303,3 +303,23 @@ $("button[name='gf_down']").on('click', function () {
         // null operation
     });
 });
+
+function upLoad(){
+    var fileInput = document.getElementById("gf_main_img");
+    var file = fileInput.files[0];
+    //创建读取文件的对象
+    var reader = new FileReader();
+    //创建文件读取相关的变量
+    var imgFile;
+    //为文件读取成功设置事件
+    reader.οnlοad=function(e) {
+        // alert('文件读取完成');
+        imgFile = e.target.result;
+        console.log(imgFile);
+        $("#main_img_contain").css("display","block");
+        $("#main_img").attr('src',imgFile);
+    };
+
+    //正式读取文件
+    reader.readAsDataURL(file);
+}

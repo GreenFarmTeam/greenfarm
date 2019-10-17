@@ -172,8 +172,7 @@ $("button[name='gf_detail']").on('click', function () {
                     "            </div>\n" +
                     "        </div>\n" +
                     "        <div class='portlet-body'>\n" +
-                    "            <form class='form-horizontal'>\n" +
-                    "                <div style='width: 40%; margin: 0 4%; float:left;'>";
+                    "            <form class='form-horizontal'>\n";
 
                 var filltext1 = "<div class='control-group'>\n" +
                     "                        <label class='control-label'>";
@@ -184,20 +183,10 @@ $("button[name='gf_detail']").on('click', function () {
                     "                        </div>\n" +
                     "                    </div>";
 
-                var content1 = "";
-                var listname1 = ["店铺编号：", "店铺名称：", "店铺描述：", "商家会员号：", "商家昵称："];
-                var listvalue1 = [jsonData.businessUid, jsonData.businessName, jsonData.businessDescription, jsonData.username, jsonData.nickname];
-                for(var i = 0; i < listname1.length; i++){
-                    content1 += filltext1 + listname1[i] + filltext2 + listvalue1[i] + filltext3;
-                }
-
-                var midcontent = "</div>\n" +
-                    "\n" +
-                    "                <div style='width: 40%; margin: 0 4%; float:left;'>";
 
                 var content2 = "";
-                var listname2 = ["商品编号：", "商品名称：", "商品单价：", "商品类型：", "商品描述：", "当前库存：", "成功上架日期：", "提交审核日期"];
-                var listvalue2 = [jsonData.uid, jsonData.name, jsonData.price, jsonData.type, jsonData.description, jsonData.stock, jsonData.upDate, jsonData.submitDate];
+                var listname2 = ["商品名称：", "商品单价：", "商品类型：", "商品描述：", "当前库存：", "成功上架日期："];
+                var listvalue2 = [jsonData.name, jsonData.price, jsonData.type, jsonData.description, jsonData.stock, jsonData.upDate];
                 for(var i = 0; i < listname2.length; i++){
                     content2 += filltext1 + listname2[i] + filltext2 + listvalue2[i] + filltext3;
                 }
@@ -220,9 +209,7 @@ $("button[name='gf_detail']").on('click', function () {
                     content2 += filltext1 + "商品其他图片</label> <div class='controls'><span>暂无其他商品图片</span></div></div>";
                 }
 
-                var foot = "</div>\n" +
-                    "\n" +
-                    "                <div style='clear:both'></div>\n" +
+                var foot =
                     "            </form>\n" +
                     "        </div>\n" +
                     "    </div>\n" +
@@ -235,7 +222,7 @@ $("button[name='gf_detail']").on('click', function () {
                     skin: 'layui-layer-rim',
                     area: ['1000px', '600px'],
                     shadeClose: true,
-                    content : top + content1 + midcontent + content2 + foot
+                    content : top + content2 + foot
                 });
             }
         }
