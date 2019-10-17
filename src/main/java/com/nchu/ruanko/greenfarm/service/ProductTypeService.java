@@ -1,5 +1,6 @@
 package com.nchu.ruanko.greenfarm.service;
 
+import com.nchu.ruanko.greenfarm.pojo.entity.FarmType;
 import com.nchu.ruanko.greenfarm.pojo.entity.ProductType;
 import java.util.List;
 
@@ -17,4 +18,6 @@ public interface ProductTypeService {
      * @return
      */
     ProductType loadProuctTypeById(String productId);
+
+
 }

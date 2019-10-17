@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"/>
+    <title>订单管理列表</title>
+    <link th:href="@{/gfstatic/css/bootstrap.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/gfstatic/css/bootstrap-responsive.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/gfstatic/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/gfstatic/css/style-metro.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/gfstatic/css/style.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/gfstatic/css/style-responsive.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/gfstatic/css/default.css}" rel="stylesheet" type="text/css" id="style_color"/>
+    <link th:href="@{/gfstatic/css/uniform.default.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/gfstatic/css/pagination.css}" rel="stylesheet" type="text/css"/>
+
+</head>
+<body>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <h3 class="page-title"><i class="fa fa-file-text"></i> 订单管理</h3>
+        <ul class="breadcrumb">
+            <li>
+                <a href="#"><i class="fa fa-home"></i>农场订单</a>
+                <i class="fa fa-angle-right"></i>
+            </li>
+            <li>
+                <a href="#">订单列表</a>
+            </li>
+        </ul>
+    </div>
+    <div class="row-fluid">
+        <div class="portlet box blue">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-reorder"></i>
+                    订单列表
+                </div>
+            </div>
+            <div class="portlet-body">
+                <table id="orderTable" class="table table-advance table-hover">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>预约人</th>
+                        <th>联系电话</th>
+                        <th>农场名称</th>
+                        <th>预约时间</th>
+                        <th>预约状态</th>
+                        <th width="50%">订单详情</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:if="${vo.orderFarmVoList.size()}!=0" th:each="pd,stat:${vo.orderFarmVoList}">
+                        <td th:text="${stat.count}"></td>
+                        <td th:text="${pd.orderFarm.getOrderFarmUid()}"></td>
+                        <td th:text="${pd.orderFarm.orderFarmName}"></td>
+                        <td th:text="${pd.orderFarm.orderFarmPhone}"></td>
+                        <td th:if="${pd.orderFarm.orderFarmState}==0" ><span style="border-radius: 5px !important;" class="label label-info">未付款</span></td>
+                        <td th:if="${pd.orderFarm.orderFarmState}==2" ><span style="border-radius: 5px !important;" class="label label-info">待处理</span></td>
+                        <td th:if="${pd.orderFarm.orderFarmState}==3" ><span style="border-radius: 5px !important;" class="label label-info">订单完成</span></td>
+
+                        <td th:if="${pd.orderFarm.orderFarmTime}!=null"><span class="label label-default" style="border-radius: 5px !important;" th:text="${#dates.format(pd.orderFarm.orderFarmTime,'yyyy-MM-dd HH:mm:ss')}"> </span> </td>
+                        <!--<td th:if="${pd.product.productStock}!=null" th:text="${pd.product.productStock}"></td>-->
+                        <td>
+                            <div style="margin:0;" class="portlet box green">
+                                <div th:id="${pd.orderFarm.orderFarmUid}" onclick="getDetail(this)" th:value="${pd.orderFarm.orderFarmUid}" class="portlet-title">
+                                    <div class="caption">预约详情</div>
+                                    <div class="tools">
+                                        <a href="" class="expand" style="color: #FFFFFF;">
+                                            <i class="fa fa-caret-down"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="portlet-body" style="display: none;">
+                                    <table class="table table-bordered table-hover">
+
+                                    </table>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <hr/>
+                <div th:if="${vo.orderFarmVoList.size()}!=0">
+                    <a th:if="${vo.orderFarmPageInfo.isFirstPage}==true" disabled="disabled">首页</a>
+                    <a th:if="${vo.orderFarmPageInfo.isFirstPage}==false" th:href="@{/business/management/farm/order/loadAll(page=1)}">首页</a>
+
+                    <a th:if="${vo.orderFarmPageInfo.hasPreviousPage}==false" disabled="disabled">上一页</a>
+                    <a th:if="${vo.orderFarmPageInfo.hasPreviousPage}==true" th:href="@{/business/management/farm/order/loadAll(page=${vo.orderFarmPageInfo.pageNum}-1)}">上一页</a>
+
+                    <!--<a th:if="${pg}!=${vo.pageInfo.pageNum}" th:each="pg:${vo.pageInfo.navigatepageNums}" th:href="@{/greenfarm/admin/management/business/review(page=${pg})}" th:text="${pg}"></a>-->
+                    <!--<a th:if="${pg}==${vo.pageInfo.pageNum}" th:each="pg:${vo.pageInfo.navigatepageNums}" th:text="${pg}" disabled="disabled"></a>-->
+
+                    <a th:each="pg:${vo.orderFarmPageInfo.navigatepageNums}" th:href="@{/business/management/farm/order/loadAll(page=${pg})}" th:text="${pg}"></a>
+
+
+                    <a th:if="${vo.orderFarmPageInfo.hasNextPage}==false" disabled="disabled">下一页</a>
+                    <a th:if="${vo.orderFarmPageInfo.hasNextPage}==true" th:href="@{/business/management/farm/order/loadAll(page=${vo.orderFarmPageInfo.pageNum}+1)}">下一页</a>
+
+                    <a th:if="${vo.orderFarmPageInfo.isLastPage}==true" disabled="disabled">末页</a>
+                    <a th:if="${vo.orderFarmPageInfo.isLastPage}==false" th:href="@{/business/management/farm/order/loadAll(page=${vo.orderFarmPageInfo.pages})}">末页</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script th:src="@{/gfstatic/js/vue/jquery-1.10.1.min.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/jquery-migrate-1.2.1.min.js}" type="text/javascript"></script>
+<!-- IMPORTANT! Load jquery-ui-1.10.1.custom.min.js before bootstrap.min.js to fix bootstrap tooltip conflict with jquery ui tooltip -->
+<script th:src="@{/gfstatic/js/vue/jquery-ui-1.10.1.custom.min.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/bootstrap.min.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/jquery.slimscroll.min.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/jquery.blockui.min.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/jquery.cookie.min.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/jquery.uniform.min.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/app.js}" type="text/javascript"></script>
+<script th:src="@{/gfstatic/js/vue/jquery.pagination.js}" type="text/javascript"></script>
+<script th:inline="javascript" type="text/javascript">
+
+    function getDetail(btn) {
+
+        var div = '#'+btn.id;
+        var orderFarmUid = $(div).attr("value");
+
+        if(($(div).next().css("display")).trim()=="none") {
+            layer.alert("哈哈")
+
+
+            if ($(div).next().find("table").html()) {
+                return;
+            }
+
+            if (!orderFarmUid) {
+                layer.alert("订单编号为空");
+                return;
+            }
+            $.ajax({
+                url: "/member/management/orderFarm/load/" + orderFarmUid,
+                type: "get",
+                dataType: "json",
+                success: function (jsonData) {
+                    if (jsonData.flag == 1) {
+                        for (var i = 0; i < jsonData.farm.length; i++) {
+                            var item = jsonData.farm[i];
+                            var tr = $("<tr></tr>");
+                            tr.append($("<td><img style='display: block;height: 50px;max-width: 100%;' src='" + item.mainImage.farmImagePath + "'/></td>"));
+                            tr.append($("<td ></td>").text(item.farm.farmName));
+                            tr.append($("<td></td>").text(item.farm.business.user.userNickname));
+                            tr.append($("<td></td>").text("￥" + item.business.user.userPhone));
+                            $(div).next().find("table").append(tr);
+                        }
+                        $(div).next().css("display","block")
+                    } else {
+                        layer.msg("加载订单详情失败");
+                    }
+                },
+                error: function () {
+                    layer.alert("连接错误！");
+                }
+            });
+        }else if($(div).next().css("display")=="block"){
+
+            $(div).next().css("display","none")
+
+        }else{
+            $(div).next().css("display","block")
+        }
+    }
+
+    //    ]]>
+</script>
+
+
+</body>
+</html>

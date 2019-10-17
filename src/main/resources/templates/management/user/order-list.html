@@ -33,7 +33,7 @@
     <!--订单列表-->
     <div class="layui-row">
         <div class="layui-col-md12"><h1 class="site-h1"><i class="fa fa-gift" style="color: #FF5722;"></i>
-            &nbsp;我的订单</h1></div>
+            &nbsp;我的商品订单</h1></div>
     </div>
     <div class="layui-row">
         <div class="layui-row" style="overflow: auto;">
@@ -59,10 +59,40 @@
         </div>
 
     </div>
+
+    <div class="layui-row">
+        <div class="layui-col-md12"><h1 class="site-h1"><i class="fa fa-gift" style="color: #FF5722;"></i>
+            &nbsp;我的农场订单</h1></div>
+    </div>
+    <div class="layui-row">
+        <div class="layui-row" style="overflow: auto;">
+            <div class="layui-col-md12" style="overflow: auto;">
+                <table class="layui-table" lay-skin="nob" style="min-width: 1140px;">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>预约人</th>
+                        <th>联系电话</th>
+                        <th>农场名称</th>
+                        <th>预约时间</th>
+                        <th>备注详情</th>
+                        <th>预约状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="farm-list">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
     <script>
         //            <![CDATA[
         $(function () {
             loadOrder();
+            loadFarmOrder();
         });
 
         // 加载我的订单列表
@@ -86,6 +116,28 @@
                 }
             })
         }
+        //加载农场订单
+        function loadFarmOrder() {
+            $.ajax({
+                type:"get",
+                url:"/member/management/order/farm/load/all/operation",
+                dataType:"json",
+                success : function (jsonData) {
+                    if (jsonData.flag == 1) {
+                        var tbody = $("#farm-list");
+                        if(jsonData.data.length<=0){
+                            layer.msg("您暂无农场订单，赶快去购物吧！")
+                        }else
+                            appendToFarmPage(jsonData.data, tbody);
+
+
+                    } else {
+                        layer.msg("加载订单请求失败！")
+                    }
+                }
+            })
+        }
+        //将产品数据渲染到页面
         // 将数据渲染进页面
         function appendToPage(items, tbody) {
             var count=1;
@@ -96,7 +148,7 @@
                 tr.append($("<td width='200'>" + item.orderCtime + "</td>"));
                 tr.append($("<td width='80'>" + item.orderRname + "</td>"));
                 tr.append($("<td width='100'>" + item.orderRphone + "</td>"));
-                tr.append($("<td width='100'><a onclick='getDetailAddress(this)' value='"+item.orderRaddress+"' href='javascript:void(0);'>" + item.orderRaddress.substring(0,item.orderRaddress.indexOf("|")) + "</a></td>"));
+                tr.append($("<td width='100'><a  value='"+item.orderRaddress+"' href='javascript:void(0);'>" + item.orderRaddress.substring(0,item.orderRaddress.indexOf("|")) + "</a></td>"));
                 tr.append($("<td width='80'>" + item.orderSum + "</td>"));
                 var state = item.orderState;
                 var status;//1:未付款 2:等待发货 3:等待收货 4:订单完成
@@ -117,10 +169,11 @@
                         status = "<span class='layui-badge layui-bg-black'>未知状态</span>";
                         break;
                 }
-
                 tr.append($("<td width='100'>" + status + "</td>"));
-
                 var operter = $("<td ><button onclick='getDetail( this)' value='"+item.orderUid+"' class='layui-btn layui-btn-radius layui-btn-primary'>查看详情</button></td>");
+                if (state == 4) {
+                    operter.append($("<button onclick='recieve(this)' value='"+item.orderUid+"'  class='layui-btn layui-btn-radius layui-btn-green'>评价</button>"));
+                }
                 if (state == 3) {
                     operter.append($("<button onclick='recieve(this)' value='"+item.orderUid+"'  class='layui-btn layui-btn-radius layui-btn-danger'>确认收货</button>"));
                 }
@@ -129,14 +182,70 @@
                 }
                 tr.append(operter);
                 tbody.append(tr);
+            });
+        }
+
+        // 将数据渲染进页面
+        function appendToFarmPage(items, tbody) {
+            var count=1;
+            $(items).each(function (index, item) {
+                console.log(item)
+                var tr = $("<tr></tr>");
+                tr.append($("<td>" + (count++) + "</td>"));
+                tr.append($("<td width='200'>" + item.orderFarmName + "</td>"));
+                tr.append($("<td width='80'>" + item.orderFarmPhone + "</td>"));
+                tr.append($("<td width='100'>" + item.orderFarmFarm.farmName + "</td>"));
+                tr.append($("<td width='80'>" + item.orderFarmTime + "</td>"));
+                tr.append($("<td width='100'>" + item.orderFarmRemark + "</td>"));
+
+                var state = item.orderFarmState;
+                var status;//1:未付款 2:等待发货 3:等待收货 4:订单完成
+                switch (state) {
+                    case 0:
+                        status = "<span class='layui-badge layui-bg-orange'>未付款</span>";
+                        break;
+                    case 1:
+                        status = "<span class='layui-badge layui-bg-green'>等待通知</span>";
+                        break;
+                    case 2:
+                        status = "<span class='layui-badge layui-bg-blue'>预约完成</span>";
+                        break;
+                    default:
+                        status = "<span class='layui-badge layui-bg-black'>未知状态</span>";
+                        break;
+                }
+
+                tr.append($("<td width='100'>" + status + "</td>"));
+
+                var operter = $("<td ><button onclick='getFarmDetail( this)' value='"+item.orderFarmUid+"' class='layui-btn layui-btn-radius layui-btn-primary'>查看详情</button></td>");
+                if (state == 2) {
+                    operter.append($("<button onclick='evaluateFarm(this)' value='"+item.orderFarmUid+"'  class='layui-btn layui-btn-radius layui-btn-green'>评价</button>"));
+                }
+                if (state == 1) {
+                    operter.append($("<button onclick='farmConfirm(this)' value='"+item.orderFarmUid+"'  class='layui-btn layui-btn-radius layui-btn-danger'>已带看</button>"));
+                }
+                if (state == 0) {
+                    operter.append($("<button onclick='farmPay(this)'  value='"+item.orderFarmUid+"' class='layui-btn layui-btn-radius layui-btn-green'>付款</button>"));
+                }
+                tr.append(operter);
+                tbody.append(tr);
 
             });
         }
-        function getDetailAddress(btn){
+        /*function getDetailAddress(btn){
             var address = btn.value.substring(btn.value.indexOf("|")+1);
             layer.confirm('详细地址：'+address, {btn:['确定'], skin:'layui-layer-lan', closeBtn:0});
         }
+*/
+        function evaluateFarm() {
 
+
+        }
+        /**评价订单**/
+        function evaluateProduct() {
+
+
+        }
 
         // 获取订单详情
         function getDetail(btn) {
@@ -178,7 +287,44 @@
             })
         }
 
-        //付款
+        //获取农场的详情
+        function getFarmDetail(btn) {
+            var orderFarmUid = btn.value;
+            $.ajax({
+                type:"GET",
+                url:"/member/management/orderFarm/load/" + orderFarmUid,
+                dataType:"json",
+                success : function (jsonData) {
+                    if (jsonData.flag === 1) {
+                        var div = $("<div></div>");
+                        var table = $("<table class='layui-table' style='overflow: auto;min-width: 650px' lay-skin='line' ></table>");
+                        var tbody = $("<tbody></tbody>");
+
+                        var tr = $("<tr style='max-height: 200px;'></tr>");
+                        tr.append($("<td ><img class='img_responsive' src='" + jsonData.farm.mainImage.farmImagePath + "'/></td>"));
+                        tr.append($("<td style='text-align: left;width: 200px;'><a style='color: #01AAED;text-decoration: underline;' href='/member/shop/farm/load/detail/operation?id="+jsonData.farm.farm.farmUid+"'>" + jsonData.farm.farm.farmName + "</a></td>"));
+                        tr.append($("<td>联系人：" + jsonData.farm.farm.business.user.userRealname + "</td>"));
+                        tr.append($("<td>电话：" + jsonData.farm.farm.business.user.userPhone + "</td>"));
+                        tr.append($("<td>描述：" + jsonData.farm.farm.farmDescription + "</td>"));
+                        tbody.append(tr);
+
+                        table.append(tbody);
+                        div.append(table);
+                        layer.open({
+                            type: 1,
+                            title: false,
+                            closeBtn: 0,
+                            shadeClose: true,
+                            skin: 'detail',
+                            content: div.html()
+                        });
+                    } else {
+                        layer.msg("加载农场订单详情请求失败！")
+                    }
+                }
+            })
+        }
+        //产品付款
         function pay(btn) {
             var id = btn.value;
 
@@ -216,6 +362,44 @@
             })
 
         }
+        //农场付款
+        function farmPay(btn) {
+            var id = btn.value;
+
+            $.ajax({
+                type:"get",
+                url:"/member/management/farm/order/pay/" + id,
+                dataType:"json",
+                success : function (jsonData) {
+                    if (jsonData.flag == 1) {
+                        var content = "<!DOCTYPE html>\n" +
+                            "<html>\n" +
+                            "<head>\n" +
+                            "    <meta charset=\"UTF-8\">\n" +
+                            "    <title>支付</title>\n" +
+                            "</head>\n" +
+                            "<body>"+jsonData.responseHtml+"</body>\n" +
+                            "</html>"
+
+
+                        layer.closeAll();
+                        layer.open({
+                            type: 1,
+                            skin: 'layui-layer-rim',
+                            area: ['800px', '600px'],
+                            shadeClose: true,
+                            content : jsonData.responseHtml
+                        });
+                        /* layer.alert("开始支付")
+                         $(location).attr("href", getPathPrefix() + "member/management/toPay.html/"+jsonData.responseHtml);*/
+
+                    } else {
+                        layer.msg("付款请求失败！")
+                    }
+                }
+            })
+
+        }
 
         //确认收货
         function recieve(btn) {
@@ -223,17 +407,40 @@
             layer.confirm('您确认已经收到货了吗？', {
                 btn: ['确定','取消'] //按钮
             }, function(){
-                $.get("/order/receive.do?orderId=" + id, function (data) {
-                    if (data.state == 0) {
-                        window.setTimeout(function () {
-                            window.location.reload();
-                        },500);
-                    } else {
-                        layer.msg(data.message);
+                $.ajax({
+                    type:"get",
+                    url:"/member/management/order/confirm/receive/" + id,
+                    dataType:"json",
+                    success : function (jsonData) {
+                        if(jsonData.flag==true){
+                            $(location).attr("href", getPathPrefix() + "member/management/order/index");
+                        }else{
+                            layer.msg("确认失败！")
+                        }
                     }
-                });
+                })
             });
 
+        }
+        //已带看
+        function farmConfirm(btn){
+            var id = btn.value;
+            layer.confirm('您确认已经看过农场了吗？', {
+                btn: ['确定','取消'] //按钮
+            }, function(){
+                $.ajax({
+                    type:"get",
+                    url:"/member/management/farm/order/confirm/" + id,
+                    dataType:"json",
+                    success : function (jsonData) {
+                        if(jsonData.flag==true){
+                            $(location).attr("href", getPathPrefix() + "member/management/order/index");
+                        }else{
+                            layer.msg("确认失败！")
+                        }
+                    }
+                })
+            });
         }
 
         //            ]]>
