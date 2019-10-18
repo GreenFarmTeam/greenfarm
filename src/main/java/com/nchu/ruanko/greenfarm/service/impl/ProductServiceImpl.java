@@ -3,13 +3,8 @@ package com.nchu.ruanko.greenfarm.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.nchu.ruanko.greenfarm.constant.FileConstant;
-import com.nchu.ruanko.greenfarm.dao.ProductDAO;
-import com.nchu.ruanko.greenfarm.dao.ProductImageDAO;
-import com.nchu.ruanko.greenfarm.dao.ProductReviewDAO;
-import com.nchu.ruanko.greenfarm.pojo.entity.Product;
-import com.nchu.ruanko.greenfarm.pojo.entity.ProductImage;
-import com.nchu.ruanko.greenfarm.pojo.entity.ProductReview;
-import com.nchu.ruanko.greenfarm.pojo.entity.ProductType;
+import com.nchu.ruanko.greenfarm.dao.*;
+import com.nchu.ruanko.greenfarm.pojo.entity.*;
 import com.nchu.ruanko.greenfarm.pojo.vo.*;
 import com.nchu.ruanko.greenfarm.service.ProductService;
 import com.nchu.ruanko.greenfarm.util.string.StringUtils;
@@ -34,6 +29,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductReviewDAO productReviewDAO;
+
+    @Autowired
+    private OrderRateDAO orderRateDAO;
+    @Autowired
+    private ProductReviewImageDAO productReviewImageDAO;
 
     private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -459,7 +459,20 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public MemberProductVo loadProductByproductID(String productId) {
         MemberProductVo vo = new MemberProductVo();
-        vo.setProduct(productDAO.getProductByProductUID(productId));
+        Product product  = productDAO.getProductByProductUID(productId);
+
+        List<OrderRate> orderRateList = orderRateDAO.listAllOrderRatesByProductId(productId);
+        List<ReviewOfProductVo> reviewOfProductVos =new ArrayList<>();
+        for(OrderRate orderRate : orderRateList){
+            ReviewOfProductVo reviewOfProductVo = new ReviewOfProductVo();
+            reviewOfProductVo.setOrderRate(orderRate);
+            reviewOfProductVo.setProductReviewImages(productReviewImageDAO.selectAllProductReviewImageByProductId(productId));
+
+            reviewOfProductVos.add(reviewOfProductVo);
+        }
+        product.setReviewOfProductVoList(reviewOfProductVos);
+        vo.setProduct(product);
+
         ProductImage mainProductImage = productImageDAO.getProductMainImageByProductUID(productId);
         if(mainProductImage==null){
             vo.setMainImage(new ProductImage());

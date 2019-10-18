@@ -57,6 +57,7 @@ function order() {
                 "        <input type=\"text\" id=\"date\" name='order-date' lay-verify=\"date\" placeholder=\"yyyy-MM-dd\" autocomplete=\"off\" class=\"layui-input\">\n" +
                 "      </div>\n" +
                 "  </div>" +
+
                 "  <div class=\"layui-input-block layui-row\">\n" +
                 "  </div>\n" +"" +
                 "\n" +

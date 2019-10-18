@@ -8,21 +8,25 @@ import com.alipay.api.request.AlipayTradePagePayRequest;
 import com.alipay.api.response.AlipayTradePagePayResponse;
 import com.alibaba.fastjson.JSONObject;
 import com.nchu.ruanko.greenfarm.config.AlipayConfig;
+import com.nchu.ruanko.greenfarm.constant.FileConstant;
 import com.nchu.ruanko.greenfarm.pojo.entity.*;
 import com.nchu.ruanko.greenfarm.pojo.vo.OrderItemVo;
 import com.nchu.ruanko.greenfarm.service.OrderFarmService;
 import com.nchu.ruanko.greenfarm.service.OrderItemService;
 import com.nchu.ruanko.greenfarm.service.OrderService;
+import com.nchu.ruanko.greenfarm.util.string.StringUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
@@ -193,5 +197,56 @@ public class UserOrderController {
         }
         return json.toString();
     }
+
+    /**订单评论文件上传**/
+    @ApiOperation(value = "userUpLoadPic", notes = "商品评论文件上传")
+    @PostMapping(value="user/management/order/review/upload/pic")
+    @ResponseBody
+    public String  userUpLoadPic(@RequestParam("orderId")String orderId, MultipartFile file){
+        JSONObject jsonObject = new JSONObject();
+        File folder = new File(FileConstant.FILE_UPLOAD_PATH);
+        System.out.println("进入商品评论图片的上传");
+        System.out.println("files"+file);
+        if (!folder.exists() || !folder.isDirectory()) {
+            folder.mkdirs();
+        }
+        if (file != null ) {
+                String uid = StringUtils.createUUID();
+                String fileNewName = uid + file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+                try {
+                    file.transferTo(new File(folder, fileNewName));
+                    ProductReviewImage reviewImage = new ProductReviewImage();
+
+
+                    reviewImage.setProductReviewImagePath(FileConstant.FILE_UPLOAD_VIRTUAL_PATH_PREFIX + fileNewName);
+                    reviewImage.setProductReviewImageUid(uid);
+                    orderService.saveOrderReviewPic(reviewImage,orderId);
+                    jsonObject.put("flag", true);
+                    /*FarmImage farmOtherImage = new FarmImage();
+                    farmOtherImage.setFarmImageUid(uid);
+                    farmOtherImage.setFarmImagePath(FileConstant.FILE_UPLOAD_VIRTUAL_PATH_PREFIX + fileNewName);*/
+                   /* farmOtherImages.add(farmOtherImage);*/
+                } catch (IOException e) {
+                    jsonObject.put("flag", false);
+                    jsonObject.put("reason", "文件上传失败！system");
+                    e.printStackTrace();
+                    return jsonObject.toString();
+                }
+        }
+        return  jsonObject.toString();
+    }
+
+    @ApiOperation(value = "usersubmitOrderReview", notes = "提交订单评论")
+    @PostMapping(value="/member/management/product/order/review/")
+    @ResponseBody
+    public String usersubmitOrderReview(@RequestParam("productDegree")String productDegree,@RequestParam("WuLiuDegree")String WuLiuDegree,@RequestParam("remark")String remark,@RequestParam("orderId")String orderId){
+        JSONObject jsonObject = new JSONObject();
+        orderService.saveOrderReview(productDegree,WuLiuDegree,remark,orderId);
+        jsonObject.put("flag",1);
+
+        return  jsonObject.toString();
+    }
+
+
 
 }

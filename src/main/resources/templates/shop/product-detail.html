@@ -62,6 +62,33 @@
                     </div>
                 </fieldset>
             </div>
+            <!--商品评论-->
+            <div class="detail clearfix">
+                <fieldset class="layui-elem-field">
+                    <legend style="font-weight: 700; text-align: center">
+                        <i class="fa fa-heart" style="color: #FF5722;"></i>
+                        商品评论
+                        <i class="fa fa-heart" style="color: #FF5722;"></i>
+                    </legend>
+                 <!--   <div class="layui-field-box">
+                        <table th:if="${product.getProduct().reviewOfProductVoList.size()}!=0" id="userTable" class="table table-bordered table-striped">
+
+                            <tr th:each="review:${product.getProduct().reviewOfProductVoList}" >
+                                <td th:text="${review.orderRate.orderRateLogistics}"></td>
+                                <td th:if="${addr.addressDistrict}!=null" th:text="${addr.addressProvince}+' '+${addr.addressCity}+' '+${addr.addressDistrict}"></td>
+                                <td th:if="${addr.addressDistrict}==null" th:text="${addr.addressProvince}+' '+${addr.addressCity}"></td>
+                                <td th:text="${addr.addressDetail}"></td>
+                                <td style="text-align: center">
+                                    <a class="layui-btn layui-btn-primary layui-btn-xs" th:href="@{/user/management/address/modify/{uid}(uid=${addr.addressUid})}">修改</a>
+                                    <button class="layui-btn layui-btn-primary layui-btn-xs" href="javaScript:void(0)" name="gf_delete" th:value="${addr.addressUid}">删除</button>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>-->
+                </fieldset>
+            </div>
+
         </div>
     </div>
     <script type="text/javascript" th:src="@{/gfstatic/js/management/shop/product-detail.js}"> </script>

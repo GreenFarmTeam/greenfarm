@@ -35,7 +35,13 @@ public class OrderServiceImpl implements OrderService {
     @Autowired
     private OrderFarmDAO orderFarmDAO;
     @Autowired
+    private FarmReviewImageDAO farmReviewImageDAO;
+    @Autowired
+    private ProductReviewImageDAO productReviewImageDAO;
+    @Autowired
     private FarmDAO farmDAO;
+    @Autowired
+    private OrderRateDAO orderRateDAO;
     private static final int cartState = 0;
     private static final int unPayState = 1;
     private static final int delivery_waitProductState = 2;
@@ -210,14 +216,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public String userPurchaseProduct(String userUid,String prdtId, String name, String phone, String addr, String detailAddr, String totalPrice,String prdNum) {
          String orderId = StringUtils.createUUID();
-        System.out.println("userUid:"+userUid);
-        System.out.println("prdtId:"+prdtId);
-        System.out.println("name:"+name);
-        System.out.println("phone:"+phone);
-        System.out.println("addr:"+addr);
-        System.out.println("detailAddr:"+detailAddr);
-        System.out.println("totalPrice:"+totalPrice);
-        System.out.println("prdNum:"+prdNum);
+
          if(orderDAO.createOrder(orderId,new Date(System.currentTimeMillis()),name,phone,addr,totalPrice,unPayState,userUid)>=1){
             Product product = productDAO.getProductByProductUID(prdtId);
             if(orderItemDAO.createOrderItems(StringUtils.createUUID(),orderId,prdtId,product.getProductPrice(),totalPrice,Integer.parseInt(prdNum))>=1){
@@ -332,5 +331,31 @@ public class OrderServiceImpl implements OrderService {
         businessOrderPageVo.setBusinessOrderVoList(businessOrderVoList);
         businessOrderPageVo.setPageInfo(pageInfo);
         return businessOrderPageVo;
+    }
+
+    /**
+     * 会员保存订单评论的图片
+     * @param reviewImage
+     * @param orderId
+     */
+    @Override
+    public void saveOrderReviewPic(ProductReviewImage reviewImage, String orderId) {
+        productReviewImageDAO.insertProductReviewImage(reviewImage.getProductReviewImageUid(),orderId,reviewImage.getProductReviewImagePath());
+    }
+
+    /**
+     * 保存用户的订单评论内容
+     * @param productDegree
+     * @param wuLiuDegree
+     * @param remark
+     * @param orderId
+     */
+    @Override
+    public void saveOrderReview(String productDegree, String wuLiuDegree, String remark, String orderId) {
+        List<OrderItem> orderItemList = orderItemDAO.loadOrderItemsByOrderId(orderId);
+        for(OrderItem orderItem : orderItemList){
+            orderRateDAO.insertOrderRate(StringUtils.createUUID(),productDegree,wuLiuDegree,remark,orderId);
+        }
+
     }
 }

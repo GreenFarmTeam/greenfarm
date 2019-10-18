@@ -83,6 +83,7 @@ public class UserProductController {
     @GetMapping(value = "/member/management/product/load/detail/operation")
     public ModelAndView memberManagementLoadProductsDetailInfo(@RequestParam("productID") String productId) {
         ModelAndView modelAndView = new ModelAndView();
+
         modelAndView.addObject("productList",productService.loadProductByproductID(productId));
         modelAndView.setViewName("");
         return modelAndView;
@@ -119,6 +120,8 @@ public class UserProductController {
         }
         return jsonObject.toString();
     }
+    /*@ApiOperation(value = "userSubmitOrder", notes = "")*/
+
 
 
 }
