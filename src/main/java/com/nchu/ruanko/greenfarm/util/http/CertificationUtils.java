@@ -27,6 +27,7 @@ public final class CertificationUtils {
         querys.put("name", name);
         HttpResponse response = AliyunHttpUtils.doGet(HOST, PATH, METHOD, headers, querys);
         String flag = JSON.parseObject(EntityUtils.toString(response.getEntity())).getString("status");
+        System.out.println(flag);
         return SUCCESS_FLAG.equals(flag);
     }
 

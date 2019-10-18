@@ -53,7 +53,7 @@ public class UserAddressController {
     @ApiOperation(value = "userAddAddressOperation", notes = "用户/会员添加收货地址")
     @PostMapping(value = "/user/management/address/add/operation")
     @ResponseBody
-    public String userAddAddressOperation(@RequestParam(name = "province") String province, @RequestParam(name = "city") String city, @RequestParam(name = "district", required = false) String district, @RequestParam(name = "name") String name, @RequestParam(name = "address") String address, HttpServletRequest request) {
+    public String userAddAddressOperation(@RequestParam(name = "province") String province,@RequestParam("phone")String phone, @RequestParam(name = "city") String city, @RequestParam(name = "district", required = false) String district, @RequestParam(name = "name") String name, @RequestParam(name = "address") String address, HttpServletRequest request) {
         JSONObject json = new JSONObject();
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
@@ -63,6 +63,7 @@ public class UserAddressController {
         addr.setAddressDistrict(district);
         addr.setAddressName(name);
         addr.setAddressDetail(address);
+        addr.setAddressPhone(phone);
         addressService.addAddress(addr, user.getUserUid());
         json.put("flag", true);
         return json.toString();

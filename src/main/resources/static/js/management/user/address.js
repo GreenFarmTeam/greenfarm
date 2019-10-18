@@ -103,11 +103,13 @@ gfCity.on('change', function () {
 
 
 // 新增收货地址
-$("#gf_sure").on('click', function () {
+$("#gf_sure_add").on('click', function () {
+
     var name = $("#gf_name").val();
     var provinceVal = $("#gf_province").val();
     var cityVal = $("#gf_city").val();
     var districtVal = $("#gf_district").val();
+    var phone = $("#gf_phone").val();
     var address = $("#gf_desc").val();
     if ($.trim(name) === "" || $.trim(address) === "" || provinceVal === "default") {
         layer.alert('请填写完整信息！', {skin:'layui-layer-lan', closeBtn: 0});
@@ -133,6 +135,7 @@ $("#gf_sure").on('click', function () {
                                         dataType : "json",
                                         data : {
                                             "name" : name,
+                                            "phone": phone,
                                             "address" : address,
                                             "province" : gfProvince.find("option:selected").text(),
                                             "city" : gfCity.find("option:selected").text()
@@ -160,6 +163,7 @@ $("#gf_sure").on('click', function () {
                                     dataType : "json",
                                     data : {
                                         "name" : name,
+                                        "phone": phone,
                                         "address" : address,
                                         "province" : gfProvince.find("option:selected").text(),
                                         "city" : gfCity.find("option:selected").text(),
@@ -186,6 +190,7 @@ $("#gf_sure").on('click', function () {
                                 dataType : "json",
                                 data : {
                                     "name" : name,
+                                    "phone": phone,
                                     "address" : address,
                                     "province" : gfProvince.find("option:selected").text(),
                                     "city" : gfCity.find("option:selected").text()

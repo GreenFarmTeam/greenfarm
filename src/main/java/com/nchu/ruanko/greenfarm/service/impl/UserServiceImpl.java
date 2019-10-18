@@ -49,6 +49,9 @@ public class UserServiceImpl implements UserService {
             user.setUserPhone(StringUtils.encodeBase64(user.getUserPhone()));
             user.setUserMail(null);
         }
+        System.out.println(user);
+
+
         userDAO.insertUser(user);
     }
 

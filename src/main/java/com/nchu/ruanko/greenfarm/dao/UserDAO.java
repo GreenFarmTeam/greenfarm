@@ -30,6 +30,7 @@ public interface UserDAO {
             @Result(property = "userRealname", column = "user_realname"),
             @Result(property = "userPhoto", column = "user_photo"),
             @Result(property = "userTime", column = "user_time"),
+            @Result(property = "userState", column = "user_state"),
             @Result(property = "userIsBusiness", column = "user_is_business")
     })
     @Select("SELECT *" +
@@ -156,7 +157,7 @@ public interface UserDAO {
      * @param user
      */
     @Insert("INSERT INTO gf_tb_user" +
-            " VALUES(#{userUid},#{userUsername},#{userPassword},#{userNickname},#{userPhone},#{userMail},#{userIdcard},#{userRealname},#{userPhoto},#{userTime},#{userIsBusiness})")
+            " VALUES(#{userUid},#{userUsername},#{userPassword},#{userNickname},#{userPhone},#{userMail},#{userIdcard},#{userRealname},#{userPhoto},#{userTime},#{userIsBusiness},1)")
     void insertUser(User user);
 
     /**

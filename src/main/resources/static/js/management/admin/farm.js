@@ -46,7 +46,7 @@ $("button[name='gf_down']").on('click', function () {
     });
 });
 
-$("a[name='gf_agree']").on('click', function () {
+$("button[name='gf_agree']").on('click', function () {
     var reviewUid = $(this).attr("value");
     layer.confirm('确定同意上架该农场？', {btn:['是','否'], skin:'layui-layer-lan', closeBtn:0}, function() {
         $.ajax({
@@ -95,7 +95,7 @@ $("button[name='disagree']").on('click', function () {
                 "<input type='button' value='确定' id='gf_reason_sure'/>" +
                 "</form>" +
                 "<input type='hidden' value='" + reviewUid + "' id='gf_review_uid'/>" +
-                "<script type='text/javascript' src='/gfstatic/js/management/admin/review-farm-disagree-reason.js'></script>" +
+                "<script type='text/javascript' src='/gfstatic/js/management/admin/farm.js'></script>" +
                 "</body>" +
                 "</html>"
             });

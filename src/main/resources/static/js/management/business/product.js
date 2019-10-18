@@ -128,7 +128,7 @@ $("#gf_sure").on('click', function () {
                             success : function (jsonData) {
                                 if (jsonData.flag === true) {
                                     layer.confirm('操作成功，请等待审核！', {btn:['是'], skin:'layui-layer-lan', closeBtn:0}, function () {
-                                        $(location).attr("href", getPathPrefix() + "business/management/index");
+                                        $(location).attr("href", getPathPrefix() + "business/management/product/add");
                                     });
                                 } else {
                                     layer.alert(jsonData.reason, {skin:'layui-layer-lan', closeBtn: 0});
@@ -282,7 +282,7 @@ $("button[name='gf_stock']").on('click', function () {
         "\n" +
         "                    <div class='control-group'>\n" +
         "                        <div class='controls'>\n" +
-        "                            <input type='button' id='gf_stock_sure' value='确定' class='layui-btn layui-btn-normal layui-btn-ms' disabled='disabled'/>\n" +
+        "                            <input type='button' id='gf_stock_sure' value='确定' class='layui-btn layui-btn-normal layui-btn-ms'/>\n" +
         "                        </div>\n" +
         "                    </div>\n" +
         "\n" +
@@ -293,7 +293,7 @@ $("button[name='gf_stock']").on('click', function () {
         "                        </div>\n" +
         "                    </div>\n" +
         "\n" +
-        "                    <input type='hidden' value='' + productUid + '' id='gf_product_uid'/>\n" +
+        "                    <input type='hidden' value='" + productUid + "' id='gf_product_uid'/>\n" +
         "                </form>\n" +
         "            </div>\n" +
         "        </div>\n" +
@@ -362,7 +362,7 @@ $("#gf_stock_sure").on('click', function () {
     }
 });
 
-$("button[name='gf_stock_nolimit']").on('click', function () {
+$("a[name='gf_stock_nolimit']").on('click', function () {
     var productUid = $("#gf_product_uid").val();
     layer.closeAll();
     layer.confirm('确定设置为库存充足？', {btn:['是','否'], skin:'layui-layer-lan', closeBtn:0}, function () {
@@ -387,7 +387,7 @@ $("button[name='gf_stock_nolimit']").on('click', function () {
     });
 });
 
-$("button[name='gf_stock_null']").on('click', function () {
+$("a[name='gf_stock_null']").on('click', function () {
     var productUid = $("#gf_product_uid").val();
     layer.confirm('确定设置为库存为零？', {btn:['是','否'], skin:'layui-layer-lan', closeBtn:0}, function () {
         $.ajax({

@@ -6,14 +6,13 @@ import com.nchu.ruanko.greenfarm.dao.FarmDAO;
 import com.nchu.ruanko.greenfarm.dao.FarmImageDAO;
 import com.nchu.ruanko.greenfarm.dao.FarmReviewDAO;
 import com.nchu.ruanko.greenfarm.dao.OrderFarmDAO;
-import com.nchu.ruanko.greenfarm.pojo.entity.Farm;
-import com.nchu.ruanko.greenfarm.pojo.entity.FarmImage;
-import com.nchu.ruanko.greenfarm.pojo.entity.OrderFarm;
+import com.nchu.ruanko.greenfarm.pojo.entity.*;
 import com.nchu.ruanko.greenfarm.pojo.vo.BusinessOrderPageVo;
 import com.nchu.ruanko.greenfarm.pojo.vo.MemberFarmVo;
 import com.nchu.ruanko.greenfarm.pojo.vo.OrderFarmPageVo;
 import com.nchu.ruanko.greenfarm.pojo.vo.OrderFarmVo;
 import com.nchu.ruanko.greenfarm.service.OrderFarmService;
+import com.nchu.ruanko.greenfarm.util.string.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,6 +44,11 @@ public class OrderFarmServiceImpl implements OrderFarmService {
     public MemberFarmVo getFarmDetailInfoByOrderFarm(String orderFarmUid) {
         MemberFarmVo vo = new MemberFarmVo();
         Farm farm = farmDAO.getFarmByOrderFarmUid(orderFarmUid);
+        User user =  farm.getBusiness().getUser();
+        user.setUserRealname(StringUtils.decodeBase64(farm.getBusiness().getUser().getUserRealname()));
+        Business business = farm.getBusiness();
+        business.setUser(user);
+        farm.setBusiness(business);
         vo.setFarm(farm);
 
         FarmImage mainFarmImage = farmImageDAO.getFarmMainImageByFarmUID(farm.getFarmUid());

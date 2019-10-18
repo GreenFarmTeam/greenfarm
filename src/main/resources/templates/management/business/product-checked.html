@@ -6,6 +6,7 @@
     <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/regex.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/map.js}"></script>
 
     <link th:href="@{/gfstatic/templateone/res/layui/css/layui.css}" rel="stylesheet" type="text/css"/>
@@ -63,7 +64,7 @@
                         <td th:if="${pd.product.productUnit}!=null" th:text="${pd.product.productPrice+'元/'+pd.product.productUnit}"></td>
                         <td th:if="${pd.product.productType}==null" th:text="无"></td>
                         <td th:if="${pd.product.productType}!=null" th:text="${pd.product.productType.typeName}"></td>
-                        <td th:if="${pd.product.productStock}==null" th:text="0"></td>
+                        <td th:if="${pd.product.productStock}==null" th:text="库存充足"></td>
                         <td th:if="${pd.product.productStock}!=null" th:text="${pd.product.productStock}"></td>
                         <td style="text-align: center">
                             <button href="javascript:void(0);" name="gf_detail" th:value="${pd.product.productUid}" class="layui-btn layui-btn-primary layui-btn-xs">详情</button>

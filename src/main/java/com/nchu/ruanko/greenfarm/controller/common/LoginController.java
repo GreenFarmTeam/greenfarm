@@ -64,6 +64,8 @@ public class LoginController {
     @PostMapping(value = "/user/password/login/operation")
     @ResponseBody
     public String userLoginWithPasswordOperation(@RequestParam(name = "key") String key, @RequestParam(name = "password") String password, @RequestParam(name = "vcode") String vcode, HttpServletRequest request) {
+        System.out.println(key);
+        System.out.println(password);
         JSONObject json = new JSONObject();
         HttpSession session = request.getSession();
         User user;

@@ -113,8 +113,10 @@ public class UserBasicInformationController {
             json.put("reason", "当前身份证已被认证！");
         } else {
             try {
+                System.out.println("realname"+realname);
                 boolean successFlag = CertificationUtils.certification(realname, idcard);
                 if (successFlag) {
+
                     userService.modifyUserRealnameAndIdcardByUID(realname, idcard, uid);
                     json.put("flag", true);
                     HttpSession session = request.getSession();
