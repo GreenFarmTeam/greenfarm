@@ -53,49 +53,45 @@ function purchaseProduct(){
                 "<head>\n" +
                 "    <meta charset=\"UTF-8\">\n" +
                 "    <title>支付</title>\n" +
+                "<style> label{text-align: right; margin-right: 40px; font-size: 20px; line-height: 38px;}</style>" +
                 "</head>\n" +
                 "<body>"+"<form class=\"layui-form\"  method=\"post\">\n" +
-                "  <div class=\"layui-input-block layui-row\">\n" +
-                "  </div>\n" +"" +
+                "  <br>\n" +
 
                 "<input type='hidden' name='prtPrice' value=\""+productPrice+"\"/>"+
                 "<input type='hidden' name='prtStock' value=\""+productStock+"\"/>"+
                 "<input type='hidden' name='productUid' value=\""+productUid+"\"/>"+
                 "  <div class=\"layui-form-item layui-row\">\n" +
 
-                "    <label class=\"layui-form-label layui-col-md2\">收货地址</label>\n" +
+                "    <label class=\"layui-col-md2\">收货地址:</label>\n" +
 
-                "    <div class=\"layui-input-block layui-col-md9\">\n" +
+                "    <div class=\"layui-col-md8\">\n" +
                 "      <select name=\"address\" lay-filter=\"aihao\" required=\"required\" lay-verify=\"required\">\n" +
                             selectContent+
                 "      </select>\n" +
                 "    </div>\n" +
                 "  </div>\n" +
-                "  \n" +
-                "  <div class=\" layui-input-block layui-row\">\n" +
-                "  </div>\n" +
+                "  <br>\n" +
                 "  <div class=\"layui-form-item layui-row\">\n" +
-                "    <label class=\"layui-form-label layui-col-md2\">数量</label>\n" +
-                "    <div class=\"layui-input-block layui-col-md9\">\n" +
+                "    <label class=\"layui-col-md2\">数量:</label>\n" +
+                "    <div class=\"layui-col-md8\">\n" +
                 "      <input type=\"number\" name=\"number\" required=\"required\" lay-verify=\"required\"  class=\"layui-input\">\n" +
                 "    </div>\n" +
                 "  </div>\n" +
 
-                "  <div class=\" layui-input-block layui-row\">\n" +
-                "  </div>\n" +
+                "  <br>\n" +
 
                 "  <div class=\"layui-form-item layui-form-text layui-row\">\n" +
-                "    <label class=\"layui-form-label layui-col-md2\">备注</label>\n" +
-                "    <div class=\"layui-input-block layui-col-md9\">\n" +
+                "    <label class=\"layui-col-md2\">备注留言:</label>\n" +
+                "    <div class=\"layui-col-md8\">\n" +
                 "      <textarea placeholder=\"请输入内容,没有请填无\" class=\"layui-textarea\" required=\"required\" lay-verify=\"required\" name=\"desc\"></textarea>\n" +
                 "    </div>\n" +
                 "  </div>\n" +
-                "  <div class=\"layui-input-block layui-row\">\n" +
-                "  </div>\n" +
-                " \n" +
+                "  <br>\n" +
                 "  <div class=\"layui-form-item\">\n" +
-                "    <div class=\"layui-input-block\">\n" +
-                "      <button onclick=\"submit_btn(this)\" type=\"button\" class=\"layui-btn\">提交订单</button>\n" +
+                "    <label class=\"layui-col-md2\">&nbsp;</label>\n" +
+                "    <div class=\"layui-col-md8\">\n" +
+                "      <button onclick=\"submit_btn(this)\" type=\"button\" class=\"layui-btn layui-btn-normal\">提交订单</button>\n" +
                 "    </div>\n" +
                 "  </div>\n" +
                 "</form>"+
@@ -105,7 +101,6 @@ function purchaseProduct(){
                          * 提交表单
                          */
                         function submit_btn(btn){
-                            layer.msg("我进来了!")
                             var formData = new FormData();
                             var address = $("select[name='address']").val();
                             var prtNumber = $("input[name='number']").val();
@@ -177,7 +172,7 @@ function purchaseProduct(){
             layer.open({
                 type: 1,
                 skin: 'layui-layer-rim',
-                area: ['1000px', '600px'],
+                area: ['1000px', '400px'],
                 shadeClose: true,
                 content : content
             });

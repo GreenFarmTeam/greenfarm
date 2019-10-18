@@ -5,94 +5,98 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <meta name="renderer" content="webkit"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>SkyMall | 商城</title>
+    <title>绿色农场</title>
 
-    <link th:href="@{/gfstatic/templateone/res/layui/css/layui.css}" rel="stylesheet" type="text/css"/>
-    <link th:href="@{/gfstatic/templateone/res/layui/layui.js}" rel="stylesheet" type="text/css"/>
-    <link th:href="@{/gfstatic/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
-    <link th:href="@{/gfstatic/css/common.css}" rel="stylesheet" type="text/css"/>
-    <script th:src="@{/gfstatic/layui/jquery-3.2.1.min.js}"></script>
-    <script th:src="@{/gfstatic/layui/layui.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/map.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/layui/jquery-3.2.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/layui/layui.js}"></script>
     <script th:src="@{/gfstatic/js/common/regex.js}"></script>
-    <style>
-        .desc>p{
-            font-size: 20px;
-            font-weight: 300;
-        }
-        .product_img{
-            background-color: #FFFFFF;
-            border-radius: 3px;
-            border: 1px solid #e1e1e1;
-            width: 400px;
-            height: 360px;
-        }
-        .product_info>p{
-            margin: 20px 0;
-            text-align: right;
-        }
-        .product_info>.title{
-            font-weight: bold;
-            text-align: left;
-        }
-        .size1{
-            font-size: 30px;
-        }
-        .product_info>.price{
-            font-weight: 500;
-            color: #1e1e1e;
-        }
-        .size2{
-            font-size: 24px;
-        }
-        .product_info>p>.price1{
-            font-weight: bold;
-            color: #FF5722;
-        }
-        .size3{
-            font-size: 30px;
-        }
-    </style>
+
+    <link th:href="@{/gfstatic/css/bootstrap-responsive.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/gfstatic/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/gfstatic/css/style-responsive.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/gfstatic/css/style-metro.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/gfstatic/css/style.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/gfstatic/css/default.css}" rel="stylesheet" type="text/css" id="style_color"/>
+    <link th:href="@{/gfstatic/css/uniform.default.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/gfstatic/image/favicon.ico}" rel="shortcut icon"/>
+    <link th:href="@{/gfstatic/templateone/res/layui/css/layui.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/gfstatic/css/common.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body class="site-home">
-<!--头部模块-->
-<div th:replace="shop/common::head"></div>
-<div class="layui-container" id="content">
-    <!--商品详情-->
-    <div class="layui-row" style="margin-top: 10px;">
-        <div class="layui-row" id="product">
-            <div class="layui-col-xs12 layui-col-sm6 layui-col-md6">
-                <img class="product_img img_responsive" th:src="${farm.getMainImage().getFarmImagePath()}" />
-            </div>
-            <div class="layui-col-xs12 layui-col-sm6 layui-col-md6">
-                <div class="product_info">
-                    <input type="hidden" id="farmId" th:value="${farm.farm.farmUid}"/>
-                    <p th:text="${farm.farm.farmName}" class="title size1"></p>
-                    <hr class="layui-bg-red" />
-                    <p class="price size2">优惠价：<span class="price1 size3" th:text="${farm.farm.getFarmPrice()}"></span></p>
-                    <hr class="layui-bg-red" />
-                    <p class="price size2">市场价：<span class="" th:text="${farm.farm.getFarmPrice()}+20"></span></p>
-                    <hr class="layui-bg-red" />
-                    <p ><button onclick="order()" class="layui-btn layui-btn-lg layui-btn-radius layui-btn-danger">预约带看</button></p>
+    <!--头部模块-->
+    <div th:replace="shop/common::head"></div>
 
-                </div>
-            </div>
-        </div>
-        <div class="layui-row" style="margin-top: 50px;text-align: center;">
-            <fieldset class="layui-elem-field">
-                <legend style="font-weight: 700"><i class="fa fa-heart" style="color: #FF5722;"></i>农场描述<i class="fa fa-heart" style="color: #FF5722;"></i></legend>
-                <div class="layui-field-box desc">
-                    <p th:text="${farm.farm.getFarmDescription()}"></p>
-                    <hr class="layui-bg-green" />
-                    <div th:if="${farm.getOtherImages().size()}!=0" th:each="img:${farm.getOtherImages()}">
-                        <img th:src="${img.farmImagePath}" class="img_responsive"/>
+    <div class="layui-container">
+        <div >
+            <div class="detcon clearfix">
+                <div id="product">
+                    <div class="fl img">
+                        <img class="product_img" th:src="${farm.getMainImage().getFarmImagePath()}" />
+                    </div>
+                    <div class="fr info">
+                        <input type="hidden" id="farmId" th:value="${farm.farm.farmUid}"/>
+                        <div class="tit">
+                            <p class="title" th:text="${farm.farm.farmName}"></p>
+                        </div>
+                        <div th:if="${farm.farm.farmYear!=null}">
+                            <span>出租时间：<span th:text="${farm.farm.farmYear}"></span>年</span>
+                        </div>
+                        <div th:if="${farm.farm.farmArea!=null}">
+                            <span>面积：<span th:text="${farm.farm.farmArea}"></span>亩</span>
+                        </div>
+                        <div class="pri">
+                            <span class="price"><span class="price" th:text="${farm.farm.getFarmPrice()}"></span>&nbsp;<span class="price" th:text="${farm.farm.farmUnit}"></span></span>
+                        </div>
+                        <div class="btns">
+                            <button onclick="order()" class="layui-btn layui-btn-lg layui-btn-danger">预约带看</button>
+                        </div>
                     </div>
                 </div>
-            </fieldset>
+            </div>
+
+            <!--商品详情-->
+            <div class="detail clearfix">
+                <fieldset class="layui-elem-field">
+                    <legend style="font-weight: 700; text-align: center"><i class="fa fa-heart" style="color: #FF5722;"></i>农场描述<i class="fa fa-heart" style="color: #FF5722;"></i></legend>
+                    <div class="layui-field-box">
+                        <div class="desc">
+                            <p>商品描述：</p>
+                            <p th:text="${farm.farm.getFarmDescription()}"></p>
+                        </div>
+                        <div class="more_pic">
+                            <p th:if="${farm.getOtherImages().size()}==0" th:text="无其他图片"></p>
+                            <p th:if="${farm.getOtherImages().size()}!=0" th:text="其他图片"></p>
+                            <div th:if="${farm.getOtherImages().size()}!=0" th:each="img:${farm.getOtherImages()}">
+                                <img th:src="${img.farmImagePath}" />
+                            </div>
+                        </div>
+                        <div>
+                            <p>农场位置：</p>
+                            <div id="show_map" style="height: 400px; width: 800px;border: 1px solid grey;"></div>
+                            <input type="hidden" id="gf_lng" th:value="${farm.farm.farmLongitude}"/>
+                            <input type="hidden" id="gf_lat" th:value="${farm.farm.farmLatitude}"/>
+                        </div>
+                        <div>
+                            <button href="javascript:void(0);" name="gf_location" th:attr="data-lng=${farm.farm.farmLongitude},data-lat=${farm.farm.farmLatitude}" class="layui-btn layui-btn-normal">导航到这</button>
+                            <input type="hidden" id="now-lng" value=""/>
+                            <input type="hidden" id="now-lat" value=""/>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
         </div>
     </div>
-</div>
-<script type="text/javascript" th:src="@{/gfstatic/js/management/shop/farm-detail.js}"> </script>
-<!--底部-->
-<div th:replace="shop/common::foot"></div>
+
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=f48fcde49f6822707df87e6e395b4d08"></script>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=2b715dce8430b0ba146dba04ca85d67a&plugin=AMap.Driving"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/map.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/management/shop/farm-detail.js}"> </script>
+
+    <!--底部-->
+    <div th:replace="shop/common::foot"></div>
 </body>
 </html>

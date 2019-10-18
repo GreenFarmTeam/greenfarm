@@ -44,6 +44,7 @@ public class ShopController {
     public String toIndex() {
         return "shop/index";
     }
+
     /**
      * 加载所有的农场品类型
      * @return
@@ -129,7 +130,7 @@ public class ShopController {
         MemberFarmPageVo farmList = farmService.loadAllFarmsByClassificationID(classificationId,pageNum,pageSize,PAGE_NAVIGATION_SIZE);
         json.put("flag",0);
         json.put("farmList",farmList);
-        System.out.println("我进来了");
+        System.out.println("");
         return json.toString();
     }
 

@@ -156,6 +156,7 @@ $("button[name='gf_detail']").on('click', function () {
                     "<head>\n" +
                     "    <meta charset='UTF-8'>\n" +
                     "    <title>Title</title>\n" +
+                    "<style>.form-horizontal .control-label{width: 100px;} .form-horizontal .controls{margin-left: 120px}</style>" +
                     "</head>\n" +
                     "<body>\n" +
                     "<div class='row-fluid'>\n" +
@@ -198,8 +199,8 @@ $("button[name='gf_detail']").on('click', function () {
                 }
 
                 if (jsonData.mainImage.indexOf("/") !== -1) {
-                    content2 += filltext1 + "商品主图片</label> <div class='controls'><a href='" + getPathPrefix() + jsonData.mainImage + "' target='_blank'>" +
-                        "<img src='" + getPathPrefix() + jsonData.mainImage + "' width='220px' height='180px'/></a></div></div>";
+                    content2 += filltext1 + "商品主图片</label> <div class='controls'><a href='" + getPathPrefix() + jsonData.mainImage + "' target='_blank' style='float:left; width: 220px; height: 180px; margin: 0 10px 10px 0; display: block'>" +
+                        "<img src='" + getPathPrefix() + jsonData.mainImage + "' style='width: 220px; height: 180px;margin: 0 10px 10px 0'/></a></div></div>";
                 } else {
                     content2 += filltext1 + "商品主图片</label> <div class='controls'><span>"+jsonData.mainImage+"</span></div></div>";
                 }
@@ -207,8 +208,8 @@ $("button[name='gf_detail']").on('click', function () {
                 if (jsonData.otherImages.length !== 0) {
                     content2 += filltext1 + "商品其他图片</label> <div class='controls'>";
                     for (var i in jsonData.otherImages) {
-                        content2 += "<a href='" + getPathPrefix() + jsonData.otherImages[i] + "' target='_blank'><img src='" +
-                            getPathPrefix() + jsonData.otherImages[i] + "' width='220px' height='180px' style='margin-bottom: 10px'/></a>";
+                        content2 += "<a href='" + getPathPrefix() + jsonData.otherImages[i] + "' target='_blank' style='float:left; width: 220px; height: 180px; margin: 0 10px 10px 0; display: block'><img src='" +
+                            getPathPrefix() + jsonData.otherImages[i] + "'style='width: 220px; height: 180px;margin: 0 10px 10px 0'/></a>";
                     }
                     content2 += "</div></div>";
                 } else {

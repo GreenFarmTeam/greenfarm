@@ -4,7 +4,6 @@ $.ajax({
     url:"/greenfarm/shop/load/list/classification",
     dataType:"json",
     success : function (jsonData) {
-
         if (jsonData.flag === 0) {
             var list = $("#category");
             $(jsonData.data).each(function (index, item) {
@@ -23,7 +22,6 @@ $.ajax({
     url:"/greenfarm/shop/load/list/farm/classification",
     dataType:"json",
     success : function (jsonData) {
-
         if (jsonData.flag === 0) {
             var list = $("#farm-category");
             $(jsonData.data).each(function (index, item) {

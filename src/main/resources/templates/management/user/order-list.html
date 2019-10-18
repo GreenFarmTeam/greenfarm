@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <meta name="renderer" content="webkit"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>SkyMall | 商城</title>
+    <title>绿色农场</title>
     <link th:href="@{/gfstatic/templateone/res/layui/css/layui.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/gfstatic/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/gfstatic/css/common.css}" rel="stylesheet" type="text/css"/>
@@ -48,7 +48,7 @@
                         <th>地址</th>
                         <th>总价</th>
                         <th>状态</th>
-                        <th>操作</th>
+                        <th style="text-align: center">操作</th>
                     </tr>
                     </thead>
                     <tbody id="list">
@@ -60,6 +60,7 @@
 
     </div>
 
+    <!--我的农场订单-->
     <div class="layui-row">
         <div class="layui-col-md12"><h1 class="site-h1"><i class="fa fa-gift" style="color: #FF5722;"></i>
             &nbsp;我的农场订单</h1></div>
@@ -77,17 +78,17 @@
                         <th>预约时间</th>
                         <th>备注详情</th>
                         <th>预约状态</th>
-                        <th>操作</th>
+                        <th style="text-align: center">操作</th>
                     </tr>
                     </thead>
                     <tbody id="farm-list">
-
                     </tbody>
                 </table>
             </div>
         </div>
 
     </div>
+
     <script>
         //            <![CDATA[
         $(function () {
@@ -145,16 +146,16 @@
                 console.log(item)
                 var tr = $("<tr></tr>");
                 tr.append($("<td>" + (count++) + "</td>"));
-                tr.append($("<td width='200'>" + item.orderCtime + "</td>"));
-                tr.append($("<td width='80'>" + item.orderRname + "</td>"));
-                tr.append($("<td width='100'>" + item.orderRphone + "</td>"));
-                tr.append($("<td width='100'><a  value='"+item.orderRaddress+"' href='javascript:void(0);'>" + item.orderRaddress.substring(0,item.orderRaddress.indexOf("|")) + "</a></td>"));
-                tr.append($("<td width='80'>" + item.orderSum + "</td>"));
+                tr.append($("<td>" + item.orderCtime + "</td>"));
+                tr.append($("<td>" + item.orderRname + "</td>"));
+                tr.append($("<td>" + item.orderRphone + "</td>"));
+                tr.append($("<td><a  value='"+item.orderRaddress+"' href='javascript:void(0);'>" + item.orderRaddress.substring(0,item.orderRaddress.indexOf("|")) + "</a></td>"));
+                tr.append($("<td>" + item.orderSum + "元</td>"));
                 var state = item.orderState;
                 var status;//1:未付款 2:等待发货 3:等待收货 4:订单完成
                 switch (state) {
                     case 1:
-                        status = "<span class='layui-badge layui-bg-orange'>未付款</span>";
+                        status = "<span class='layui-badge layui-bg-orange'>&emsp;未付款&emsp;</span>";
                         break;
                     case 2:
                         status = "<span class='layui-badge layui-bg-green'>等待发货</span>";
@@ -170,15 +171,15 @@
                         break;
                 }
                 tr.append($("<td width='100'>" + status + "</td>"));
-                var operter = $("<td ><button onclick='getDetail( this)' value='"+item.orderUid+"' class='layui-btn layui-btn-radius layui-btn-primary'>查看详情</button></td>");
+                var operter = $("<td ><button onclick='getDetail( this)' value='"+item.orderUid+"' class='layui-btn layui-btn-primary'>查看详情</button></td>");
                 if (state == 4) {
-                    operter.append($("<button onclick='recieve(this)' value='"+item.orderUid+"'  class='layui-btn layui-btn-radius layui-btn-green'>评价</button>"));
+                    operter.append($("<button onclick='recieve(this)' value='"+item.orderUid+"'  class='layui-btn layui-btn-primary'>&emsp;评价&emsp;</button>"));
                 }
                 if (state == 3) {
-                    operter.append($("<button onclick='recieve(this)' value='"+item.orderUid+"'  class='layui-btn layui-btn-radius layui-btn-danger'>确认收货</button>"));
+                    operter.append($("<button onclick='recieve(this)' value='"+item.orderUid+"'  class='layui-btn layui-btn-normal'>确认收货</button>"));
                 }
                 if (state == 1) {
-                    operter.append($("<button onclick='pay(this)'  value='"+item.orderUid+"' class='layui-btn layui-btn-radius layui-btn-green'>付款</button>"));
+                    operter.append($("<button onclick='pay(this)'  value='"+item.orderUid+"' class='layui-btn layui-btn-normal'>&emsp;付款&emsp;</button>"));
                 }
                 tr.append(operter);
                 tbody.append(tr);
@@ -192,17 +193,17 @@
                 console.log(item)
                 var tr = $("<tr></tr>");
                 tr.append($("<td>" + (count++) + "</td>"));
-                tr.append($("<td width='200'>" + item.orderFarmName + "</td>"));
-                tr.append($("<td width='80'>" + item.orderFarmPhone + "</td>"));
-                tr.append($("<td width='100'>" + item.orderFarmFarm.farmName + "</td>"));
-                tr.append($("<td width='80'>" + item.orderFarmTime + "</td>"));
-                tr.append($("<td width='100'>" + item.orderFarmRemark + "</td>"));
+                tr.append($("<td>" + item.orderFarmName + "</td>"));
+                tr.append($("<td>" + item.orderFarmPhone + "</td>"));
+                tr.append($("<td>" + item.orderFarmFarm.farmName + "</td>"));
+                tr.append($("<td>" + item.orderFarmTime + "</td>"));
+                tr.append($("<td>" + item.orderFarmRemark + "</td>"));
 
                 var state = item.orderFarmState;
                 var status;//1:未付款 2:等待发货 3:等待收货 4:订单完成
                 switch (state) {
                     case 0:
-                        status = "<span class='layui-badge layui-bg-orange'>未付款</span>";
+                        status = "<span class='layui-badge layui-bg-orange'>&emsp;未付款&emsp;</span>";
                         break;
                     case 1:
                         status = "<span class='layui-badge layui-bg-green'>等待通知</span>";
@@ -217,15 +218,15 @@
 
                 tr.append($("<td width='100'>" + status + "</td>"));
 
-                var operter = $("<td ><button onclick='getFarmDetail( this)' value='"+item.orderFarmUid+"' class='layui-btn layui-btn-radius layui-btn-primary'>查看详情</button></td>");
+                var operter = $("<td ><button onclick='getFarmDetail( this)' value='"+item.orderFarmUid+"' class='layui-btn layui-btn-primary'>查看详情</button></td>");
                 if (state == 2) {
-                    operter.append($("<button onclick='evaluateFarm(this)' value='"+item.orderFarmUid+"'  class='layui-btn layui-btn-radius layui-btn-green'>评价</button>"));
+                    operter.append($("<button onclick='evaluateFarm(this)' value='"+item.orderFarmUid+"'  class='layui-btn layui-btn-primary'>&emsp;评价&emsp;</button>"));
                 }
                 if (state == 1) {
-                    operter.append($("<button onclick='farmConfirm(this)' value='"+item.orderFarmUid+"'  class='layui-btn layui-btn-radius layui-btn-danger'>已带看</button>"));
+                    operter.append($("<button onclick='farmConfirm(this)' value='"+item.orderFarmUid+"'  class='layui-btn layui-btn-normal'>&nbsp;已带看&nbsp;</button>"));
                 }
                 if (state == 0) {
-                    operter.append($("<button onclick='farmPay(this)'  value='"+item.orderFarmUid+"' class='layui-btn layui-btn-radius layui-btn-green'>付款</button>"));
+                    operter.append($("<button onclick='farmPay(this)'  value='"+item.orderFarmUid+"' class='layui-btn layui-btn-normal'>&emsp;付款&emsp;</button>"));
                 }
                 tr.append(operter);
                 tbody.append(tr);
@@ -443,8 +444,8 @@
             });
         }
 
-        //            ]]>
     </script>
+
 </div>
 <!--底部-->
 <div th:replace="shop/common::foot"></div>

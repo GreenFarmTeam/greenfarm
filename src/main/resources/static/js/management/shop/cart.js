@@ -3,7 +3,6 @@ $(function () {
     loadCart();
 });
 
-
 function loadCart() {
     $.ajax({
         type:"GET",
@@ -43,9 +42,9 @@ function appendToPage(table, items) {
         tr.append($("<td >单价：" + item.orderItem.product.productPrice + "</td>"));
         tr.append($("<td name='productNum'>数量：" + item.orderItem.itemCount + "</td>"));
         tr.append($("<td name='productNum'>总价：￥" + item.orderItem.itemSum+ "</td>"));
-        tr.append($("<td><button onclick='add(this,"+(item.orderItem.itemCount)+"," + item.orderItem.product.productPrice + ")' value='"+item.orderItem.product.productUid+"' class='layui-btn layui-btn-radius layui-btn-danger'>增加</button></td>"));
-        tr.append($("<td><button onclick='sub(this,"+(item.orderItem.itemCount)+"," + item.orderItem.product.productPrice + ")' value='"+item.orderItem.product.productUid+"' class='layui-btn layui-btn-radius layui-btn-danger'>减少</button></td>"));
-        tr.append($("<td><button onclick='remove(this," + item.orderItem.itemSum + ")' class='layui-btn layui-btn-radius layui-btn-danger' value='"+item.orderItem.product.productUid+"'>删除</button></td>"));
+        tr.append($("<td><button onclick='add(this,"+(item.orderItem.itemCount)+"," + item.orderItem.product.productPrice + ")' value='"+item.orderItem.product.productUid+"' class='layui-btn layui-btn-sm layui-btn-radius layui-btn-primary' style='font-size: 18px'>+</button></td>"));
+        tr.append($("<td><button onclick='sub(this,"+(item.orderItem.itemCount)+"," + item.orderItem.product.productPrice + ")' value='"+item.orderItem.product.productUid+"' class='layui-btn layui-btn-sm layui-btn-radius layui-btn-primary' style='font-size: 18px'>-</button></td>"));
+        tr.append($("<td><button onclick='remove(this," + item.orderItem.itemSum + ")' class='layui-btn layui-btn-primary' value='"+item.orderItem.product.productUid+"'>删除</button></td>"));
         table.append(tr);
         total += item.orderItem.itemSum;
     });
@@ -76,7 +75,9 @@ function remove(btn, subTotal) {
 
 }
 
-/**增加产品数量**/
+/**
+ * 增加产品数量
+ */
 function add(btn, productNum,productPrice) {
     var productId = btn.value;
     productNum++;
@@ -101,7 +102,9 @@ function add(btn, productNum,productPrice) {
     })
 }
 
-/**减少产品数量**/
+/**
+ * 减少产品数量*
+ */
 function sub(btn,  productNum,productPrice) {
     var productId = btn.value;
     productNum--;
@@ -130,7 +133,6 @@ function sub(btn,  productNum,productPrice) {
     }
 }
 
-
 function addressAppendToPage(table, items) {
     table.html("")
     console.log(items)
@@ -143,7 +145,7 @@ function addressAppendToPage(table, items) {
         tr.append($("<td name='productNum'>联系电话：" + item.addressPhone + "</td>"));
         tr.append($("<td >收货地址：" + item.addressProvince+" "+item.addressCity+" "+item.addressDistrict + "</td>"));
         tr.append($("<td >详细地址：" + item.addressDetail + "</td>"));
-        tr.append($("<td><button onclick='choose(this)' value='"+item.addressUid+"' class='layui-btn layui-btn-radius layui-btn-danger'>选为收货地址</button></td>"));
+        tr.append($("<td><button onclick='choose(this)' value='"+item.addressUid+"' class='layui-btn layui-btn-sm layui-btn-primary'>选为收货地址</button></td>"));
         table.append(tr);
     });
 }
@@ -175,7 +177,6 @@ function choose(btn) {
  * 提交订单
  */
 function submit_btn (btn) {
-    layer.msg("我进来了!")
     var formData = new FormData();
     var name = $("input[name='name']").val();
     var phone = $("input[name='phone']").val();

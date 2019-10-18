@@ -4,21 +4,6 @@ jQuery(document).ready(function () {
 });
 
 
-// 判断该商家是否有“农场租赁”这项业务
-// window.onload = function () {
-//     $.ajax({
-//         type : "GET",
-//         url : "/business/management/farm/can",
-//         dataType : "json",
-//         data : {
-//             "uid" : $("#gf_business_uid").val()
-//         },
-//         success : function (jsonData) {
-//             flag = jsonData.flag;
-//         }
-//     });
-// };
-
 function changePage(page) {
     $(".page-sidebar-menu li").removeClass("active");
 
@@ -64,6 +49,7 @@ function changePage(page) {
         $("#farm").addClass("active").find("a").eq(0).append($('<span class="selected"></span>'));
         $("#gf_farm_review").addClass("active");
         $("#mainFrame").attr("src", "/business/management/farm/review");
+
     }else if (page === 'order_product') {
         $("#order").addClass("active").find("a").eq(0).append($('<span class="selected"></span>'));
         $("#order_product").addClass("active");

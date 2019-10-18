@@ -73,40 +73,6 @@ function markPoint(map, lng, lat) {
 }
 
 
-// function initMap2(idContainer) {
-//
-//     var map = new AMap.Map(idContainer, {
-//         resizeEnable : false,
-//         zoom : 14
-//     });
-//
-//     AMap.plugin('AMap.Geolocation', function() {
-//         var geolocation = new AMap.Geolocation({
-//             enableHighAccuracy: true,
-//             // 设置定位超时时间，默认：无穷大
-//             timeout: 10000,
-//             buttonPosition:'RB',
-//             buttonOffset: new AMap.Pixel(10, 20),
-//             zoomToAccuracy: true
-//         });
-//         geolocation.getCurrentPosition();
-//         AMap.event.addListener(geolocation, 'complete', onComplete);
-//         AMap.event.addListener(geolocation, 'error', onError);
-//
-//         function onComplete (data) {
-//             $("#now-lng").val(data.position.lng);
-//             $("#now-lat").val(data.position.lat);
-//         }
-//
-//         function onError(data) {
-//             // null operation
-//         }
-//     });
-//
-//     return map;
-//
-// }
-
 function initMap2(containerId) {
 
     var map = new AMap.Map(containerId, {
@@ -146,3 +112,40 @@ function initMap2(containerId) {
     return map;
 
 }
+
+var map = new AMap.Map('show_map', {
+    resizeEnable : true,
+    zoom : 15
+});
+markPoint(map, $("#gf_lng").val(), $("#gf_lat").val());
+
+$("button[name='gf_location']").on('click', function () {
+    var lng = $(this).attr("data-lng");
+    var lat = $(this).attr("data-lat");
+    var content = "<!DOCTYPE html>" +
+        "<html>" +
+        "<head>" +
+        "<meta charset='UTF-8'>" +
+        "</head>" +
+        "<body>" +
+        "<div id='container' style='width: 800px; height: 600px'></div>" +
+        "<script type='text/javascript'>" +
+        "var map = initMap2('container');" +
+        "map.setCenter(new AMap.LngLat(" + lng + ", " + lat + "));" +
+        "var localLng = $('#now-lng').val();" +
+        "var localLat = $('#now-lat').val();" +
+        "var driving = new AMap.Driving({" +
+        "map:map" +
+        "});" +
+        "driving.search(new AMap.LngLat(localLng, localLat), new AMap.LngLat(" + lng + ", " + lat + "), function(status, result) {});" +
+        "</script>" +
+        "</body>" +
+        "<ml>";
+    layer.open({
+        type: 1,
+        skin: 'layui-layer-rim',
+        area: ['800px', '600px'],
+        shadeClose: false,
+        content: content
+    });
+});

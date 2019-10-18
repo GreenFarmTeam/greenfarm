@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>已下线的农场信息</title>
     <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=f48fcde49f6822707df87e6e395b4d08"></script>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=2b715dce8430b0ba146dba04ca85d67a&plugin=AMap.Driving"></script>
     <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
@@ -65,7 +66,11 @@
                         <td th:if="${pd.getFarm().getFarmUnit()}!=null" th:text="${pd.getFarm().getFarmUnit()}"></td>
                         <td th:if="${pd.getFarm().getBusiness().getBusinessShopName()}!=null" th:text="${pd.getFarm().getBusiness().getBusinessShopName()}"></td>
                         <td th:if="${pd.getFarm().getType().getFarmTypeName()}!=null" th:text="${pd.getFarm().getType().getFarmTypeName()}"></td>
-                        <td><a href="javascript:void(0);" name="gf_location" th:attr="data-lng=${pd.getFarm().getFarmLongitude()}, data-lat=${pd.getFarm().getFarmLatitude()}">查看地图</a></td>
+                        <td>
+                            <a href="javascript:void(0);" name="gf_location" th:attr="data-lng=${pd.getFarm().getFarmLongitude()},data-lat=${pd.getFarm().getFarmLatitude()}">查看地图</a>
+                            <input type="hidden" id="now-lng" value=""/>
+                            <input type="hidden" id="now-lat" value=""/>
+                        </td>
                         <td th:if="${pd.getReview().getFarmReviewReviewTime()}!=null" th:text="${pd.getReview().getFarmReviewReviewTime()}"></td>
                         <td style="text-align: center">
                             <button href="javascript:void(0)" th:value="${pd.getFarm().getFarmUid()}" name="gf_detail" class="layui-btn layui-btn-primary layui-btn-xs">详情</button>

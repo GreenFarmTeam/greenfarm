@@ -6,13 +6,23 @@
     <meta name="renderer" content="webkit"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
     <title>绿色农场</title>
-    <link th:href="@{/gfstatic/templateone/res/layui/css/layui.css}" rel="stylesheet" type="text/css"/>
-    <link th:href="@{/gfstatic/templateone/res/layui/layui.js}" rel="stylesheet" type="text/css"/>
-    <link th:href="@{/gfstatic/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
-    <link th:href="@{/gfstatic/css/common.css}" rel="stylesheet" type="text/css"/>
-    <script th:src="@{/gfstatic/layui/jquery-3.2.1.min.js}"></script>
-    <script th:src="@{/gfstatic/layui/layui.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/js/common/map.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/layui/jquery-3.2.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/layui/layui.js}"></script>
 
+    <link th:href="@{/gfstatic/css/bootstrap-responsive.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/gfstatic/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/gfstatic/css/style-responsive.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/gfstatic/css/style-metro.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/gfstatic/css/style.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/gfstatic/css/default.css}" rel="stylesheet" type="text/css" id="style_color"/>
+    <link th:href="@{/gfstatic/css/uniform.default.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/gfstatic/image/favicon.ico}" rel="shortcut icon"/>
+    <link th:href="@{/gfstatic/templateone/res/layui/css/layui.css}" rel="stylesheet" type="text/css"/>
+    <link th:href="@{/gfstatic/css/common.css}" rel="stylesheet" type="text/css"/>
 </head>
 <body class="site-home">
 <!--头部模块-->
@@ -30,8 +40,11 @@
                         <div class="tit">
                             <p class="title" th:text="${product.product.productName}"></p>
                         </div>
+                        <div th:if="${product.product.productType.typeName} != null">
+                            <span>农场类型：<span th:text="${product.product.productType.typeName}"></span></span>
+                        </div>
                         <div class="pri">
-                            <span class="price">￥&nbsp;<span class="price" th:text="${product.product.productPrice}"></span>&nbsp;元/<span class="price" th:text="${product.product.productUnit}"></span></span>
+                            <span class="price"><span class="price" th:text="${product.product.productPrice}"></span>&nbsp;元/<span class="price" th:text="${product.product.productUnit}"></span></span>
                         </div>
                         <div class="btns">
                             <button onclick="addCart()" class="fl btn-add layui-btn layui-btn-lg layui-btn-primary">加入购物车</button>

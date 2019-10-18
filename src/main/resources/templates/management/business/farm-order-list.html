@@ -13,12 +13,11 @@
     <link th:href="@{/gfstatic/css/default.css}" rel="stylesheet" type="text/css" id="style_color"/>
     <link th:href="@{/gfstatic/css/uniform.default.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/gfstatic/css/pagination.css}" rel="stylesheet" type="text/css"/>
-
 </head>
 <body>
 <div class="container-fluid">
     <div class="row-fluid">
-        <h3 class="page-title"><i class="fa fa-file-text"></i> 订单管理</h3>
+        <br>
         <ul class="breadcrumb">
             <li>
                 <a href="#"><i class="fa fa-home"></i>农场订单</a>
@@ -38,7 +37,7 @@
                 </div>
             </div>
             <div class="portlet-body">
-                <table id="orderTable" class="table table-advance table-hover">
+                <table id="orderTable" class="table table-bordered table-striped">
                     <thead>
                     <tr>
                         <th>序号</th>
@@ -47,18 +46,17 @@
                         <th>农场名称</th>
                         <th>预约时间</th>
                         <th>预约状态</th>
-                        <th width="50%">订单详情</th>
+                        <th>订单详情</th>
                     </tr>
                     </thead>
-                    <tbody>
                     <tr th:if="${vo.orderFarmVoList.size()}!=0" th:each="pd,stat:${vo.orderFarmVoList}">
                         <td th:text="${stat.count}"></td>
                         <td th:text="${pd.orderFarm.getOrderFarmUid()}"></td>
                         <td th:text="${pd.orderFarm.orderFarmName}"></td>
                         <td th:text="${pd.orderFarm.orderFarmPhone}"></td>
-                        <td th:if="${pd.orderFarm.orderFarmState}==0" ><span style="border-radius: 5px !important;" class="label label-info">未付款</span></td>
-                        <td th:if="${pd.orderFarm.orderFarmState}==2" ><span style="border-radius: 5px !important;" class="label label-info">待处理</span></td>
-                        <td th:if="${pd.orderFarm.orderFarmState}==3" ><span style="border-radius: 5px !important;" class="label label-info">订单完成</span></td>
+                        <td th:if="${pd.orderFarm.orderFarmState}==0" ><span class="label label-info">未付款</span></td>
+                        <td th:if="${pd.orderFarm.orderFarmState}==2" ><span class="label label-info">待处理</span></td>
+                        <td th:if="${pd.orderFarm.orderFarmState}==3" ><span class="label label-info">订单完成</span></td>
 
                         <td th:if="${pd.orderFarm.orderFarmTime}!=null"><span class="label label-default" style="border-radius: 5px !important;" th:text="${#dates.format(pd.orderFarm.orderFarmTime,'yyyy-MM-dd HH:mm:ss')}"> </span> </td>
                         <!--<td th:if="${pd.product.productStock}!=null" th:text="${pd.product.productStock}"></td>-->
@@ -80,29 +78,18 @@
                             </div>
                         </td>
                     </tr>
-                    </tbody>
                 </table>
-                <hr/>
                 <div th:if="${vo.orderFarmVoList.size()}!=0">
                     <a th:if="${vo.orderFarmPageInfo.isFirstPage}==true" disabled="disabled">首页</a>
                     <a th:if="${vo.orderFarmPageInfo.isFirstPage}==false" th:href="@{/business/management/farm/order/loadAll(page=1)}">首页</a>
-
                     <a th:if="${vo.orderFarmPageInfo.hasPreviousPage}==false" disabled="disabled">上一页</a>
                     <a th:if="${vo.orderFarmPageInfo.hasPreviousPage}==true" th:href="@{/business/management/farm/order/loadAll(page=${vo.orderFarmPageInfo.pageNum}-1)}">上一页</a>
-
-                    <!--<a th:if="${pg}!=${vo.pageInfo.pageNum}" th:each="pg:${vo.pageInfo.navigatepageNums}" th:href="@{/greenfarm/admin/management/business/review(page=${pg})}" th:text="${pg}"></a>-->
-                    <!--<a th:if="${pg}==${vo.pageInfo.pageNum}" th:each="pg:${vo.pageInfo.navigatepageNums}" th:text="${pg}" disabled="disabled"></a>-->
-
                     <a th:each="pg:${vo.orderFarmPageInfo.navigatepageNums}" th:href="@{/business/management/farm/order/loadAll(page=${pg})}" th:text="${pg}"></a>
-
-
                     <a th:if="${vo.orderFarmPageInfo.hasNextPage}==false" disabled="disabled">下一页</a>
                     <a th:if="${vo.orderFarmPageInfo.hasNextPage}==true" th:href="@{/business/management/farm/order/loadAll(page=${vo.orderFarmPageInfo.pageNum}+1)}">下一页</a>
-
                     <a th:if="${vo.orderFarmPageInfo.isLastPage}==true" disabled="disabled">末页</a>
                     <a th:if="${vo.orderFarmPageInfo.isLastPage}==false" th:href="@{/business/management/farm/order/loadAll(page=${vo.orderFarmPageInfo.pages})}">末页</a>
                 </div>
-
             </div>
         </div>
     </div>
@@ -126,13 +113,9 @@
         var orderFarmUid = $(div).attr("value");
 
         if(($(div).next().css("display")).trim()=="none") {
-            layer.alert("哈哈")
-
-
             if ($(div).next().find("table").html()) {
                 return;
             }
-
             if (!orderFarmUid) {
                 layer.alert("订单编号为空");
                 return;
@@ -162,7 +145,6 @@
                 }
             });
         }else if($(div).next().css("display")=="block"){
-
             $(div).next().css("display","none")
 
         }else{

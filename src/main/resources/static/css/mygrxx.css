@@ -84,25 +84,18 @@ a {
 	text-align: center;
 	margin-top: 10%;
 }
-.you .gxin div.tx a{
-	display: block;
-	width: 90px;
-	height: 90px;
-	border-radius: 45px;
-	border: 1px solid #e3e3e3;
-	padding: 1px;
-}
 .you .gxin div.tx a img{
 	height: 92px;
 	width: 92px;
 	border: none;
+    text-align: center;
 }
 .you .gxin div.tx a p{
 	color: #A10000;
 	margin-top: 5px;
 }
 .you .gxin div.tx div{
-	text-align: left;
+	text-align: center;
 }
 .you .gxin div.tx div p{
 	height: 30px;
