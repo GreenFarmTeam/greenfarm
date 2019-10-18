@@ -95,7 +95,13 @@
     <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.15&key=2b715dce8430b0ba146dba04ca85d67a&plugin=AMap.Driving"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/map.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/management/shop/farm-detail.js}"> </script>
-
+    <script>
+        var map = new AMap.Map('show_map', {
+            resizeEnable : true,
+            zoom : 15
+        });
+        markPoint(map, $("#gf_lng").val(), $("#gf_lat").val());
+    </script>
     <!--底部-->
     <div th:replace="shop/common::foot"></div>
 </body>
