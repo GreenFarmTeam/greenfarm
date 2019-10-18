@@ -42,7 +42,7 @@
                         <i class="fa fa-reorder"></i>
                         实名认证
                     </div>
-                    <span th:if="${session.user.userIdcard}==null">你已完成实名认证！</span>
+                    <span th:if="${session.user.userIdcard}!=null">你已完成实名认证！</span>
                 </div>
                 <div class="portlet-body">
                     <form class="form-horizontal" th:if="${session.user.userIdcard}==null">

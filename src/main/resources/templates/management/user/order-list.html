@@ -5,14 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
     <meta name="renderer" content="webkit"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>绿色农场</title>
+    <title>SkyMall | 商城</title>
     <link th:href="@{/gfstatic/templateone/res/layui/css/layui.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/gfstatic/css/font-awesome.min.css}" rel="stylesheet" type="text/css"/>
     <link th:href="@{/gfstatic/css/common.css}" rel="stylesheet" type="text/css"/>
     <script type="text/javascript" th:src="@{/gfstatic/webjars/jquery/3.4.1/jquery.min.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.all.js}"></script>
     <script type="text/javascript" th:src="@{/gfstatic/js/common/url.js}"></script>
-    <script th:src="@{/gfstatic/layui/layui.js}"></script>
+    <script type="text/javascript" th:src="@{/gfstatic/templateone/res/layui/layui.js}"></script>
+
     <style>
         #list {
 
@@ -48,7 +49,7 @@
                         <th>地址</th>
                         <th>总价</th>
                         <th>状态</th>
-                        <th style="text-align: center">操作</th>
+                        <th>操作</th>
                     </tr>
                     </thead>
                     <tbody id="list">
@@ -60,7 +61,6 @@
 
     </div>
 
-    <!--我的农场订单-->
     <div class="layui-row">
         <div class="layui-col-md12"><h1 class="site-h1"><i class="fa fa-gift" style="color: #FF5722;"></i>
             &nbsp;我的农场订单</h1></div>
@@ -78,18 +78,19 @@
                         <th>预约时间</th>
                         <th>备注详情</th>
                         <th>预约状态</th>
-                        <th style="text-align: center">操作</th>
+                        <th>操作</th>
                     </tr>
                     </thead>
                     <tbody id="farm-list">
+
                     </tbody>
                 </table>
             </div>
         </div>
 
     </div>
-
-    <script>
+</div>
+    <script type="text/javascript">
         //            <![CDATA[
         $(function () {
             loadOrder();
@@ -146,16 +147,16 @@
                 console.log(item)
                 var tr = $("<tr></tr>");
                 tr.append($("<td>" + (count++) + "</td>"));
-                tr.append($("<td>" + item.orderCtime + "</td>"));
-                tr.append($("<td>" + item.orderRname + "</td>"));
-                tr.append($("<td>" + item.orderRphone + "</td>"));
-                tr.append($("<td><a  value='"+item.orderRaddress+"' href='javascript:void(0);'>" + item.orderRaddress.substring(0,item.orderRaddress.indexOf("|")) + "</a></td>"));
-                tr.append($("<td>" + item.orderSum + "元</td>"));
+                tr.append($("<td width='200'>" + item.orderCtime + "</td>"));
+                tr.append($("<td width='80'>" + item.orderRname + "</td>"));
+                tr.append($("<td width='100'>" + item.orderRphone + "</td>"));
+                tr.append($("<td width='100'><a  value='"+item.orderRaddress+"' href='javascript:void(0);'>" + item.orderRaddress.substring(0,item.orderRaddress.indexOf("|")) + "</a></td>"));
+                tr.append($("<td width='80'>" + item.orderSum + "</td>"));
                 var state = item.orderState;
                 var status;//1:未付款 2:等待发货 3:等待收货 4:订单完成
                 switch (state) {
                     case 1:
-                        status = "<span class='layui-badge layui-bg-orange'>&emsp;未付款&emsp;</span>";
+                        status = "<span class='layui-badge layui-bg-orange'>未付款</span>";
                         break;
                     case 2:
                         status = "<span class='layui-badge layui-bg-green'>等待发货</span>";
@@ -171,15 +172,15 @@
                         break;
                 }
                 tr.append($("<td width='100'>" + status + "</td>"));
-                var operter = $("<td ><button onclick='getDetail( this)' value='"+item.orderUid+"' class='layui-btn layui-btn-primary'>查看详情</button></td>");
+                var operter = $("<td ><button onclick='getDetail( this)' value='"+item.orderUid+"' class='layui-btn layui-btn-radius layui-btn-primary'>查看详情</button></td>");
                 if (state == 4) {
-                    operter.append($("<button onclick='recieve(this)' value='"+item.orderUid+"'  class='layui-btn layui-btn-primary'>&emsp;评价&emsp;</button>"));
+                    operter.append($("<button name=\""+item.orderUid+"\" onclick='productReview(this)' value='"+item.orderUid+"'  class='layui-btn layui-btn-radius layui-btn-green'>评价</button>"));
                 }
                 if (state == 3) {
-                    operter.append($("<button onclick='recieve(this)' value='"+item.orderUid+"'  class='layui-btn layui-btn-normal'>确认收货</button>"));
+                    operter.append($("<button onclick='recieve(this)' value='"+item.orderUid+"'  class='layui-btn layui-btn-radius layui-btn-danger'>确认收货</button>"));
                 }
                 if (state == 1) {
-                    operter.append($("<button onclick='pay(this)'  value='"+item.orderUid+"' class='layui-btn layui-btn-normal'>&emsp;付款&emsp;</button>"));
+                    operter.append($("<button onclick='pay(this)'  value='"+item.orderUid+"' class='layui-btn layui-btn-radius layui-btn-green'>付款</button>"));
                 }
                 tr.append(operter);
                 tbody.append(tr);
@@ -193,17 +194,17 @@
                 console.log(item)
                 var tr = $("<tr></tr>");
                 tr.append($("<td>" + (count++) + "</td>"));
-                tr.append($("<td>" + item.orderFarmName + "</td>"));
-                tr.append($("<td>" + item.orderFarmPhone + "</td>"));
-                tr.append($("<td>" + item.orderFarmFarm.farmName + "</td>"));
-                tr.append($("<td>" + item.orderFarmTime + "</td>"));
-                tr.append($("<td>" + item.orderFarmRemark + "</td>"));
+                tr.append($("<td width='200'>" + item.orderFarmName + "</td>"));
+                tr.append($("<td width='80'>" + item.orderFarmPhone + "</td>"));
+                tr.append($("<td width='100'>" + item.orderFarmFarm.farmName + "</td>"));
+                tr.append($("<td width='80'>" + item.orderFarmTime + "</td>"));
+                tr.append($("<td width='100'>" + item.orderFarmRemark + "</td>"));
 
                 var state = item.orderFarmState;
                 var status;//1:未付款 2:等待发货 3:等待收货 4:订单完成
                 switch (state) {
                     case 0:
-                        status = "<span class='layui-badge layui-bg-orange'>&emsp;未付款&emsp;</span>";
+                        status = "<span class='layui-badge layui-bg-orange'>未付款</span>";
                         break;
                     case 1:
                         status = "<span class='layui-badge layui-bg-green'>等待通知</span>";
@@ -218,35 +219,23 @@
 
                 tr.append($("<td width='100'>" + status + "</td>"));
 
-                var operter = $("<td ><button onclick='getFarmDetail( this)' value='"+item.orderFarmUid+"' class='layui-btn layui-btn-primary'>查看详情</button></td>");
+                var operter = $("<td ><button onclick='getFarmDetail( this)' value='"+item.orderFarmUid+"' class='layui-btn layui-btn-radius layui-btn-primary'>查看详情</button></td>");
                 if (state == 2) {
-                    operter.append($("<button onclick='evaluateFarm(this)' value='"+item.orderFarmUid+"'  class='layui-btn layui-btn-primary'>&emsp;评价&emsp;</button>"));
+                    operter.append($("<button onclick='farmReview(this)' value='"+item.orderFarmUid+"'  class='layui-btn layui-btn-radius layui-btn-green'>评价</button>"));
                 }
                 if (state == 1) {
-                    operter.append($("<button onclick='farmConfirm(this)' value='"+item.orderFarmUid+"'  class='layui-btn layui-btn-normal'>&nbsp;已带看&nbsp;</button>"));
+                    operter.append($("<button onclick='farmConfirm(this)' value='"+item.orderFarmUid+"'  class='layui-btn layui-btn-radius layui-btn-danger'>已带看</button>"));
                 }
                 if (state == 0) {
-                    operter.append($("<button onclick='farmPay(this)'  value='"+item.orderFarmUid+"' class='layui-btn layui-btn-normal'>&emsp;付款&emsp;</button>"));
+                    operter.append($("<button onclick='farmPay(this)'  value='"+item.orderFarmUid+"' class='layui-btn layui-btn-radius layui-btn-green'>付款</button>"));
                 }
                 tr.append(operter);
                 tbody.append(tr);
 
             });
         }
-        /*function getDetailAddress(btn){
-            var address = btn.value.substring(btn.value.indexOf("|")+1);
-            layer.confirm('详细地址：'+address, {btn:['确定'], skin:'layui-layer-lan', closeBtn:0});
-        }
-*/
-        function evaluateFarm() {
 
 
-        }
-        /**评价订单**/
-        function evaluateProduct() {
-
-
-        }
 
         // 获取订单详情
         function getDetail(btn) {
@@ -444,9 +433,359 @@
             });
         }
 
+        /**
+         * 提交表单
+         * */
+        function submit_btn(){
+            var formData = new FormData();
+            var productDegree = $("#productDegree").val();
+            var WuLiuDegree = $("#wuLiuDegree").val();
+            var remark  = $("textarea[name='remark']").val();
+            var orderId=$("#orderId").val();
+            if(remark==null || remark.trim()==''||remark.length<=10){
+                layer.alert("评论内容不少于10个字!")
+                return;
+            }else {
+                layer.confirm('确定提交订单？', {btn: ['是', '否'], skin: 'layui-layer-lan', closeBtn: 0}, function () {
+                    formData.append("productDegree", productDegree);
+                    formData.append("WuLiuDegree", WuLiuDegree);
+                    formData.append("remark", remark);
+                    formData.append("orderId", orderId);
+                    $.ajax({
+                        type: "post",
+                        url: "/member/management/product/order/review/",
+                        dataType: "json",
+                        data: formData,
+                        contentType: false,
+                        processData: false,
+                        cache: false,
+                        success: function (jsonData) {
+                            if (jsonData.flag == 1) {
+                                layer.alert("评论订单成功！")
+
+
+                            } else {
+                                layer.alert("评论失败！")
+                            }
+                        }
+                    })
+                })
+            }
+        }
+
+        /**
+         * 商品评价
+         * @param btn
+         */
+        function productReview(btn) {
+            var orderId = btn.value;
+
+            var content = "<!DOCTYPE html>\n" +
+                    "<html>\n" +
+                    "<head> </head>"+
+                "<body>"+
+                "<form class=\"layui-form\" method='post'>\n" +
+                "  <div class=\"layui-form-item\">\n" +
+                "    <label class=\"layui-form-label\">商品满意度</label>\n" +
+                    "<div id=\"test5\"></div>\n" +
+                    "<input type='hidden' id='productDegree'/>"+
+                    " \n" +
+                    "<fieldset class=\"layui-elem-field layui-field-title\" style=\"margin-top: 30px;\">" +
+                "    <label class=\"layui-form-label\">物流满意度</label>\n" +
+                     "<div id=\"test6\"></div>\n" +
+                     " \n" +
+                    "<input type='hidden' id='wuLiuDegree'/>"+
+                    "<input type='hidden' id='orderId' value=\""+orderId+"\"/>"+
+
+                     "<fieldset class=\"layui-elem-field layui-field-title\" style=\"margin-top: 30px;\">" +
+
+                " </div>\n" +
+
+
+                "  <div class=\"layui-form-item layui-form-text\">\n" +
+                "    <label class=\"layui-form-label\">商品评论</label>\n" +
+                "    <div class=\"layui-input-block\">\n" +
+                "      <textarea name='remark' placeholder=\"请输入评论内容，没有请填无\" class=\"layui-textarea\" name=\"desc\"></textarea>\n" +
+                "    </div>\n" +
+                "  </div>\n" +
+
+                "<div class=\"layui-upload\">\n" +
+                "  <button type=\"button\" class=\"layui-btn\" id=\"test2\">多图片上传</button> \n" +
+                "  <blockquote class=\"layui-elem-quote layui-quote-nm\" style=\"margin-top: 10px;\">\n" +
+                "    预览图：\n" +
+                "    <div class=\"layui-upload-list\" id=\"demo2\"></div>\n" +
+                " </blockquote>\n" +
+                "</div>"+
+                "  <div class=\"layui-form-item\">\n" +
+                "    <div class=\"layui-input-block\">\n" +
+                "      <button id='#submit_btn' class=\"layui-btn\" onclick='submit_btn()'  type='button' >发表评论</button>\n" +
+                "    </div>\n" +
+                "  </div>\n" +
+                "</form>\n"+
+                "</body></html>\n" ;
+
+            layer.closeAll();
+            layer.open({
+                type: 1,
+                skin: 'layui-layer-rim',
+                area: ['800px', '600px'],
+                shadeClose: true,
+                content :  content
+            });
+
+
+            /**
+             * 动态加载form组件
+             */
+            layui.use(['form', 'layedit', 'laydate'], function () {
+                var form = layui.form
+                    , layer = layui.layer
+                    , layedit = layui.layedit
+                    , laydate = layui.laydate;
+
+                form.render();
+            });
+            /**
+             * 动态加载评分插件
+             */
+
+            layui.use(['rate'], function () {
+                var rate = layui.rate;
+                rate.render({
+                    elem: '#test5'
+                    , value: 3
+                    , text: true
+                    , setText: function (value) { //自定义文本的回调
+                        var arrs = {
+                            '1': '极差'
+                            , '2': '差'
+                            , '3': '中等'
+                            , '4': '好'
+                            , '5': '极好'
+                        };
+                        this.span.text(arrs[value] || (value + "星"));
+                        $("#productDegree").val(this.value);
+
+                    }
+                })
+                rate.render({
+                    elem: '#test6'
+                    , value: 3
+                    , text: true
+                    , setText: function (value) { //自定义文本的回调
+                        var arrs = {
+                            '1': '极差'
+                            , '2': '差'
+                            , '3': '中等'
+                            , '4': '好'
+                            , '5': '极好'
+                        };
+                        this.span.text(arrs[value] || (value + "星"));
+                        $("#wuLiuDegree").val(this.value);
+
+                    }
+                })
+            })
+            /**
+             * 动态加载多文件上传组件
+             */
+            layui.use('upload', function() {
+                var $ = layui.jquery
+                    , upload = layui.upload;
+                //多图片上传
+                upload.render({
+                    elem: '#test2'
+                    ,url: '/user/management/order/review/upload/pic'
+                    ,multiple: true
+                    //设置图片上传的大小3M
+                    ,size: 3*1024*1024
+                    //设置文件上传的方式
+                    ,method: 'POST'
+                    //设置图片上传的格式
+                    , acceptMime: 'image/jpg, image/png'
+                    , multiple: true
+                    //禁用自动上传
+                    , auto: true
+                    ,data:{
+                        orderId:orderId
+                    }
+                    //上传按钮
+                    , bindAction: '#testListAction'
+                    ,before: function(obj){
+                        //预读本地文件示例，不支持ie8
+                        obj.preview(function(index, file, result){
+                            $('#demo2').append('<img src="'+ result +'" style="width: 60px;width:60px" alt="'+ file.name +'" class="layui-upload-img">')
+                        });
+                    }
+                    ,done: function(res){
+                        if(res.flag==true){
+                            layer.alert("评论图片文件上传成功！")
+                        }
+
+
+                    }
+                });
+            })
+        }
+
+        /**
+         * 农场评价
+         * @param btn
+         */
+        function farmReview(btn){
+            var orderId = btn.value;
+
+            var content = "<!DOCTYPE html>\n" +
+                "<html>\n" +
+                "<head> </head>"+
+                "<body>"+
+                "<form class=\"layui-form\" method='post'>\n" +
+                "  <div class=\"layui-form-item\">\n" +
+                "    <label class=\"layui-form-label\">农场满意度</label>\n" +
+                "<div id=\"test5\"></div>\n" +
+                "<input type='hidden' id='productDegree'/>"+
+                " \n" +
+                "<fieldset class=\"layui-elem-field layui-field-title\" style=\"margin-top: 30px;\">" +
+                "    <label class=\"layui-form-label\">服务满意度</label>\n" +
+                "<div id=\"test6\"></div>\n" +
+                " \n" +
+                "<input type='hidden' id='wuLiuDegree'/>"+
+                "<input type='hidden' id='orderId' value=\""+orderId+"\"/>"+
+
+                "<fieldset class=\"layui-elem-field layui-field-title\" style=\"margin-top: 30px;\">" +
+
+                " </div>\n" +
+
+
+                "  <div class=\"layui-form-item layui-form-text\">\n" +
+                "    <label class=\"layui-form-label\">商品评论</label>\n" +
+                "    <div class=\"layui-input-block\">\n" +
+                "      <textarea name='remark' placeholder=\"请输入评论内容，没有请填无\" class=\"layui-textarea\" name=\"desc\"></textarea>\n" +
+                "    </div>\n" +
+                "  </div>\n" +
+
+                "<div class=\"layui-upload\">\n" +
+                "  <button type=\"button\" class=\"layui-btn\" id=\"test2\">多图片上传</button> \n" +
+                "  <blockquote class=\"layui-elem-quote layui-quote-nm\" style=\"margin-top: 10px;\">\n" +
+                "    预览图：\n" +
+                "    <div class=\"layui-upload-list\" id=\"demo2\"></div>\n" +
+                " </blockquote>\n" +
+                "</div>"+
+                "  <div class=\"layui-form-item\">\n" +
+                "    <div class=\"layui-input-block\">\n" +
+                "      <button id='#submit_btn' class=\"layui-btn\" onclick='submit_btn()'  type='button' >发表评论</button>\n" +
+                "    </div>\n" +
+                "  </div>\n" +
+                "</form>\n"+
+                "</body></html>\n" ;
+
+            layer.closeAll();
+            layer.open({
+                type: 1,
+                skin: 'layui-layer-rim',
+                area: ['800px', '600px'],
+                shadeClose: true,
+                content :  content
+            });
+
+
+            /**
+             * 动态加载form组件
+             */
+            layui.use(['form', 'layedit', 'laydate'], function () {
+                var form = layui.form
+                    , layer = layui.layer
+                    , layedit = layui.layedit
+                    , laydate = layui.laydate;
+
+                form.render();
+            });
+            /**
+             * 动态加载评分插件
+             */
+
+            layui.use(['rate'], function () {
+                var rate = layui.rate;
+                rate.render({
+                    elem: '#test5'
+                    , value: 3
+                    , text: true
+                    , setText: function (value) { //自定义文本的回调
+                        var arrs = {
+                            '1': '极差'
+                            , '2': '差'
+                            , '3': '中等'
+                            , '4': '好'
+                            , '5': '极好'
+                        };
+                        this.span.text(arrs[value] || (value + "星"));
+                        $("#productDegree").val(this.value);
+
+                    }
+                })
+                rate.render({
+                    elem: '#test6'
+                    , value: 3
+                    , text: true
+                    , setText: function (value) { //自定义文本的回调
+                        var arrs = {
+                            '1': '极差'
+                            , '2': '差'
+                            , '3': '中等'
+                            , '4': '好'
+                            , '5': '极好'
+                        };
+                        this.span.text(arrs[value] || (value + "星"));
+                        $("#wuLiuDegree").val(this.value);
+
+                    }
+                })
+            })
+            /**
+             * 动态加载多文件上传组件
+             */
+            layui.use('upload', function() {
+                var $ = layui.jquery
+                    , upload = layui.upload;
+                //多图片上传
+                upload.render({
+                    elem: '#test2'
+                    ,url: '/user/management/order/review/upload/pic'
+                    ,multiple: true
+                    //设置图片上传的大小3M
+                    ,size: 3*1024*1024
+                    //设置文件上传的方式
+                    ,method: 'POST'
+                    //设置图片上传的格式
+                    , acceptMime: 'image/jpg, image/png'
+                    , multiple: true
+                    //禁用自动上传
+                    , auto: true
+                    ,data:{
+                        orderId:orderId
+                    }
+                    //上传按钮
+                    , bindAction: '#testListAction'
+                    ,before: function(obj){
+                        //预读本地文件示例，不支持ie8
+                        obj.preview(function(index, file, result){
+                            $('#demo2').append('<img src="'+ result +'" style="width: 60px;width:60px" alt="'+ file.name +'" class="layui-upload-img">')
+                        });
+                    }
+                    ,done: function(res){
+                        if(res.flag==true){
+                            layer.alert("评论图片文件上传成功！")
+                        }
+
+
+                    }
+                });
+            })
+
+        }
+
     </script>
 
-</div>
 <!--底部-->
 <div th:replace="shop/common::foot"></div>
 </body>

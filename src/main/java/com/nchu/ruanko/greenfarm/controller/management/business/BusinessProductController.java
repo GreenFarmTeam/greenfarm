@@ -305,6 +305,8 @@ public class BusinessProductController {
     @PostMapping(value = "/business/management/product/stock/operation")
     @ResponseBody
     public String businessManagementProductModifyStock(@RequestParam(name = "stock") Integer stock, @RequestParam(name = "uid") String productUid) {
+        System.out.println(stock);
+        System.out.println(productUid);
         JSONObject json = new JSONObject();
         productService.businessSetStock(stock, productUid);
         json.put("flag", true);

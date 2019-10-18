@@ -18,7 +18,7 @@ $("#gf_modify").on('click', function () {
                     },
                     success : function (jsonData) {
                         if (jsonData.flag === true) {
-                            $(location).attr("href", getPathPrefix() + "user/management/index");
+                            $(location).attr("href", getPathPrefix() + "/user/management/profile");
                         }
                     }
                 });

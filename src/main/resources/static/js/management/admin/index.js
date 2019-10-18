@@ -12,7 +12,7 @@ function changePage(page) {
     } else if (page === 'business-all') {
         $("#business").addClass("active").find("a").eq(0).append($('<span class="selected"></span>'));
         $("#business-all").addClass("active");
-        $("#mainFrame").attr("src", "/greenfarm/admin/management/business/loadAll");
+        $("#mainFrame").attr("src", "6 ZAmanagement/business/loadAll");
     } else if (page === 'business-review') {
         $("#business").addClass("active").find("a").eq(0).append($('<span class="selected"></span>'));
         $("#business-review").addClass("active");

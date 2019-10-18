@@ -61,7 +61,7 @@ function order() {
                 "  <div class=\"layui-form-item\">\n" +
                 "    <label class=\"layui-form-label layui-col-md4 \" style='padding: 9px 0px;margin-right: 26px'>预约人姓名</label>\n" +
                 "    <div class=\"layui-input-block layui-col-md8 \" style='margin-left: 0px'>\n" +
-                "      <input type=\"text\" name=\"title\" lay-verify=\"title\" autocomplete=\"off\" placeholder=\"请输入预约人姓名\" class=\"layui-input\">\n" +
+                "      <input type=\"text\" name=\"name\" lay-verify=\"title\" autocomplete=\"off\" placeholder=\"请输入预约人姓名\" class=\"layui-input\">\n" +
                 "    </div>\n" +
                 "  </div>\n" +
 
@@ -89,6 +89,7 @@ function order() {
                 "        <input type=\"text\" id=\"date\" name='order-date' lay-verify=\"date\" placeholder=\"yyyy-MM-dd\" autocomplete=\"off\" class=\"layui-input\">\n" +
                 "      </div>\n" +
                 "  </div>" +
+
                 "  <div class=\"layui-input-block layui-row\">\n" +
                 "  </div>\n" +"" +
                 "\n" +

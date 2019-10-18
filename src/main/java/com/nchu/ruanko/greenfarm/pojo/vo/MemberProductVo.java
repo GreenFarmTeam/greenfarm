@@ -1,5 +1,6 @@
 package com.nchu.ruanko.greenfarm.pojo.vo;
 
+import com.nchu.ruanko.greenfarm.pojo.entity.OrderRate;
 import com.nchu.ruanko.greenfarm.pojo.entity.Product;
 import com.nchu.ruanko.greenfarm.pojo.entity.ProductImage;
 import com.nchu.ruanko.greenfarm.pojo.entity.ProductReview;
@@ -11,6 +12,7 @@ public class MemberProductVo {
     private ProductReview review;
     private ProductImage mainImage;
     private List<ProductImage> otherImages;
+
 
 
     public Product getProduct() {

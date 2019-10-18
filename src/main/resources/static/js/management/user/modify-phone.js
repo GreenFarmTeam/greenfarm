@@ -63,7 +63,7 @@ $("#gf_sure").on('click', function () {
                     },
                     success : function (jsonData) {
                         if (jsonData.flag === true) {
-                            $(location).attr("href", getPathPrefix() + "user/management/index");
+                            $(location).attr("href", getPathPrefix() + "/user/management/profile");
                         } else {
                             layer.alert(jsonData.reason, {skin:'layui-layer-lan', closeBtn: 0});
                         }

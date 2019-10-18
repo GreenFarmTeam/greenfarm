@@ -95,7 +95,7 @@ $("button[name='gf_disagree']").on('click', function () {
                 "<input type='button' value='确定' id='gf_reason_sure'/>" +
                 "</form>" +
                 "<input type='hidden' value='" + reviewUid + "' id='gf_review_uid'/>" +
-                "<script type='text/javascript' src='/gfstatic/js/management/admin/review-product-disagree-reason.js'></script>" +
+                "<script type='text/javascript' src='/gfstatic/js/management/admin/product.js'></script>" +
                 "</body>" +
                 "</html>"
             });

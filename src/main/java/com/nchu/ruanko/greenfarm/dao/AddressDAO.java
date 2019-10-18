@@ -43,8 +43,8 @@ public interface AddressDAO {
      * @param address
      * @param userUid
      */
-    @Insert("INSERT INTO gf_tb_address(addr_uid,addr_name,addr_province,addr_city,addr_district,addr_desc,addr_user_uid)" +
-            " VALUES(#{addr.addressUid},#{addr.addressName},#{addr.addressProvince},#{addr.addressCity},#{addr.addressDistrict},#{addr.addressDetail},#{uid})")
+    @Insert("INSERT INTO gf_tb_address(addr_uid,addr_name,addr_province,addr_city,addr_district,addr_desc,addr_phone,addr_user_uid)" +
+            " VALUES(#{addr.addressUid},#{addr.addressName},#{addr.addressProvince},#{addr.addressCity},#{addr.addressDistrict},#{addr.addressDetail},#{addr.addressPhone},#{uid})")
     void insertAddress(@Param(value = "addr") Address address, @Param("uid") String userUid);
 
     /**

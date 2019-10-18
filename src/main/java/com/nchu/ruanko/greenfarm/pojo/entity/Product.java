@@ -1,6 +1,9 @@
 package com.nchu.ruanko.greenfarm.pojo.entity;
 
+import com.nchu.ruanko.greenfarm.pojo.vo.ReviewOfProductVo;
+
 import java.util.Date;
+import java.util.List;
 
 /**
  * 对应数据库表：gf_tb_product
@@ -17,6 +20,15 @@ public class Product {
     private Integer productIsRecommend;
     private ProductType productType;
     private Business business;
+    private List<ReviewOfProductVo> reviewOfProductVoList;
+
+    public List<ReviewOfProductVo> getReviewOfProductVoList() {
+        return reviewOfProductVoList;
+    }
+
+    public void setReviewOfProductVoList(List<ReviewOfProductVo> reviewOfProductVoList) {
+        this.reviewOfProductVoList = reviewOfProductVoList;
+    }
 
     public String getProductUid() {
         return productUid;

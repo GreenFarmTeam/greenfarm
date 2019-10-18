@@ -113,7 +113,7 @@ $("#gf_sure").on('click', function () {
                             success : function (jsonData) {
                                 if (jsonData.flag === true) {
                                     layer.confirm('操作成功，请等待审核！', {btn:['是'], skin:'layui-layer-lan', closeBtn:0}, function () {
-                                        $(location).attr("href", getPathPrefix() + "business/management/index");
+                                        $(location).attr("href", getPathPrefix() + "business/management/farm/add");
                                     });
                                 }
                             }

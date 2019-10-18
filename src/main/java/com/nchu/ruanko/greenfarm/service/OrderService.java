@@ -3,6 +3,7 @@ package com.nchu.ruanko.greenfarm.service;
 
 import com.alipay.api.response.AlipayTradePagePayResponse;
 import com.nchu.ruanko.greenfarm.pojo.entity.Order;
+import com.nchu.ruanko.greenfarm.pojo.entity.ProductReviewImage;
 import com.nchu.ruanko.greenfarm.pojo.vo.BusinessOrderPageVo;
 
 import java.util.List;
@@ -27,4 +28,8 @@ public interface OrderService {
 
 
     BusinessOrderPageVo loadAllOrdersOfBusiness(String userUid, int pageNum, int pageSize, int pageNavigationSize);
+
+    void saveOrderReviewPic(ProductReviewImage reviewImage, String orderId);
+
+    void saveOrderReview(String productDegree, String wuLiuDegree, String remark, String orderId);
 }

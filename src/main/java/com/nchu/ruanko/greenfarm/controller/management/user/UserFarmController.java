@@ -90,6 +90,7 @@ public class UserFarmController {
     public  String submitOrderFarm(@RequestParam("name")String name,@RequestParam("phone")String phone,@RequestParam("orderDate")String orderDate,@RequestParam("requireInfo")String requireInfo,@RequestParam("farmId")String farmId, HttpServletRequest request){
         JSONObject jsonObject = new JSONObject();
         HttpSession session = request.getSession();
+        System.out.println("name"+name);
         User user = (User)session.getAttribute("user");
         if(farmService.submitOrderFarm(user.getUserUid(),farmId,name,phone,orderDate,requireInfo))
             jsonObject.put("flag", true);
