@@ -190,7 +190,7 @@ $("button[name='gf_detail']").on('click',function () {
 
                 if (jsonData.mainImage.indexOf("/") !== -1) {
                     content2 += filltext1 + "农场主图片</label> <div class='controls'><a href='" + getPathPrefix() + jsonData.mainImage + "' target='_blank'>" +
-                        "<img src='" + getPathPrefix() + jsonData.mainImage + "' width='220px' height='180px'/></a></div></div>";
+                        "<img src='" + getPathPrefix() + jsonData.mainImage + "' style='width: 220px; height: 180px;margin: 0 10px 10px 0'/></a></div></div>";
                 } else {
                     content2 += filltext1 + "农场主图片</label> <div class='controls'><span>"+jsonData.mainImage+"</span></div></div>";
                 }
@@ -198,8 +198,8 @@ $("button[name='gf_detail']").on('click',function () {
                 if (jsonData.otherImages.length !== 0) {
                     content2 += filltext1 + "农场其他图片</label> <div class='controls'>";
                     for (var i in jsonData.otherImages) {
-                        content2 += "<a href='" + getPathPrefix() + jsonData.otherImages[i] + "' target='_blank'><img src='" +
-                            getPathPrefix() + jsonData.otherImages[i] + "' width='220px' height='180px' style='margin-bottom: 10px'/></a>";
+                        content2 += "<a href='" + getPathPrefix() + jsonData.otherImages[i] + "' target='_blank' style='float:left; width: 220px; height: 180px; margin: 0 10px 10px 0; display: block'><img src='" +
+                            getPathPrefix() + jsonData.otherImages[i] + "' style='width: 220px; height: 180px;margin: 0 10px 10px 0'/></a>";
                     }
                     content2 += "</div></div>";
                 } else {
@@ -262,19 +262,23 @@ $("a[name='gf_location']").on('click', function () {
         "<meta charset='UTF-8'>" +
         "</head>" +
         "<body>" +
-        "<div id='container' style='width: 600px; height: 450px'></div>" +
+        "<div id='container' style='width: 800px; height: 600px'></div>" +
         "<script type='text/javascript'>" +
-        "var map = new AMap.Map('container', {" +
-        "zoom : 14," +
-        "resizeEnable : false});" +
-        "markPoint(map, " + lng + ", " + lat + ");" +
+        "var map = initMap2('container');" +
+        "map.setCenter(new AMap.LngLat(" + lng + ", " + lat + "));" +
+        "var localLng = $('#now-lng').val();" +
+        "var localLat = $('#now-lat').val();" +
+        "var driving = new AMap.Driving({" +
+        "map:map" +
+        "});" +
+        "driving.search(new AMap.LngLat(localLng, localLat), new AMap.LngLat(" + lng + ", " + lat + "), function(status, result) {});" +
         "</script>" +
         "</body>" +
-        "</html>";
+        "<ml>";
     layer.open({
         type: 1,
         skin: 'layui-layer-rim',
-        area: ['600px', '450px'],
+        area: ['800px', '600px'],
         shadeClose: false,
         content: content
     });
